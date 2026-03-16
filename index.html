@@ -756,60 +756,62 @@ function renderLessons() {
   initLessonClicks();
 }
 
-function detailHTML(det, n) {
-  var goals = '';
-  for(var i=0;i<det.goals.length;i++) goals += '<div class="le-goal">'+det.goals[i]+'</div>';
-  var speaks = '';
-  for(var i=0;i<det.speak.length;i++) speaks += '<div class="le-phrase"><div class="le-de">'+det.speak[i][0]+'</div><div class="le-en">'+det.speak[i][1]+'</div></div>';
-  var chunks = '';
-  for(var i=0;i<det.chunks.length;i++) chunks += '<div class="le-chunk">'+det.chunks[i]+'</div>';
-  return '<div class="le-grid">'
-    +'<div><div class="le-col-label">By the end you will</div>'+goals+'</div>'
-    +'<div><div class="le-col-label">Phrases you will learn</div>'+speaks+'</div>'
-    +'<div><div class="le-col-label">Grammar chunks</div>'+chunks
-    +'<div class="le-col-label" style="margin-top:18px">Memory trick</div>'
-    +'<div class="le-mnemonic">'+det.mnemonic+'</div></div>'
-    +'<div class="le-footer">'
-    +'<button class="btn btn-gold" style="font-size:16px" data-action="demo">▶ Start this lesson</button>'
-    +'<button class="btn btn-ghost" style="font-size:16px" data-action="demo">Preview →</button>'
-    +'</div></div>';
+function toggleLesson(n) {
+  var row = document.getElementById('lr'+n);
+  if(!row) return;
+  var isOpen = row.classList.contains('open');
+  document.querySelectorAll('.lrow.open').forEach(function(x){ x.classList.remove('open'); });
+  if(!isOpen) row.classList.add('open');
 }
 
 function rowHTML(l) {
   var locked = !!l.locked;
   var status = locked ? 'locked' : (l.done ? 'done' : 'next');
-  var icon = locked ? '🔒' : (l.done ? '✓' : '▶');
-  var det = (!locked && currentLevel==='A1') ? A1_DETAIL[l.n] : null;
-  var expandContent = det ? detailHTML(det, l.n)
-    : (!locked ? '<div style="padding:24px 32px;font-size:17px;color:var(--ml)">'+l.desc+'</div>' : '');
-  var expandDiv = locked ? '' : '<div class="lrow-expand">'+expandContent+'</div>';
-  var chevron = locked ? '' : '<div class="lrow-chev">⌄</div>';
-  var hdr = '<div class="lrow-hdr"'+(locked?'':' data-n="'+l.n+'"')+'>'
-    +'<div class="lrow-num">L'+String(l.n).padStart(2,'0')+'</div>'
-    +'<div class="lrow-icon '+status+'">'+icon+'</div>'
-    +'<div class="lrow-text"><div class="lrow-title">'+l.title+'</div><div class="lrow-desc">'+l.desc+'</div></div>'
-    +'<div class="lrow-dur">'+l.dur+'</div>'
-    +chevron+'</div>';
-  return '<div class="lrow '+status+'" id="lr'+l.n+'">'+hdr+expandDiv+'</div>';
+  var icon   = locked ? '&#x1F512;' : (l.done ? '&#x2713;' : '&#x25B6;');
+  var det    = (!locked && currentLevel === 'A1') ? A1_DETAIL[l.n] : null;
+
+  var goalsHTML = '';
+  if(det) for(var i=0;i<det.goals.length;i++) goalsHTML += '<div class="le-goal">'+det.goals[i]+'</div>';
+
+  var speakHTML = '';
+  if(det) for(var i=0;i<det.speak.length;i++) speakHTML += '<div class="le-phrase"><div class="le-de">'+det.speak[i][0]+'</div><div class="le-en">'+det.speak[i][1]+'</div></div>';
+
+  var chunksHTML = '';
+  if(det) for(var i=0;i<det.chunks.length;i++) chunksHTML += '<div class="le-chunk">'+det.chunks[i]+'</div>';
+
+  var expandInner = '';
+  if(det) {
+    expandInner = '<div class="le-grid">'
+      +'<div><div class="le-col-label">By the end you will</div>'+goalsHTML+'</div>'
+      +'<div><div class="le-col-label">Phrases you will learn</div>'+speakHTML+'</div>'
+      +'<div><div class="le-col-label">Grammar chunks</div>'+chunksHTML
+        +'<div class="le-col-label" style="margin-top:18px">Memory trick</div>'
+        +'<div class="le-mnemonic">'+det.mnemonic+'</div></div>'
+      +'<div class="le-footer">'
+        +'<button class="btn btn-gold" style="font-size:16px" onclick="switchView('demo')">&#x25B6; Start this lesson</button>'
+        +'<button class="btn btn-ghost" style="font-size:16px" onclick="switchView('demo')">Preview &rarr;</button>'
+      +'</div></div>';
+  } else if(!locked) {
+    expandInner = '<div style="padding:24px 32px;font-size:17px;color:var(--ml)">'+l.desc+'</div>';
+  }
+
+  var clickAttr = locked ? '' : ' onclick="toggleLesson('+l.n+')"';
+  var expandDiv = locked ? '' : '<div class="lrow-expand">'+expandInner+'</div>';
+  var chevron   = locked ? '' : '<div class="lrow-chev">&#x2335;</div>';
+
+  return '<div class="lrow '+status+'" id="lr'+l.n+'">'
+    +'<div class="lrow-hdr"'+clickAttr+'>'
+      +'<div class="lrow-num">L'+String(l.n).padStart(2,'0')+'</div>'
+      +'<div class="lrow-icon '+status+'">'+icon+'</div>'
+      +'<div class="lrow-text"><div class="lrow-title">'+l.title+'</div><div class="lrow-desc">'+l.desc+'</div></div>'
+      +'<div class="lrow-dur">'+l.dur+'</div>'
+      +chevron
+    +'</div>'
+    +expandDiv
+  +'</div>';
 }
 
-function initLessonClicks() {
-  var list = document.getElementById('lesson-list-body');
-  if(!list) return;
-  list.addEventListener('click', function(e) {
-    var hdr = e.target.closest('[data-n]');
-    if(hdr && hdr.dataset.n !== undefined) {
-      var n = parseInt(hdr.dataset.n, 10);
-      var row = document.getElementById('lr'+n);
-      if(!row) return;
-      var was = row.classList.contains('open');
-      document.querySelectorAll('.lrow.open').forEach(function(x){ x.classList.remove('open'); });
-      if(!was) row.classList.add('open');
-    }
-    var btn = e.target.closest('[data-action="demo"]');
-    if(btn) switchView('demo');
-  });
-}
+function initLessonClicks() { /* no-op, onclick is inline */ }
 
 // ── DEMO STEP LOGIC ──────────────────────────────────────────────
 let step = 0;
