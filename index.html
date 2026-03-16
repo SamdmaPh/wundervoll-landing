@@ -6,1381 +6,612 @@
 <title>Wundervoll — German, made wonderful.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Sora:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#070B18;--bg2:#0D1425;--bg3:#0A1020;--bg4:#060910;
-  --sidebar:#07101E;
-  --b:#1A2840;--bl:#243352;--bll:#2D3F5C;
+  --bg:#070B18;--bg2:#0D1425;
+  --b:#1E2E45;--bl:#263A56;
   --gold:#C9A84C;--goldl:#E8C97A;--goldd:#7A6230;
-  --goldbg:rgba(201,168,76,0.07);--goldbr:rgba(201,168,76,0.2);
+  --goldbg:rgba(201,168,76,0.08);--goldbr:rgba(201,168,76,0.25);
   --red:#CC0000;--redl:#E03535;
-  --redbg:rgba(204,0,0,0.07);--redbr:rgba(204,0,0,0.2);
-  --green:#22C55E;--greenbg:rgba(34,197,94,0.07);--greenbr:rgba(34,197,94,0.2);
-  --purple:#8B5CF6;--purplebg:rgba(139,92,246,0.07);--purplebr:rgba(139,92,246,0.2);
-  --blue:#3B82F6;--bluebg:rgba(59,130,246,0.07);--bluebr:rgba(59,130,246,0.2);
-  --w:#fff;--t:#C0D0E0;--m:#3D5270;--ml:#556A84;
-  --k:#070B18;
-  --fd:'Cormorant Garamond',Georgia,serif;
-  --fb:'DM Sans',system-ui,sans-serif;
+  --green:#22C55E;--greenbg:rgba(34,197,94,0.08);--greenbr:rgba(34,197,94,0.25);
+  --w:#FFFFFF;--t:#D4E4F4;--m:#4A6480;--ml:#6B87A3;
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Sora',system-ui,sans-serif;
   --fm:'DM Mono',monospace;
-  --r8:8px;--r12:12px;--r16:16px;--r20:20px;--r24:24px;
 }
 html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
 
-/* ── GRAIN OVERLAY ─────────────────────────────────────────── */
-body::after{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  opacity:.5;
-}
+/* ─── SHELL ─────────────────────────────────── */
+.shell{display:grid;grid-template-columns:72px 260px 1fr;height:100vh;overflow:hidden}
 
-/* ── SHELL ─────────────────────────────────────────────────── */
-.shell{display:grid;grid-template-columns:64px 220px 1fr;grid-template-rows:1fr;height:100vh;overflow:hidden}
-
-/* ── ICON RAIL ─────────────────────────────────────────────── */
-.rail{
-  background:var(--bg4);border-right:1px solid var(--b);
-  display:flex;flex-direction:column;align-items:center;
-  padding:14px 0;gap:4px;
-}
-.rail-logo{
-  font-family:var(--fd);font-size:20px;font-weight:700;
-  display:flex;flex-direction:column;align-items:center;
-  margin-bottom:16px;line-height:1;cursor:pointer;
-  padding-bottom:14px;border-bottom:1px solid var(--b);width:100%;justify-content:center;
-}
-.rail-logo .w1{color:var(--w)}
-.rail-logo .w2{color:var(--red)}
-.rail-logo .w3{color:var(--gold)}
-.rail-btn{
-  width:40px;height:40px;border-radius:var(--r8);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .15s;border:none;background:none;
-  color:var(--m);font-size:17px;position:relative;
-}
+/* ─── RAIL ──────────────────────────────────── */
+.rail{background:#05080F;border-right:1px solid var(--b);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px}
+.rail-logo{font-family:var(--fd);font-size:22px;font-weight:900;margin-bottom:18px;line-height:1;cursor:pointer;padding-bottom:16px;border-bottom:1px solid var(--b);width:100%;text-align:center}
+.rl-w{color:var(--w)}.rl-u{color:var(--red)}.rl-n{color:var(--gold);font-size:16px}
+.rail-btn{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:none;color:var(--m);font-size:20px;position:relative;transition:all .15s}
 .rail-btn:hover{background:rgba(255,255,255,.05);color:var(--t)}
-.rail-btn.active{background:var(--goldbg);color:var(--gold)}
-.rail-btn::after{
-  content:attr(data-tip);
-  position:absolute;left:52px;
-  background:var(--bg2);border:1px solid var(--b);
-  color:var(--t);font-size:11px;font-weight:600;
-  padding:4px 10px;border-radius:var(--r8);
-  white-space:nowrap;pointer-events:none;
-  opacity:0;transform:translateX(-4px);transition:all .15s;
-  z-index:200;font-family:var(--fb);
-}
+.rail-btn.active{background:var(--goldbg);color:var(--gold);border:1px solid var(--goldbr)}
+.rail-btn::after{content:attr(data-tip);position:absolute;left:58px;background:var(--bg2);border:1px solid var(--b);color:var(--t);font-size:13px;font-weight:600;padding:6px 14px;border-radius:10px;white-space:nowrap;pointer-events:none;opacity:0;transform:translateX(-4px);transition:all .15s;z-index:999;font-family:var(--fb)}
 .rail-btn:hover::after{opacity:1;transform:translateX(0)}
 .rail-spacer{flex:1}
-.rail-avatar{
-  width:32px;height:32px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold),var(--red));
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:700;color:var(--k);cursor:pointer;
-  border:2px solid rgba(201,168,76,.3);margin-top:8px;
-}
+.rail-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--red));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#070B18;cursor:pointer;margin-top:8px;border:2px solid rgba(201,168,76,.3)}
 
-/* ── SIDEBAR ───────────────────────────────────────────────── */
-.sidebar{
-  background:var(--sidebar);border-right:1px solid var(--b);
-  display:flex;flex-direction:column;overflow:hidden;
-}
-.sb-top{
-  padding:16px;border-bottom:1px solid var(--b);
-}
-.sb-search{
-  display:flex;align-items:center;gap:8px;
-  background:var(--bg2);border:1px solid var(--b);border-radius:var(--r8);
-  padding:7px 12px;
-}
-.sb-search input{
-  background:none;border:none;outline:none;color:var(--t);
-  font-size:12px;width:100%;font-family:var(--fb);
-}
+/* ─── SIDEBAR ────────────────────────────────── */
+.sidebar{background:#07101E;border-right:1px solid var(--b);display:flex;flex-direction:column;overflow:hidden}
+.sb-top{padding:20px;border-bottom:1px solid var(--b)}
+.sb-search{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid var(--b);border-radius:10px;padding:10px 14px}
+.sb-search input{background:none;border:none;outline:none;color:var(--t);font-size:15px;font-family:var(--fb);width:100%}
 .sb-search input::placeholder{color:var(--m)}
-.sb-search-icon{color:var(--m);font-size:12px}
-
-.sb-body{flex:1;overflow-y:auto;padding:8px 0}
-.sb-body::-webkit-scrollbar{width:3px}
-.sb-body::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px}
-
-.sb-label{
-  font-size:9px;font-weight:700;color:var(--m);
-  letter-spacing:.18em;text-transform:uppercase;
-  padding:10px 16px 4px;
-}
-.sb-item{
-  display:flex;align-items:center;gap:10px;
-  padding:6px 16px;cursor:pointer;
-  border-left:2px solid transparent;
-  transition:all .12s;font-size:12px;color:var(--ml);
-  user-select:none;
-}
-.sb-item:hover{background:rgba(255,255,255,.025);color:var(--t)}
-.sb-item.active{background:var(--goldbg);color:var(--gold);border-left-color:var(--gold)}
-.sb-item-icon{font-size:13px;width:16px;text-align:center;flex-shrink:0}
-.sb-item-text{flex:1}
-.sb-badge{
-  background:var(--goldbg);border:1px solid var(--goldbr);
-  color:var(--gold);font-size:9px;font-weight:700;
-  padding:1px 6px;border-radius:10px;font-family:var(--fm);
-}
-.sb-badge.new{background:var(--redbg);border-color:var(--redbr);color:var(--red)}
-
-.sb-level{
-  display:flex;align-items:center;gap:8px;
-  padding:5px 12px 5px 28px;cursor:pointer;
-  border-radius:var(--r8);margin:1px 6px;
-  transition:all .12s;font-size:11px;color:var(--m);
-}
-.sb-level:hover{background:rgba(255,255,255,.025);color:var(--t)}
+.sb-body{flex:1;overflow-y:auto;padding:14px 0;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
+.sb-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--m);padding:0 18px;margin:14px 0 6px}
+.sb-item{display:flex;align-items:center;gap:12px;padding:11px 18px;cursor:pointer;transition:all .15s;font-size:15px;font-weight:500;color:var(--ml)}
+.sb-item:hover{background:rgba(255,255,255,.03);color:var(--t)}
+.sb-item.active{background:var(--goldbg);color:var(--gold);border-right:2px solid var(--gold)}
+.sb-item-icon{font-size:17px;width:22px;text-align:center}
+.sb-level{display:flex;align-items:center;gap:12px;padding:11px 18px;cursor:pointer;transition:all .15s;font-size:14px;font-weight:500;color:var(--ml)}
+.sb-level:hover{background:rgba(255,255,255,.03);color:var(--t)}
 .sb-level.active{background:var(--goldbg);color:var(--gold)}
-.sb-level-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.sb-level-name{flex:1}
-.sb-level-bar{width:40px;height:2px;background:var(--b);border-radius:1px;overflow:hidden}
-.sb-level-fill{height:100%;border-radius:1px}
+.sb-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.sb-lname{flex:1}
+.sb-bar{width:44px;height:4px;background:var(--b);border-radius:2px;overflow:hidden}
+.sb-fill{height:100%;border-radius:2px}
+.sb-footer{padding:18px;border-top:1px solid var(--b)}
+.xp-card{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:14px;padding:16px}
+.xp-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.xp-label{font-size:14px;color:var(--gold);font-weight:600}
+.xp-val{font-size:24px;font-weight:700;color:var(--gold);font-family:var(--fd)}
+.xp-track{height:5px;background:rgba(201,168,76,.15);border-radius:3px;overflow:hidden;margin-bottom:7px}
+.xp-fill{height:100%;width:39%;background:var(--gold);border-radius:3px}
+.xp-sub{font-size:12px;color:var(--goldd);font-weight:500}
 
-.sb-footer{
-  padding:12px;border-top:1px solid var(--b);
-}
-.sb-xp-card{
-  background:var(--goldbg);border:1px solid var(--goldbr);
-  border-radius:var(--r12);padding:12px;
-}
-.sb-xp-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.sb-xp-label{font-size:10px;color:var(--gold);font-weight:600;letter-spacing:.05em}
-.sb-xp-val{font-size:14px;font-weight:700;color:var(--gold);font-family:var(--fm)}
-.sb-xp-track{height:3px;background:rgba(201,168,76,.15);border-radius:2px;overflow:hidden}
-.sb-xp-fill{height:100%;background:var(--gold);border-radius:2px;width:34%}
-.sb-xp-sub{font-size:10px;color:var(--goldd);margin-top:4px}
-
-/* ── MAIN ──────────────────────────────────────────────────── */
-.main{overflow:hidden;display:flex;flex-direction:column}
-
-.topbar{
-  height:48px;background:var(--bg4);border-bottom:1px solid var(--b);
-  display:flex;align-items:center;padding:0 24px;gap:12px;
-  flex-shrink:0;position:relative;
-}
-.topbar::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,#111 33.3%,var(--red) 33.3%,var(--red) 66.6%,var(--gold) 66.6%);
-  opacity:.4;
-}
-.topbar-title{font-size:13px;font-weight:600;color:var(--w);flex:1}
-.topbar-breadcrumb{
-  display:flex;align-items:center;gap:6px;
-  font-size:11px;color:var(--m);
-}
-.topbar-breadcrumb span{color:var(--ml);cursor:pointer;transition:color .12s}
-.topbar-breadcrumb span:hover{color:var(--t)}
-.topbar-breadcrumb .sep{color:var(--b)}
-.topbar-breadcrumb .current{color:var(--t);font-weight:600}
-.topbar-right{display:flex;align-items:center;gap:10px;margin-left:auto}
-.tb-badge{
-  display:flex;align-items:center;gap:5px;
-  padding:3px 10px;border-radius:20px;
-  font-size:11px;font-weight:600;cursor:pointer;
-  font-family:var(--fm);transition:all .15s;
-}
-.tb-badge.gold{background:var(--goldbg);border:1px solid var(--goldbr);color:var(--gold)}
-.tb-badge.red{background:var(--redbg);border:1px solid var(--redbr);color:var(--red)}
-.tb-badge:hover{filter:brightness(1.2)}
-.tb-divider{width:1px;height:20px;background:var(--b)}
-.tb-btn{
-  width:28px;height:28px;border-radius:var(--r8);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--m);font-size:13px;
-  transition:all .12s;border:none;background:none;
-}
+/* ─── MAIN ───────────────────────────────────── */
+.main{display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:60px;border-bottom:1px solid var(--b);display:flex;align-items:center;padding:0 32px;gap:16px;flex-shrink:0;background:rgba(7,11,24,.85);backdrop-filter:blur(12px)}
+.topbar-crumb{flex:1;display:flex;align-items:center;gap:8px;font-size:15px;color:var(--m)}
+.topbar-crumb .sep{color:var(--b)}
+.topbar-crumb .cur{color:var(--w);font-weight:600}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.badge{font-size:13px;font-weight:700;padding:6px 14px;border-radius:20px}
+.badge-gold{background:var(--goldbg);border:1px solid var(--goldbr);color:var(--gold)}
+.badge-red{background:rgba(204,0,0,.08);border:1px solid rgba(204,0,0,.2);color:var(--redl)}
+.tb-btn{width:36px;height:36px;border:none;background:none;border-radius:9px;color:var(--m);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .tb-btn:hover{background:rgba(255,255,255,.05);color:var(--t)}
+.content{flex:1;overflow:hidden;display:flex}
 
-.content{flex:1;overflow:hidden}
+/* ─── VIEWS ──────────────────────────────────── */
+.view{display:none;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
+.view.active{display:flex;flex-direction:column}
 
-/* ── VIEWS ─────────────────────────────────────────────────── */
-.view{display:none;height:100%;overflow-y:auto}
-.view.active{display:block}
-.view::-webkit-scrollbar{width:4px}
-.view::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px}
+/* ─── BUTTONS ────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:12px;font-family:var(--fb);font-size:16px;font-weight:600;cursor:pointer;border:none;transition:all .2s;letter-spacing:.01em}
+.btn-lg{padding:18px 36px;font-size:18px;border-radius:14px}
+.btn-gold{background:linear-gradient(135deg,#C9A84C,#A87A30);color:#040810;box-shadow:0 4px 20px rgba(201,168,76,.25)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,168,76,.35)}
+.btn-ghost{background:rgba(255,255,255,.05);border:1px solid var(--b);color:var(--t)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:var(--bl);color:var(--w)}
+.btn-red{background:linear-gradient(135deg,#CC0000,#990000);color:#fff}
+.btn-red:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(204,0,0,.3)}
+.btn-green{background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(34,197,94,.3)}
+.btn:disabled{opacity:.35;cursor:default;transform:none !important;box-shadow:none !important}
 
-/* ══════════════════════════════════════════════════════════════
-   HOME VIEW
-══════════════════════════════════════════════════════════════ */
-#v-home{padding:32px}
+/* ══════════════════════════════════════════════
+   HOME
+══════════════════════════════════════════════ */
+#v-home{padding:52px 56px;gap:48px}
 
-.home-hero{
-  background:var(--bg2);border:1px solid var(--b);border-radius:var(--r24);
-  padding:36px 40px;margin-bottom:28px;
-  display:grid;grid-template-columns:1fr 180px;gap:32px;align-items:center;
-  position:relative;overflow:hidden;
-}
-.home-hero::before{
-  content:'';position:absolute;top:0;right:0;bottom:0;width:60%;
-  background:linear-gradient(135deg,transparent 30%,rgba(201,168,76,.04),rgba(204,0,0,.03),rgba(201,168,76,.03));
-  pointer-events:none;
-}
-.home-hero-eyebrow{
-  font-family:var(--fm);font-size:9px;color:var(--gold);
-  letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;
-}
-.home-hero-title{
-  font-family:var(--fd);font-size:36px;font-weight:400;
-  color:var(--w);line-height:1.15;margin-bottom:12px;letter-spacing:-.01em;
-}
-.home-hero-title em{color:var(--gold);font-style:italic}
-.home-hero-sub{font-size:13px;color:var(--ml);line-height:1.7;max-width:520px;margin-bottom:22px}
-.home-hero-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.btn{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:9px 18px;border-radius:var(--r12);
-  font-size:12px;font-weight:700;cursor:pointer;
-  border:none;font-family:var(--fb);transition:all .2s;
-  text-decoration:none;
-}
-.btn-gold{background:var(--gold);color:var(--k)}
-.btn-gold:hover{background:var(--goldl);transform:translateY(-1px);box-shadow:0 8px 24px rgba(201,168,76,.2)}
-.btn-ghost{background:transparent;color:var(--ml);border:1px solid var(--b)}
-.btn-ghost:hover{border-color:var(--bl);color:var(--t)}
-.btn-red{background:var(--red);color:var(--w)}
-.btn-red:hover{background:var(--redl);transform:translateY(-1px)}
+.hero{display:grid;grid-template-columns:1fr 260px;gap:40px;align-items:center}
+.hero-eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.hero-title{font-family:var(--fd);font-size:72px;font-weight:900;color:var(--w);line-height:1.02;margin-bottom:20px}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-sub{font-size:20px;color:var(--ml);font-weight:300;line-height:1.7;max-width:560px;margin-bottom:32px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:flex;flex-direction:column;gap:14px}
+.hstat{background:rgba(255,255,255,.03);border:1px solid var(--b);border-radius:16px;padding:22px;text-align:center}
+.hstat-n{font-family:var(--fd);font-size:44px;font-weight:700;color:var(--gold);display:block;line-height:1}
+.hstat-l{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ml);margin-top:6px}
 
-.home-hero-stats{display:flex;flex-direction:column;gap:10px}
-.hhs{
-  background:rgba(255,255,255,.03);border:1px solid var(--b);
-  border-radius:var(--r12);padding:14px;text-align:center;
-}
-.hhs-num{
-  font-family:var(--fd);font-size:28px;font-weight:600;
-  color:var(--w);display:block;line-height:1;
-}
-.hhs-label{font-size:9px;color:var(--m);letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
-
-/* Section header */
-.section-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:16px;
-}
-.section-title{
-  font-size:11px;font-weight:700;color:var(--ml);
-  letter-spacing:.15em;text-transform:uppercase;
-}
-.section-link{
-  font-size:11px;color:var(--gold);cursor:pointer;
-  text-decoration:none;transition:color .12s;
-}
-.section-link:hover{color:var(--goldl)}
-
-/* Continue card */
-.continue-card{
-  background:var(--bg2);border:1px solid var(--b);border-radius:var(--r16);
-  padding:20px;display:flex;align-items:center;gap:16px;
-  cursor:pointer;transition:all .2s;margin-bottom:28px;
-  position:relative;overflow:hidden;
-}
-.continue-card::after{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:var(--gold);
-}
-.continue-card:hover{border-color:var(--goldbr);background:rgba(201,168,76,.03);transform:translateY(-1px)}
-.cc-icon{
-  width:48px;height:48px;border-radius:var(--r12);
-  background:var(--goldbg);border:1px solid var(--goldbr);
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;flex-shrink:0;
-}
+.continue-card{background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.04));border:1px solid var(--goldbr);border-radius:20px;padding:32px 36px;display:flex;align-items:center;gap:28px;cursor:pointer;transition:all .25s}
+.continue-card:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(201,168,76,.15);border-color:var(--gold)}
+.cc-icon{font-size:44px;flex-shrink:0}
 .cc-body{flex:1}
-.cc-eyebrow{font-size:9px;color:var(--gold);font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px}
-.cc-title{font-size:15px;font-weight:700;color:var(--w);margin-bottom:4px}
-.cc-meta{font-size:11px;color:var(--m)}
-.cc-progress{margin-top:10px}
-.cc-progress-bar{height:3px;background:var(--b);border-radius:2px;overflow:hidden}
-.cc-progress-fill{height:100%;background:var(--gold);border-radius:2px;width:35%}
-.cc-action{
-  width:36px;height:36px;border-radius:var(--r8);
-  background:var(--gold);display:flex;align-items:center;justify-content:center;
-  color:var(--k);font-size:16px;font-weight:800;flex-shrink:0;
-}
+.cc-eye{font-family:var(--fm);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.cc-title{font-size:26px;font-weight:700;color:var(--w);margin-bottom:6px}
+.cc-meta{font-size:16px;color:var(--m);margin-bottom:16px}
+.cc-bar{height:5px;background:rgba(201,168,76,.15);border-radius:3px;overflow:hidden}
+.cc-fill{height:100%;width:32%;background:var(--gold);border-radius:3px}
+.cc-arrow{font-size:32px;color:var(--gold)}
 
-/* Grid layout */
-.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
-.home-card{
-  background:var(--bg2);border:1px solid var(--b);border-radius:var(--r16);
-  padding:22px;
-}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.hcard{background:rgba(255,255,255,.02);border:1px solid var(--b);border-radius:20px;padding:30px 32px}
+.hcard-title{font-size:20px;font-weight:700;color:var(--w);margin-bottom:22px;display:flex;align-items:center;justify-content:space-between}
+.hcard-link{font-size:15px;color:var(--gold);font-weight:600;cursor:pointer}
+.hcard-link:hover{color:var(--goldl)}
 
-/* Next lesson list */
-.next-lesson-item{
-  display:flex;align-items:center;gap:12px;
-  padding:10px 12px;border-radius:var(--r12);
-  border:1px solid var(--b);background:var(--bg3);
-  margin-bottom:6px;cursor:pointer;transition:all .15s;
-}
-.next-lesson-item:hover{border-color:var(--goldbr);background:var(--goldbg)}
-.nli-num{
-  width:28px;height:28px;border-radius:var(--r8);
-  background:var(--goldbg);border:1px solid var(--goldbr);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--fm);font-size:10px;color:var(--gold);flex-shrink:0;
-}
-.nli-body{flex:1;min-width:0}
-.nli-title{font-size:12px;font-weight:600;color:var(--w);margin-bottom:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nli-meta{font-size:10px;color:var(--m)}
-.nli-arrow{color:var(--m);font-size:12px}
+.nli{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:all .15s}
+.nli:last-child{border:none}
+.nli:hover .nli-title{color:var(--gold)}
+.nli-badge{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--ml);flex-shrink:0;font-family:var(--fm)}
+.nli-badge.done{background:var(--greenbg);border-color:var(--greenbr);color:var(--green)}
+.nli-badge.next{background:var(--goldbg);border-color:var(--goldbr);color:var(--gold)}
+.nli-body{flex:1}
+.nli-title{font-size:17px;font-weight:600;color:var(--t);transition:color .15s}
+.nli-meta{font-size:14px;color:var(--m);margin-top:2px}
+.nli-arr{color:var(--m);font-size:22px}
 
-/* Level progress bars */
-.level-row{margin-bottom:14px}
-.lr-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
-.lr-label{font-size:12px;font-weight:600;color:var(--w)}
-.lr-count{font-size:10px;color:var(--m);font-family:var(--fm)}
-.lr-track{height:4px;background:var(--b);border-radius:2px;overflow:hidden}
-.lr-fill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.lr{margin-bottom:16px}
+.lr-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.lr-label{font-size:16px;font-weight:600;color:var(--t)}
+.lr-count{font-family:var(--fm);font-size:12px;color:var(--m)}
+.lr-track{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.lr-fill{height:100%;border-radius:3px;transition:width .5s ease}
 
-/* Masters grid */
-.masters-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.master-card{
-  background:var(--bg3);border:1px solid var(--b);border-radius:var(--r12);
-  padding:14px;cursor:pointer;transition:all .15s;
-}
-.master-card:hover{border-color:var(--goldbr);background:var(--goldbg)}
-.mc-name{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.mc-principle{font-size:12px;font-weight:600;color:var(--w);line-height:1.4;margin-bottom:4px}
-.mc-detail{font-size:11px;color:var(--m);line-height:1.5}
+/* ══════════════════════════════════════════════
+   CURRICULUM
+══════════════════════════════════════════════ */
+#v-library{padding:52px 56px 40px;flex-direction:column;gap:0}
 
-/* ══════════════════════════════════════════════════════════════
-   LIBRARY / CURRICULUM VIEW
-══════════════════════════════════════════════════════════════ */
-#v-library{
-  display:none;height:100%;overflow:hidden;
-}
-#v-library.active{display:grid;grid-template-columns:1fr 340px}
+.lib-hdr{margin-bottom:32px}
+.lib-title{font-family:var(--fd);font-size:60px;font-weight:700;color:var(--w);line-height:1}
+.lib-title em{color:var(--gold);font-style:italic}
+.lib-sub{font-size:18px;color:var(--ml);margin-top:10px;font-weight:300}
 
-.lib-list{
-  overflow-y:auto;padding:24px;border-right:1px solid var(--b);
-}
-.lib-list::-webkit-scrollbar{width:3px}
-.lib-list::-webkit-scrollbar-thumb{background:var(--b)}
+.lvl-tabs{display:flex;gap:10px;margin-bottom:36px;flex-wrap:wrap}
+.lvl-tab{padding:10px 24px;border-radius:24px;font-size:15px;font-weight:700;letter-spacing:.04em;cursor:pointer;border:1px solid var(--b);background:none;color:var(--m);font-family:var(--fb);transition:all .2s}
+.lvl-tab:hover{color:var(--t);border-color:var(--bl)}
+.lvl-tab.active{color:#040810;border-color:transparent}
 
-.lib-header{
-  display:flex;align-items:center;gap:12px;
-  margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--b);
-  flex-wrap:wrap;
-}
-.lib-header-title{font-family:var(--fd);font-size:24px;font-weight:400;color:var(--w)}
-.lib-header-title em{color:var(--gold);font-style:italic}
+/* Level header */
+.lvl-section-hdr{display:flex;align-items:center;gap:18px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--b)}
+.lvl-badge{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;letter-spacing:.04em}
+.lvl-info{flex:1}
+.lvl-name{font-size:28px;font-weight:700;color:var(--w)}
+.lvl-sub{font-size:16px;color:var(--m);margin-top:2px}
+.lvl-cnt{font-family:var(--fm);font-size:13px;color:var(--m)}
 
-.lib-level-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
-.level-filter{
-  padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;
-  cursor:pointer;transition:all .15s;border:1px solid var(--b);
-  background:none;color:var(--m);font-family:var(--fm);letter-spacing:.05em;
-}
-.level-filter:hover{color:var(--t);border-color:var(--bl)}
-.level-filter.active{color:var(--k);border-color:transparent}
+/* Accordion lessons */
+.lesson-list{display:flex;flex-direction:column;gap:3px;margin-bottom:48px}
 
-.lib-section{margin-bottom:28px}
-.lib-section-hdr{
-  display:flex;align-items:center;gap:10px;
-  margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--b);
-}
-.lib-section-badge{
-  padding:3px 10px;border-radius:20px;font-size:10px;
-  font-weight:700;font-family:var(--fm);border:1px solid;
-}
-.lib-section-title{font-size:14px;font-weight:600;color:var(--w)}
-.lib-section-sub{font-size:11px;color:var(--m)}
-.lib-section-count{margin-left:auto;font-size:10px;color:var(--m);font-family:var(--fm)}
+.lrow{border-radius:14px;overflow:hidden}
+.lrow-hdr{display:flex;align-items:center;gap:18px;padding:20px 26px;cursor:pointer;transition:all .15s;background:rgba(255,255,255,.025);border:1px solid transparent}
+.lrow-hdr:hover{background:rgba(255,255,255,.04);border-color:var(--bl)}
+.lrow.open .lrow-hdr{background:rgba(201,168,76,.07);border-color:var(--goldbr);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.lrow.locked .lrow-hdr{opacity:.38;cursor:default}
+.lrow.locked .lrow-hdr:hover{background:rgba(255,255,255,.025);border-color:transparent}
 
-.lesson-card{
-  display:flex;align-items:flex-start;gap:14px;
-  padding:14px;border-radius:var(--r12);border:1px solid var(--b);
-  background:var(--bg2);margin-bottom:6px;cursor:pointer;
-  transition:all .15s;position:relative;
-}
-.lesson-card:hover{border-color:var(--goldbr);background:rgba(201,168,76,.03);transform:translateX(2px)}
-.lesson-card.selected{border-color:var(--gold);background:var(--goldbg)}
-.lesson-card.locked{opacity:.45;cursor:default}
-.lesson-card.locked:hover{border-color:var(--b);background:var(--bg2);transform:none}
-.lesson-card.done .lc-num-box{background:var(--greenbg);border-color:var(--greenbr);color:var(--green)}
-.lc-num-box{
-  width:36px;height:36px;border-radius:var(--r8);
-  background:var(--bg3);border:1px solid var(--b);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--fm);font-size:11px;color:var(--m);flex-shrink:0;transition:all .15s;
-}
-.lesson-card.selected .lc-num-box{background:var(--goldbg);border-color:var(--goldbr);color:var(--gold)}
-.lc-body{flex:1;min-width:0}
-.lc-title{font-size:13px;font-weight:600;color:var(--w);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lc-meta-row{display:flex;gap:8px;align-items:center}
-.lc-level{font-size:9px;font-weight:700;color:var(--gold);font-family:var(--fm);letter-spacing:.08em}
-.lc-dur{font-size:10px;color:var(--m)}
-.lc-desc{font-size:11px;color:var(--m);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lc-lock{color:var(--m);font-size:12px;flex-shrink:0;align-self:center}
-.lc-done{color:var(--green);font-size:11px;font-weight:700;flex-shrink:0;align-self:center}
+.lrow-num{font-family:var(--fm);font-size:13px;color:var(--m);width:30px;text-align:right;flex-shrink:0}
+.lrow-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.lrow-icon.done{background:var(--greenbg);border:1px solid var(--greenbr);color:var(--green)}
+.lrow-icon.next{background:var(--goldbg);border:1px solid var(--goldbr);color:var(--gold)}
+.lrow-icon.locked{background:rgba(255,255,255,.03);border:1px solid var(--b);color:var(--m);font-size:13px}
+.lrow-text{flex:1}
+.lrow-title{font-size:19px;font-weight:600;color:var(--w);margin-bottom:2px}
+.lrow-desc{font-size:15px;color:var(--ml)}
+.lrow-dur{font-family:var(--fm);font-size:13px;color:var(--m);flex-shrink:0}
+.lrow-chev{color:var(--m);transition:transform .3s;font-size:20px;flex-shrink:0}
+.lrow.open .lrow-chev{transform:rotate(180deg);color:var(--gold)}
 
-/* Lesson detail panel */
-.lib-detail{
-  overflow-y:auto;background:var(--bg2);
-  display:flex;flex-direction:column;
-}
-.lib-detail::-webkit-scrollbar{width:3px}
-.lib-detail::-webkit-scrollbar-thumb{background:var(--b)}
+/* Expanded content */
+.lrow-expand{display:none;background:rgba(201,168,76,.04);border:1px solid var(--goldbr);border-top:none;border-bottom-left-radius:14px;border-bottom-right-radius:14px}
+.lrow.open .lrow-expand{display:block}
+.le-grid{padding:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px}
+.le-col-label{font-family:var(--fm);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:500}
+.le-goal{display:flex;gap:12px;margin-bottom:12px;font-size:16px;color:var(--t);line-height:1.5}
+.le-goal::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:2px}
+.le-phrase{padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;margin-bottom:10px}
+.le-de{font-size:17px;font-weight:600;color:var(--w)}
+.le-en{font-size:14px;color:var(--m);margin-top:4px;font-style:italic}
+.le-chunk{display:flex;gap:12px;margin-bottom:12px;font-size:16px;color:var(--t);line-height:1.5}
+.le-chunk::before{content:'»';color:var(--gold);font-weight:700;flex-shrink:0}
+.le-mnemonic{background:rgba(201,168,76,.07);border:1px solid var(--goldbr);border-radius:12px;padding:16px;font-size:16px;color:var(--goldl);line-height:1.65;font-style:italic;margin-top:8px}
+.le-footer{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding-top:4px;border-top:1px solid var(--goldbr)}
 
-.ld-empty{
-  flex:1;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;padding:40px;color:var(--m);
-}
-.ld-empty-icon{font-size:48px;margin-bottom:16px}
-.ld-empty-title{font-size:14px;font-weight:600;color:var(--ml);margin-bottom:6px}
-.ld-empty-sub{font-size:12px;color:var(--m);line-height:1.6}
+/* ══════════════════════════════════════════════
+   LESSON DEMO
+══════════════════════════════════════════════ */
+#v-demo{flex-direction:row;overflow:hidden}
 
-.ld-body{padding:28px;flex:1}
-.ld-eyebrow{font-size:9px;font-weight:700;color:var(--m);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
-.ld-title{font-family:var(--fd);font-size:26px;font-weight:400;color:var(--w);line-height:1.3;margin-bottom:8px}
-.ld-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
-.ld-badge{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;font-family:var(--fm);border:1px solid}
-.ld-section{margin-bottom:20px}
-.ld-section-label{font-size:9px;font-weight:700;color:var(--m);letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
-.ld-goal{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
-.ld-goal-dot{
-  width:16px;height:16px;border-radius:50%;background:var(--greenbg);
-  border:1px solid var(--greenbr);display:flex;align-items:center;justify-content:center;
-  font-size:8px;color:var(--green);flex-shrink:0;margin-top:1px;
-}
-.ld-goal-text{font-size:12px;color:var(--t);line-height:1.5}
-.ld-phrase{
-  background:var(--bg3);border:1px solid var(--b);border-radius:var(--r8);
-  padding:10px 14px;margin-bottom:5px;
-  display:flex;justify-content:space-between;align-items:center;gap:8px;
-}
-.ld-phrase-de{font-size:13px;font-weight:600;color:var(--w)}
-.ld-phrase-en{font-size:11px;color:var(--m);font-style:italic;text-align:right}
-.ld-chunk{
-  background:var(--purplebg);border:1px solid var(--purplebr);
-  border-radius:var(--r8);padding:10px 14px;margin-bottom:5px;
-  font-size:12px;color:var(--t);line-height:1.5;
-}
-.ld-mnemonic{
-  background:var(--goldbg);border:1px solid var(--goldbr);
-  border-radius:var(--r12);padding:14px;
-  font-size:12px;color:var(--t);line-height:1.6;
-}
-.ld-mnemonic-label{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:.15em;margin-bottom:6px}
-.ld-start{
-  width:100%;background:var(--gold);color:var(--k);
-  border:none;border-radius:var(--r12);padding:14px;
-  font-size:14px;font-weight:800;cursor:pointer;
-  font-family:var(--fb);transition:all .2s;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  margin-top:4px;
-}
-.ld-start:hover{background:var(--goldl);transform:translateY(-1px);box-shadow:0 8px 32px rgba(201,168,76,.25)}
-.ld-start.locked{background:var(--b);color:var(--m);cursor:default;transform:none;box-shadow:none}
-.ld-footer{padding:20px 28px;border-top:1px solid var(--b)}
+/* Step nav */
+.demo-nav{display:flex;align-items:stretch;border-bottom:1px solid var(--b);padding:0 40px;background:rgba(7,11,24,.7);backdrop-filter:blur(12px);flex-shrink:0;overflow-x:auto;scrollbar-width:none}
+.demo-nav::-webkit-scrollbar{display:none}
+.dnav-step{display:flex;align-items:center;gap:10px;height:58px;padding:0 20px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;color:var(--m);font-size:15px;font-weight:500;white-space:nowrap;flex-shrink:0}
+.dnav-step:hover{color:var(--t)}
+.dnav-step.active{color:var(--gold);border-bottom-color:var(--gold)}
+.dnav-step.done{color:var(--green)}
+.dnav-dot{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:var(--fm);flex-shrink:0;transition:all .2s}
+.dnav-step.active .dnav-dot{background:var(--gold);color:#040810}
+.dnav-step.done .dnav-dot{background:var(--green);color:#fff}
+.dnav-sep{width:24px;height:1px;background:var(--b);flex-shrink:0;align-self:center}
 
-/* ══════════════════════════════════════════════════════════════
-   DEMO / LESSON VIEW (interactive in-browser lesson)
-══════════════════════════════════════════════════════════════ */
-#v-demo{
-  display:none;height:100%;overflow:hidden;
-}
-#v-demo.active{
-  display:grid;grid-template-columns:1fr 320px;
-}
+/* Main stage */
+.demo-wrap{display:flex;flex:1;overflow:hidden}
+.demo-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:64px;position:relative;overflow:hidden}
+.demo-stage::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 45% at 50% 40%,rgba(201,168,76,.05),transparent 65%);pointer-events:none}
 
-.demo-stage{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px;position:relative;overflow:hidden;
-  background:radial-gradient(ellipse at 50% 30%,rgba(201,168,76,.04) 0%,transparent 60%);
-}
+/* Each step */
+.dstep{display:none;flex-direction:column;align-items:center;text-align:center;max-width:800px;width:100%;gap:36px;animation:fadeUp .4s ease}
+.dstep.active{display:flex}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-.demo-phone{
-  width:320px;
-  background:var(--bg4);
-  border-radius:36px;
-  border:1.5px solid rgba(255,255,255,.08);
-  box-shadow:0 0 0 1px rgba(0,0,0,.5),0 40px 80px rgba(0,0,0,.6),0 0 80px rgba(201,168,76,.06);
-  overflow:hidden;
-  position:relative;
-}
-.demo-phone-notch{
-  height:26px;background:var(--bg4);
-  display:flex;align-items:center;justify-content:center;
-}
-.demo-phone-pill{
-  width:72px;height:22px;background:#0f0f0f;
-  border-radius:0 0 14px 14px;border:1px solid rgba(255,255,255,.05);
-}
-.demo-phone-flag{
-  height:3px;
-  background:linear-gradient(90deg,#111 33.3%,var(--red) 33.3%,var(--red) 66.6%,var(--gold) 66.6%);
-  opacity:.7;
-}
-.demo-phone-top{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 18px 8px;
-}
-.demo-back{color:var(--gold);font-size:20px;cursor:pointer;font-weight:300}
-.demo-lesson-name{font-size:11px;font-weight:700;color:var(--w)}
-.demo-act-label{font-size:7px;font-weight:800;color:var(--m);letter-spacing:2px;text-align:center}
-.demo-xp{color:var(--gold);font-size:11px;font-weight:700;font-family:var(--fm)}
-.demo-prog-track{height:2px;background:var(--bg3);margin:0 18px 4px}
-.demo-prog-fill{height:100%;background:var(--gold);transition:width .5s ease}
+.step-badge{font-family:var(--fm);font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--m);padding:7px 16px;border:1px solid var(--b);border-radius:24px}
+.step-situation{font-size:16px;color:var(--ml);font-style:italic}
+.step-prompt{font-size:26px;font-weight:400;color:var(--t);line-height:1.5}
 
-.demo-screen{
-  min-height:460px;padding:20px 20px 16px;
-  display:flex;flex-direction:column;
-}
+/* Big phrase card */
+.phrase-card{background:rgba(255,255,255,.03);border:1px solid var(--bl);border-radius:24px;padding:44px 52px;width:100%;cursor:pointer;transition:all .25s}
+.phrase-card:hover{border-color:var(--gold);background:rgba(201,168,76,.06);transform:translateY(-2px)}
+.phrase-de{font-family:var(--fd);font-size:52px;font-weight:700;color:var(--w);line-height:1.2;margin-bottom:20px}
+.phrase-audio{display:flex;align-items:center;justify-content:center;gap:14px;color:var(--m);font-size:15px}
+.audiobars{display:flex;align-items:center;gap:4px;height:22px}
+.abar{width:4px;border-radius:2px;background:var(--gold);animation:abpulse 1.2s ease-in-out infinite}
+.abar:nth-child(1){height:8px}.abar:nth-child(2){height:18px;animation-delay:.1s}.abar:nth-child(3){height:12px;animation-delay:.2s}.abar:nth-child(4){height:22px;animation-delay:.3s}.abar:nth-child(5){height:10px;animation-delay:.4s}
+@keyframes abpulse{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.4)}}
 
-/* Step styles */
-.ds{display:none;flex:1;flex-direction:column}
-.ds.active{display:flex;animation:fadeUp .35s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.tap-hint{font-size:17px;color:var(--m);font-style:italic}
 
-/* Hook step */
-.ds-situation{font-size:11px;color:var(--m);text-align:center;font-style:italic;margin-bottom:6px}
-.ds-prompt{font-size:17px;font-weight:700;color:var(--w);text-align:center;line-height:1.4;margin-bottom:28px}
-.ds-phrase-card{
-  background:var(--bg3);border:1px solid var(--goldbr);
-  border-radius:16px;padding:22px;text-align:center;margin-bottom:16px;
-  position:relative;overflow:hidden;
-}
-.ds-phrase-card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.06),transparent 60%);
-}
-.ds-phrase-de{font-size:20px;font-weight:800;color:var(--w);text-align:center;line-height:1.4;margin-bottom:12px;position:relative}
-.ds-audio-row{display:flex;align-items:center;justify-content:center;gap:6px;position:relative}
-.ds-audio-text{color:var(--gold);font-size:11px}
-.audio-waves{display:inline-flex;gap:2px;align-items:flex-end}
-.aw{width:3px;background:var(--gold);border-radius:2px;animation:aw 1.1s ease-in-out infinite alternate}
-.aw:nth-child(1){height:5px;animation-delay:0s}
-.aw:nth-child(2){height:10px;animation-delay:.1s}
-.aw:nth-child(3){height:15px;animation-delay:.2s}
-.aw:nth-child(4){height:10px;animation-delay:.3s}
-.aw:nth-child(5){height:5px;animation-delay:.4s}
-@keyframes aw{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
+.trans-card{background:rgba(255,255,255,.03);border:1px solid var(--bl);border-radius:16px;padding:22px 30px;width:100%;text-align:left}
+.trans-label{font-family:var(--fm);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:10px}
+.trans-text{font-size:26px;color:var(--t);font-weight:400}
 
-.ds-tap-hint{color:var(--m);font-size:12px;text-align:center;font-style:italic;margin-bottom:16px;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
-.ds-translation{
-  background:rgba(201,168,76,.07);border:1px solid var(--goldbr);
-  border-radius:12px;padding:14px;text-align:center;margin-bottom:14px;
-}
-.ds-trans-label{font-size:8px;font-weight:800;color:var(--gold);letter-spacing:1.5px;margin-bottom:5px}
-.ds-trans-text{font-size:16px;color:var(--gold);font-style:italic}
+.step-actions{display:flex;gap:14px;justify-content:center;width:100%}
 
-/* Noticing step */
-.ds-look{font-size:8px;font-weight:800;color:var(--m);letter-spacing:2px;margin-bottom:8px}
-.ds-notice-q{font-size:14px;font-weight:700;color:var(--w);line-height:1.4;margin-bottom:14px}
-.ds-phrase-row{
-  background:var(--bg3);border:1px solid var(--b);border-radius:8px;
-  padding:10px 14px;margin-bottom:6px;font-size:13px;color:var(--t);
-}
-.ds-phrase-row .hl{color:var(--gold);font-weight:800}
-.ds-choices{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-.ds-choice{
-  background:var(--bg3);border:1px solid var(--b);border-radius:10px;
-  padding:10px 14px;font-size:12px;color:var(--t);cursor:pointer;transition:all .12s;
-}
-.ds-choice:hover{border-color:var(--goldbr);background:var(--goldbg)}
-.ds-choice.correct{border-color:var(--goldbr);background:var(--goldbg);color:var(--gold)}
-.ds-choice.wrong{border-color:var(--redbr);background:var(--redbg);color:var(--red)}
-.ds-insight{
-  background:var(--goldbg);border:1px solid var(--goldbr);
-  border-radius:12px;padding:14px;margin-top:10px;
-  animation:fadeUp .3s ease;
-}
-.ds-insight-title{font-size:13px;font-weight:800;color:var(--gold);margin-bottom:4px}
-.ds-insight-text{font-size:11px;color:var(--t);line-height:1.5}
+/* Noticing */
+.notice-q{font-family:var(--fd);font-size:36px;font-weight:700;color:var(--w);line-height:1.3;max-width:640px}
+.notice-phrases{display:flex;flex-direction:column;gap:12px;width:100%}
+.notice-phrase{padding:16px 22px;background:rgba(255,255,255,.03);border:1px solid var(--b);border-radius:13px;font-size:20px;color:var(--t);text-align:left}
+.nph-hl{color:var(--gold);font-weight:800;font-size:24px}
+.notice-choices{display:flex;flex-direction:column;gap:12px;width:100%}
+.nc{padding:18px 24px;background:rgba(255,255,255,.03);border:1px solid var(--b);border-radius:13px;font-size:17px;color:var(--t);cursor:pointer;text-align:left;font-family:var(--fb);transition:all .2s;font-weight:500;line-height:1.4}
+.nc:hover{background:rgba(255,255,255,.06);border-color:var(--bl);color:var(--w)}
+.nc.correct{background:var(--greenbg);border-color:var(--greenbr);color:var(--green)}
+.nc.wrong{background:rgba(204,0,0,.08);border-color:rgba(204,0,0,.2);color:var(--redl)}
+.insight{background:rgba(201,168,76,.08);border:1px solid var(--goldbr);border-radius:16px;padding:26px 30px;width:100%;text-align:left}
+.insight-title{font-size:22px;font-weight:700;color:var(--gold);margin-bottom:10px}
+.insight-text{font-size:17px;color:var(--t);line-height:1.65}
 
-/* Scramble */
-.ds-build-label{font-size:8px;font-weight:800;color:var(--green);letter-spacing:2px;margin-bottom:8px}
-.ds-build-q{font-size:14px;font-weight:700;color:var(--w);line-height:1.4;margin-bottom:14px}
-.ds-drop-zone{
-  min-height:48px;border:1.5px dashed var(--b);border-radius:10px;
-  padding:10px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;
-  transition:border-color .15s;
-}
-.ds-drop-zone.has-tiles{border-color:var(--goldbr)}
-.ds-drop-hint{color:var(--m);font-size:11px;font-style:italic;margin:auto}
-.ds-tiles{display:flex;flex-wrap:wrap;gap:6px}
-.ds-tile{
-  background:var(--bg3);border:1px solid var(--bl);
-  border-radius:7px;padding:6px 10px;
-  font-size:12px;font-weight:600;color:var(--t);
-  cursor:pointer;transition:all .12s;user-select:none;
-}
-.ds-tile:hover{border-color:var(--goldbr);color:var(--gold)}
-.ds-tile.placed{background:var(--goldbg);border-color:var(--goldbr);color:var(--gold)}
+/* Build */
+.build-q{font-size:22px;color:var(--ml);font-style:italic;font-weight:300}
+.drop-zone{min-height:70px;border:2px dashed var(--bl);border-radius:16px;padding:16px 24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;width:100%;transition:all .2s}
+.drop-zone.filled{border-style:solid;border-color:var(--goldbr);background:var(--goldbg)}
+.dz-hint{color:var(--m);font-size:17px;font-style:italic}
+.tiles{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%}
+.tile{padding:13px 22px;background:rgba(255,255,255,.05);border:1px solid var(--b);border-radius:12px;font-family:var(--fd);font-size:22px;font-weight:600;color:var(--t);cursor:pointer;transition:all .15s}
+.tile:hover{background:var(--goldbg);border-color:var(--goldbr);color:var(--gold)}
+.tile.used{opacity:.2;pointer-events:none}
+.tile.placed{background:var(--goldbg);border-color:var(--goldbr);color:var(--gold);cursor:pointer}
 
-/* Continue button */
-.ds-continue{
-  width:100%;background:var(--gold);color:var(--k);
-  border:none;border-radius:10px;padding:11px;
-  font-size:13px;font-weight:800;cursor:pointer;
-  font-family:var(--fb);transition:all .15s;margin-top:auto;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-}
-.ds-continue:hover{background:var(--goldl)}
-.ds-continue:disabled{background:var(--b);color:var(--m);cursor:default}
-.ds-continue.red{background:var(--red);color:var(--w)}
-.ds-continue.red:hover{background:var(--redl)}
-.ds-continue.green{background:var(--green);color:var(--k)}
-
-/* Speak intro */
-.ds-speak-emoji{font-size:48px;text-align:center;margin-bottom:16px}
-.ds-speak-title{font-size:18px;font-weight:800;color:var(--w);text-align:center;margin-bottom:12px}
-.ds-speak-body{font-size:12px;color:var(--ml);text-align:center;line-height:1.7;margin-bottom:20px}
-.ds-speak-body em{color:var(--gold);font-style:normal;font-weight:600}
+/* Speak */
+.speak-em{font-size:64px}
+.speak-title{font-family:var(--fd);font-size:48px;font-weight:900;color:var(--w);line-height:1}
+.speak-body{font-size:20px;color:var(--ml);line-height:1.8;font-weight:300;max-width:540px}
+.speak-body em{color:var(--w);font-style:italic;font-weight:600}
 
 /* Complete */
-.ds-complete{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ds-complete-star{font-size:52px;margin-bottom:12px}
-.ds-complete-title{font-size:20px;font-weight:800;color:var(--w);text-align:center;margin-bottom:8px}
-.ds-complete-xp{font-size:32px;font-weight:900;color:var(--gold);font-family:var(--fd);margin-bottom:6px}
-.ds-complete-msg{font-size:12px;color:var(--m);text-align:center;line-height:1.6;max-width:220px}
-
-/* Phone bottom */
-.demo-phone-bottom{
-  height:24px;display:flex;align-items:center;justify-content:center;
-  padding-bottom:6px;
-}
-.demo-home-indicator{width:90px;height:3px;border-radius:2px;background:rgba(255,255,255,.12)}
+.comp-star{font-size:80px;animation:bounce .8s ease}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.comp-title{font-family:var(--fd);font-size:60px;font-weight:900;color:var(--w);line-height:1.05}
+.comp-title em{color:var(--gold);font-style:italic}
+.comp-xp{background:linear-gradient(135deg,var(--gold),#A87A30);color:#040810;font-size:22px;font-weight:800;padding:12px 32px;border-radius:28px;font-family:var(--fm)}
+.comp-msg{font-size:19px;color:var(--ml);line-height:1.7;font-weight:300;max-width:500px}
 
 /* Demo sidebar */
-.demo-sidebar{
-  border-left:1px solid var(--b);background:var(--bg2);
-  overflow-y:auto;padding:24px;
-}
-.demo-sidebar::-webkit-scrollbar{width:3px}
-.dsb-title{font-family:var(--fd);font-size:20px;font-weight:400;color:var(--w);margin-bottom:4px}
-.dsb-title em{color:var(--gold);font-style:italic}
-.dsb-sub{font-size:12px;color:var(--m);margin-bottom:20px;line-height:1.6}
-.dsb-section{margin-bottom:20px}
-.dsb-section-label{font-size:9px;font-weight:700;color:var(--m);letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
-.step-indicator{
-  display:flex;flex-direction:column;gap:3px;
-}
-.si-item{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;border-radius:var(--r8);
-  font-size:11px;color:var(--m);transition:all .15s;cursor:pointer;
-  border:1px solid transparent;
-}
-.si-item:hover{background:rgba(255,255,255,.02);color:var(--t)}
-.si-item.active{background:var(--goldbg);border-color:var(--goldbr);color:var(--gold)}
-.si-item.done{color:var(--green)}
-.si-dot{
-  width:20px;height:20px;border-radius:50%;
-  background:var(--bg3);border:1px solid var(--b);
-  display:flex;align-items:center;justify-content:center;
-  font-size:9px;font-weight:700;flex-shrink:0;transition:all .15s;
-}
-.si-item.active .si-dot{background:var(--goldbg);border-color:var(--goldbr);color:var(--gold)}
-.si-item.done .si-dot{background:var(--greenbg);border-color:var(--greenbr);color:var(--green)}
-.si-label{flex:1;font-weight:500}
-.si-time{font-size:9px;font-family:var(--fm)}
-
-.principle-card{
-  background:var(--bg3);border:1px solid var(--b);border-radius:var(--r12);
-  padding:14px;margin-bottom:6px;
-}
-.pc-master{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
-.pc-text{font-size:11px;color:var(--t);line-height:1.5}
-
-/* ══════════════════════════════════════════════════════════════
-   MASTERS / METHODIK VIEW
-══════════════════════════════════════════════════════════════ */
-#v-masters{padding:32px}
-
-.masters-hero{
-  text-align:center;padding:48px 0 40px;margin-bottom:40px;
-  position:relative;
-}
-.masters-hero::after{
-  content:'';position:absolute;bottom:0;left:20%;right:20%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--goldbr),transparent);
-}
-.masters-eyebrow{font-family:var(--fm);font-size:9px;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:12px}
-.masters-title{
-  font-family:var(--fd);font-size:52px;font-weight:300;color:var(--w);
-  line-height:1.1;letter-spacing:-.02em;margin-bottom:14px;
-}
-.masters-title em{color:var(--gold);font-style:italic}
-.masters-sub{font-size:15px;color:var(--m);max-width:560px;margin:0 auto;line-height:1.7;font-weight:300}
-
-.masters-big-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
-.master-big-card{
-  background:var(--bg2);border:1px solid var(--b);border-radius:var(--r20);
-  padding:28px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;
-}
-.master-big-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s;
-}
-.master-big-card:hover{border-color:var(--goldbr);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
-.master-big-card:hover::before{transform:scaleX(1)}
-.mbc-name{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px}
-.mbc-quote{
-  font-family:var(--fd);font-size:16px;font-style:italic;color:var(--w);
-  line-height:1.5;margin-bottom:14px;border-left:2px solid var(--goldbr);padding-left:12px;
-}
-.mbc-principle{font-size:12px;font-weight:600;color:var(--ml);margin-bottom:6px}
-.mbc-detail{font-size:11px;color:var(--m);line-height:1.6}
-.mbc-rule{
-  margin-top:14px;background:var(--bg3);border:1px solid var(--b);border-radius:var(--r8);
-  padding:10px 12px;
-}
-.mbc-rule-label{font-size:9px;font-weight:700;color:var(--gold);letter-spacing:.12em;margin-bottom:4px}
-.mbc-rule-text{font-size:11px;color:var(--t);line-height:1.5}
-
-.golden-rule{
-  background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(204,0,0,.05));
-  border:1px solid var(--goldbr);border-radius:var(--r20);padding:36px;text-align:center;
-  position:relative;overflow:hidden;
-}
-.golden-rule::before{content:'"';font-family:var(--fd);font-size:200px;color:rgba(201,168,76,.05);position:absolute;top:-40px;left:20px;line-height:1;pointer-events:none}
-.gr-label{font-family:var(--fm);font-size:9px;color:var(--gold);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
-.gr-text{font-family:var(--fd);font-size:28px;font-weight:400;color:var(--w);line-height:1.4;margin-bottom:8px;position:relative}
-.gr-text em{color:var(--gold)}
-.gr-sub{font-size:13px;color:var(--m)}
-
-/* ══════════════════════════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════════════════════════ */
-@media(max-width:1200px){
-  .masters-big-grid{grid-template-columns:1fr 1fr}
-  .home-grid{grid-template-columns:1fr}
-}
-@media(max-width:900px){
-  .shell{grid-template-columns:64px 1fr}
-  .sidebar{display:none}
-  #v-library.active{grid-template-columns:1fr}
-  .lib-detail{display:none}
-  #v-demo.active{grid-template-columns:1fr}
-  .demo-sidebar{display:none}
-}
-
-/* ── SCROLLBAR ─────────────────────────────────────────────── */
-*::-webkit-scrollbar{width:4px}
-*::-webkit-scrollbar-track{background:transparent}
-*::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px}
-*::-webkit-scrollbar-thumb:hover{background:var(--bl)}
-
+.demo-side{width:280px;border-left:1px solid var(--b);background:#07101E;overflow-y:auto;flex-shrink:0;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
+.demo-side-inner{padding:30px 24px;display:flex;flex-direction:column;gap:26px}
+.ds-title{font-family:var(--fd);font-size:30px;font-weight:700;color:var(--w);line-height:1.1}
+.ds-title em{color:var(--gold);font-style:italic}
+.ds-sub{font-size:15px;color:var(--m);line-height:1.6}
+.ds-label{font-family:var(--fm);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px;font-weight:500}
+.pc{padding:15px;background:rgba(255,255,255,.025);border:1px solid var(--b);border-radius:12px;margin-bottom:9px}
+.pc-master{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:5px;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fm)}
+.pc-text{font-size:14px;color:var(--ml);line-height:1.55}
 </style>
 </head>
 <body>
-
 <div class="shell">
 
-  <!-- ── ICON RAIL ─────────────────────────────── -->
+  <!-- RAIL -->
   <div class="rail">
     <div class="rail-logo" onclick="switchView('home')">
-      <span class="w1">W</span><span class="w2">V</span>
+      <span class="rl-w">W</span><span class="rl-u">U</span><span class="rl-n">N</span>
     </div>
-    <button class="rail-btn active" id="rb-home" data-tip="Home" onclick="switchView('home')">⌂</button>
-    <button class="rail-btn" id="rb-library" data-tip="Curriculum" onclick="switchView('library')">📚</button>
-    <button class="rail-btn" id="rb-demo" data-tip="Try a Lesson" onclick="switchView('demo')">▶</button>
-    <button class="rail-btn" id="rb-masters" data-tip="The Method" onclick="switchView('masters')">🎓</button>
+    <button class="rail-btn active" id="rb-home"    data-tip="Home"       onclick="switchView('home')">🏠</button>
+    <button class="rail-btn"        id="rb-library" data-tip="Curriculum" onclick="switchView('library')">📚</button>
+    <button class="rail-btn"        id="rb-demo"    data-tip="Live Lesson" onclick="switchView('demo')">▶</button>
     <div class="rail-spacer"></div>
-    <button class="rail-btn" data-tip="Settings">⚙</button>
     <div class="rail-avatar">P</div>
   </div>
 
-  <!-- ── SIDEBAR ───────────────────────────────── -->
+  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sb-top">
       <div class="sb-search">
-        <span class="sb-search-icon">🔍</span>
-        <input type="text" placeholder="Search lessons…">
+        <span style="color:var(--m);font-size:16px">🔍</span>
+        <input type="text" placeholder="Search lessons...">
       </div>
     </div>
     <div class="sb-body">
       <div class="sb-label">Navigation</div>
-      <div class="sb-item active" onclick="switchView('home')">
-        <span class="sb-item-icon">⌂</span>
-        <span class="sb-item-text">Home</span>
-      </div>
-      <div class="sb-item" onclick="switchView('library')">
-        <span class="sb-item-icon">📚</span>
-        <span class="sb-item-text">Curriculum</span>
-      </div>
-      <div class="sb-item" onclick="switchView('demo')">
-        <span class="sb-item-icon">▶</span>
-        <span class="sb-item-text">Try a Lesson</span>
-        <span class="sb-badge new">Live</span>
-      </div>
-      <div class="sb-item" onclick="switchView('masters')">
-        <span class="sb-item-icon">🎓</span>
-        <span class="sb-item-text">The Method</span>
-      </div>
+      <div class="sb-item active" id="sb-home"    onclick="switchView('home')">    <span class="sb-item-icon">🏠</span> Home</div>
+      <div class="sb-item"        id="sb-library" onclick="switchView('library')"> <span class="sb-item-icon">📚</span> Curriculum</div>
+      <div class="sb-item"        id="sb-demo"    onclick="switchView('demo')">    <span class="sb-item-icon">▶</span>  Try a Lesson <span style="margin-left:6px;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px">LIVE</span></div>
 
-      <div class="sb-label" style="margin-top:12px">Your Progress</div>
-      <div class="sb-level active" onclick="switchView('library');setLevel('A1')">
-        <div class="sb-level-dot" style="background:#C9A84C"></div>
-        <span class="sb-level-name">A1 — Überleben</span>
-        <div class="sb-level-bar"><div class="sb-level-fill" style="background:#C9A84C;width:32%"></div></div>
-      </div>
-      <div class="sb-level" onclick="switchView('library');setLevel('A2')">
-        <div class="sb-level-dot" style="background:#3B82F6"></div>
-        <span class="sb-level-name">A2 — Leben</span>
-        <div class="sb-level-bar"><div class="sb-level-fill" style="background:#3B82F6;width:0%"></div></div>
-      </div>
-      <div class="sb-level" onclick="switchView('library');setLevel('B1')">
-        <div class="sb-level-dot" style="background:#8B5CF6"></div>
-        <span class="sb-level-name">B1 — Denken</span>
-        <div class="sb-level-bar"><div class="sb-level-fill" style="background:#8B5CF6;width:0%"></div></div>
-      </div>
-      <div class="sb-level" onclick="switchView('library');setLevel('B2')">
-        <div class="sb-level-dot" style="background:#22C55E"></div>
-        <span class="sb-level-name">B2 — Argumentieren</span>
-        <div class="sb-level-bar"><div class="sb-level-fill" style="background:#22C55E;width:0%"></div></div>
-      </div>
-      <div class="sb-level" onclick="switchView('library');setLevel('C1')">
-        <div class="sb-level-dot" style="background:var(--red)"></div>
-        <span class="sb-level-name">C1 — Sein</span>
-        <div class="sb-level-bar"><div class="sb-level-fill" style="background:var(--red);width:0%"></div></div>
-      </div>
-      <div class="sb-level" onclick="switchView('library');setLevel('C2')">
-        <div class="sb-level-dot" style="background:var(--white)"></div>
-        <span class="sb-level-name">C2 — Meistern</span>
-        <div class="sb-level-bar"><div class="sb-level-fill" style="background:var(--white);width:0%"></div></div>
-      </div>
+      <div class="sb-label" style="margin-top:18px">Your Progress</div>
+      <div class="sb-level active" onclick="switchView('library');setLevel('A1')"><div class="sb-dot" style="background:#C9A84C"></div><span class="sb-lname">A1 — Überleben</span><div class="sb-bar"><div class="sb-fill" style="background:#C9A84C;width:32%"></div></div></div>
+      <div class="sb-level"        onclick="switchView('library');setLevel('A2')"><div class="sb-dot" style="background:#3B82F6"></div><span class="sb-lname">A2 — Leben</span><div class="sb-bar"><div class="sb-fill" style="background:#3B82F6;width:0%"></div></div></div>
+      <div class="sb-level"        onclick="switchView('library');setLevel('B1')"><div class="sb-dot" style="background:#8B5CF6"></div><span class="sb-lname">B1 — Denken</span><div class="sb-bar"><div class="sb-fill" style="background:#8B5CF6;width:0%"></div></div></div>
+      <div class="sb-level"        onclick="switchView('library');setLevel('B2')"><div class="sb-dot" style="background:#22C55E"></div><span class="sb-lname">B2 — Argumentieren</span><div class="sb-bar"><div class="sb-fill" style="background:#22C55E;width:0%"></div></div></div>
+      <div class="sb-level"        onclick="switchView('library');setLevel('C1')"><div class="sb-dot" style="background:#CC0000"></div><span class="sb-lname">C1 — Sein</span><div class="sb-bar"><div class="sb-fill" style="background:#CC0000;width:0%"></div></div></div>
     </div>
     <div class="sb-footer">
-      <div class="sb-xp-card">
-        <div class="sb-xp-row">
-          <span class="sb-xp-label">⚡ XP Today</span>
-          <span class="sb-xp-val">220</span>
-        </div>
-        <div class="sb-xp-track"><div class="sb-xp-fill"></div></div>
-        <div class="sb-xp-sub">346 XP until next level</div>
+      <div class="xp-card">
+        <div class="xp-row"><span class="xp-label">⚡ XP Today</span><span class="xp-val">220</span></div>
+        <div class="xp-track"><div class="xp-fill"></div></div>
+        <div class="xp-sub">346 XP until next level</div>
       </div>
     </div>
   </div>
 
-  <!-- ── MAIN AREA ─────────────────────────────── -->
+  <!-- MAIN -->
   <div class="main">
-
-    <!-- Top bar -->
     <div class="topbar">
-      <div class="topbar-breadcrumb" id="breadcrumb">
-        <span class="current">Home</span>
-      </div>
+      <div class="topbar-crumb" id="breadcrumb"><span class="cur">Home</span></div>
       <div class="topbar-right">
-        <div class="tb-badge gold">🔥 7 day streak</div>
-        <div class="tb-badge red">⚡ 220 XP</div>
-        <div class="tb-divider"></div>
-        <button class="tb-btn" title="Notifications">🔔</button>
-        <button class="tb-btn" onclick="window.open('https://wundervolldeutsch.com')" title="Live site">↗</button>
+        <div class="badge badge-gold">🔥 7 day streak</div>
+        <div class="badge badge-red">⚡ 220 XP</div>
+        <button class="tb-btn">🔔</button>
+        <button class="tb-btn" onclick="window.open('https://wundervolldeutsch.com')">↗</button>
       </div>
     </div>
 
     <div class="content">
 
-      <!-- ════════════════════ HOME VIEW ════════════════════ -->
+      <!-- ══════ HOME ══════ -->
       <div class="view active" id="v-home">
-        <div id="home-content" style="padding:32px;max-width:1100px">
 
-          <!-- Hero -->
-          <div class="home-hero">
-            <div>
-              <div class="home-hero-eyebrow">Willkommen zurück, Philipp</div>
-              <h1 class="home-hero-title">
-                German,<br>
-                <em>made wonderful.</em>
-              </h1>
-              <p class="home-hero-sub">
-                A1 is 32% complete. Your next lesson is waiting.
-                Every lesson is a masterpiece — built by 7 language acquisition scientists.
-              </p>
-              <div class="home-hero-actions">
-                <button class="btn btn-gold" onclick="switchView('demo')">▶ Continue Lesson 2</button>
-                <button class="btn btn-ghost" onclick="switchView('library')">Browse all lessons →</button>
-              </div>
+        <div class="hero">
+          <div>
+            <div class="hero-eyebrow">Willkommen zurück, Philipp</div>
+            <h1 class="hero-title">German,<br><em>made wonderful.</em></h1>
+            <p class="hero-sub">A1 is 32% complete. Your next lesson is waiting.</p>
+            <div class="hero-actions">
+              <button class="btn btn-gold btn-lg" onclick="switchView('demo')">▶ Continue Lesson 2</button>
+              <button class="btn btn-ghost btn-lg" onclick="switchView('library')">Browse all lessons →</button>
             </div>
-            <div class="home-hero-stats">
-              <div class="hhs"><span class="hhs-num">6</span><div class="hhs-label">Lessons done</div></div>
-              <div class="hhs"><span class="hhs-num">A1</span><div class="hhs-label">Current level</div></div>
-              <div class="hhs"><span class="hhs-num">7</span><div class="hhs-label">Day streak</div></div>
+          </div>
+          <div class="hero-stats">
+            <div class="hstat"><span class="hstat-n">6</span><div class="hstat-l">Lessons done</div></div>
+            <div class="hstat"><span class="hstat-n">7</span><div class="hstat-l">Day streak</div></div>
+            <div class="hstat"><span class="hstat-n">A1</span><div class="hstat-l">Current level</div></div>
+          </div>
+        </div>
+
+        <div class="continue-card" onclick="switchView('demo')">
+          <div class="cc-icon">🚉</div>
+          <div class="cc-body">
+            <div class="cc-eye">Next up · A1 · Lesson 2</div>
+            <div class="cc-title">Wer bin ich? — SEIN</div>
+            <div class="cc-meta">20 min · 10 phrases · Speaking included</div>
+            <div class="cc-bar"><div class="cc-fill"></div></div>
+          </div>
+          <div class="cc-arrow">→</div>
+        </div>
+
+        <div class="home-grid">
+          <div class="hcard">
+            <div class="hcard-title">Up next <span class="hcard-link" onclick="switchView('library')">See all →</span></div>
+            <div class="nli" onclick="switchView('demo')">
+              <div class="nli-badge done">✓</div>
+              <div class="nli-body"><div class="nli-title">Die ersten Worte</div><div class="nli-meta">A1 · 18 min · Completed</div></div>
+            </div>
+            <div class="nli" onclick="switchView('demo')">
+              <div class="nli-badge next">▶</div>
+              <div class="nli-body"><div class="nli-title">Wer bin ich? — SEIN</div><div class="nli-meta">A1 · 20 min · Up next</div></div>
+              <div class="nli-arr">›</div>
+            </div>
+            <div class="nli" onclick="switchView('demo')">
+              <div class="nli-badge">L3</div>
+              <div class="nli-body"><div class="nli-title">Zahlen, Preise, Mengen</div><div class="nli-meta">A1 · 20 min</div></div>
+              <div class="nli-arr">›</div>
+            </div>
+            <div class="nli" onclick="switchView('demo')">
+              <div class="nli-badge">L4</div>
+              <div class="nli-body"><div class="nli-title">HABEN — Besitz und Zustände</div><div class="nli-meta">A1 · 20 min</div></div>
+              <div class="nli-arr">›</div>
             </div>
           </div>
 
-          <!-- Continue lesson -->
-          <div class="section-hdr">
-            <div class="section-title">Continue learning</div>
-          </div>
-          <div class="continue-card" onclick="switchView('demo')">
-            <div class="cc-icon">🚉</div>
-            <div class="cc-body">
-              <div class="cc-eyebrow">Next up · A1 · Lesson 2</div>
-              <div class="cc-title">Wer bin ich? — SEIN</div>
-              <div class="cc-meta">20 min · 10 phrases · Speaking included</div>
-              <div class="cc-progress">
-                <div class="cc-progress-bar"><div class="cc-progress-fill"></div></div>
-              </div>
-            </div>
-            <div class="cc-action">→</div>
-          </div>
-
-          <!-- Grid -->
-          <div class="home-grid">
-
-            <!-- Next lessons -->
-            <div class="home-card">
-              <div class="section-hdr">
-                <div class="section-title">Up next</div>
-                <a class="section-link" onclick="switchView('library')">See all →</a>
-              </div>
-              <div class="next-lesson-item" onclick="switchView('demo')">
-                <div class="nli-num">L2</div>
-                <div class="nli-body">
-                  <div class="nli-title">Wer bin ich? — SEIN</div>
-                  <div class="nli-meta">A1 · 20 min</div>
-                </div>
-                <div class="nli-arrow">›</div>
-              </div>
-              <div class="next-lesson-item" onclick="switchView('demo')">
-                <div class="nli-num">L3</div>
-                <div class="nli-body">
-                  <div class="nli-title">Zahlen, Preise, Mengen</div>
-                  <div class="nli-meta">A1 · 20 min</div>
-                </div>
-                <div class="nli-arrow">›</div>
-              </div>
-              <div class="next-lesson-item" onclick="switchView('demo')">
-                <div class="nli-num">L4</div>
-                <div class="nli-body">
-                  <div class="nli-title">HABEN — Besitz und Zustände</div>
-                  <div class="nli-meta">A1 · 20 min</div>
-                </div>
-                <div class="nli-arrow">›</div>
-              </div>
-              <div class="next-lesson-item" style="opacity:.4;cursor:default">
-                <div class="nli-num">L5</div>
-                <div class="nli-body">
-                  <div class="nli-title">Der, Die, Das — Mit System</div>
-                  <div class="nli-meta">A1 · 22 min · 🔒</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Level progress -->
-            <div class="home-card">
-              <div class="section-hdr">
-                <div class="section-title">Your journey</div>
-              </div>
-              <div class="level-row">
-                <div class="lr-hdr"><span class="lr-label">A1 — Überleben</span><span class="lr-count">6/19</span></div>
-                <div class="lr-track"><div class="lr-fill" style="background:#C9A84C;width:32%"></div></div>
-              </div>
-              <div class="level-row" style="opacity:.4">
-                <div class="lr-hdr"><span class="lr-label">A2 — Leben</span><span class="lr-count">0/12</span></div>
-                <div class="lr-track"><div class="lr-fill" style="background:#3B82F6;width:0%"></div></div>
-              </div>
-              <div class="level-row" style="opacity:.4">
-                <div class="lr-hdr"><span class="lr-label">B1 — Denken</span><span class="lr-count">0/16</span></div>
-                <div class="lr-track"><div class="lr-fill" style="background:#8B5CF6;width:0%"></div></div>
-              </div>
-              <div class="level-row" style="opacity:.4">
-                <div class="lr-hdr"><span class="lr-label">B2 — Argumentieren</span><span class="lr-count">0/17</span></div>
-                <div class="lr-track"><div class="lr-fill" style="background:#22C55E;width:0%"></div></div>
-              </div>
-              <div class="level-row" style="opacity:.4">
-                <div class="lr-hdr"><span class="lr-label">C1 — Sein</span><span class="lr-count">0/15</span></div>
-                <div class="lr-track"><div class="lr-fill" style="background:var(--red);width:0%"></div></div>
-              </div>
-              <div style="margin-top:16px;background:var(--goldbg);border:1px solid var(--goldbr);border-radius:var(--r12);padding:14px;">
-                <div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:4px">🇩🇪 A1 → Muttersprache</div>
-                <div style="font-size:12px;color:var(--ml);line-height:1.6">83 lessons. One language. One new world. You are 7% of the way there.</div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- The 7 Masters -->
-          <div class="section-hdr">
-            <div class="section-title">Built on science</div>
-            <a class="section-link" onclick="switchView('masters')">Read the method →</a>
-          </div>
-          <div class="masters-grid">
-            <div class="master-card" onclick="switchView('masters')">
-              <div class="mc-name">Krashen</div>
-              <div class="mc-principle">Emotion first. No stress.</div>
-              <div class="mc-detail">Low affective filter — every lesson starts with a scene, not a goals list.</div>
-            </div>
-            <div class="master-card" onclick="switchView('masters')">
-              <div class="mc-name">Pimsleur</div>
-              <div class="mc-principle">Audio first. Always.</div>
-              <div class="mc-detail">Every phrase plays automatically before you see text.</div>
-            </div>
-            <div class="master-card" onclick="switchView('masters')">
-              <div class="mc-name">Schmidt</div>
-              <div class="mc-principle">One noticing moment.</div>
-              <div class="mc-detail">Discovered, not explained. It burns in deeper.</div>
-            </div>
-            <div class="master-card" onclick="switchView('masters')">
-              <div class="mc-name">Thomas</div>
-              <div class="mc-principle">Mistakes = information.</div>
-              <div class="mc-detail">No red X. The app takes responsibility, not the learner.</div>
-            </div>
-            <div class="master-card" onclick="switchView('masters')">
-              <div class="mc-name">Lewis</div>
-              <div class="mc-principle">Chunks, not grammar.</div>
-              <div class="mc-detail">"Entschuldigung!" as a living unit — not a word, a tool.</div>
-            </div>
-            <div class="master-card" onclick="switchView('masters')">
-              <div class="mc-name">Swain · Benny</div>
-              <div class="mc-principle">Speak from day one.</div>
-              <div class="mc-detail">Every lesson ends with a real conversation. Imperfect beats silent.</div>
+          <div class="hcard">
+            <div class="hcard-title">Your journey</div>
+            <div class="lr"><div class="lr-hdr"><span class="lr-label">A1 — Überleben</span><span class="lr-count">6 / 19</span></div><div class="lr-track"><div class="lr-fill" style="background:#C9A84C;width:32%"></div></div></div>
+            <div class="lr" style="opacity:.4"><div class="lr-hdr"><span class="lr-label">A2 — Leben</span><span class="lr-count">0 / 12</span></div><div class="lr-track"><div class="lr-fill" style="background:#3B82F6;width:0%"></div></div></div>
+            <div class="lr" style="opacity:.3"><div class="lr-hdr"><span class="lr-label">B1 — Denken</span><span class="lr-count">0 / 16</span></div><div class="lr-track"><div class="lr-fill" style="background:#8B5CF6;width:0%"></div></div></div>
+            <div class="lr" style="opacity:.2"><div class="lr-hdr"><span class="lr-label">B2 — Argumentieren</span><span class="lr-count">0 / 17</span></div><div class="lr-track"><div class="lr-fill" style="background:#22C55E;width:0%"></div></div></div>
+            <div class="lr" style="opacity:.15"><div class="lr-hdr"><span class="lr-label">C1 — Sein</span><span class="lr-count">0 / 15</span></div><div class="lr-track"><div class="lr-fill" style="background:#CC0000;width:0%"></div></div></div>
+            <div style="margin-top:18px;background:var(--goldbg);border:1px solid var(--goldbr);border-radius:12px;padding:18px">
+              <div style="font-family:var(--fm);font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px">Total</div>
+              <div style="font-size:16px;color:var(--ml);line-height:1.6">83 lessons total. You are 7% of the way to Muttersprache.</div>
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- ════════════════════ LIBRARY VIEW ════════════════════ -->
+      <!-- ══════ CURRICULUM ══════ -->
       <div class="view" id="v-library">
-        <div class="lib-list">
-          <div class="lib-header">
-            <h2 class="lib-header-title">Curriculum <em>Library</em></h2>
-          </div>
 
-          <div class="lib-level-filters" id="level-filters">
-            <button class="level-filter active" style="background:#C9A84C;color:#070B18" onclick="setLevel('A1')">A1</button>
-            <button class="level-filter" onclick="setLevel('A2')">A2</button>
-            <button class="level-filter" onclick="setLevel('B1')">B1</button>
-            <button class="level-filter" onclick="setLevel('B2')">B2</button>
-            <button class="level-filter" onclick="setLevel('C1')">C1</button>
-            <button class="level-filter" onclick="setLevel('C2')">C2</button>
-            <button class="level-filter" onclick="setLevel('MS')">Muttersprache</button>
-          </div>
-
-          <div id="lesson-list-body"></div>
+        <div class="lib-hdr">
+          <h1 class="lib-title">Curriculum <em>Library</em></h1>
+          <div class="lib-sub">83 lessons · A1 to Muttersprache · Click any lesson to expand</div>
         </div>
 
-        <div class="lib-detail" id="lib-detail">
-          <div class="ld-empty">
-            <div class="ld-empty-icon">📖</div>
-            <div class="ld-empty-title">Select a lesson</div>
-            <div class="ld-empty-sub">Click any lesson on the left to see its full content, goals, phrases and grammar.</div>
-          </div>
+        <div class="lvl-tabs" id="level-filters">
+          <button class="lvl-tab active" style="background:#C9A84C;color:#040810" onclick="setLevel('A1')">A1</button>
+          <button class="lvl-tab" onclick="setLevel('A2')">A2</button>
+          <button class="lvl-tab" onclick="setLevel('B1')">B1</button>
+          <button class="lvl-tab" onclick="setLevel('B2')">B2</button>
+          <button class="lvl-tab" onclick="setLevel('C1')">C1</button>
+          <button class="lvl-tab" onclick="setLevel('C2')">C2</button>
+          <button class="lvl-tab" onclick="setLevel('MS')">Muttersprache</button>
         </div>
+
+        <div id="lesson-list-body"></div>
+
       </div>
 
-      <!-- ════════════════════ DEMO VIEW ════════════════════ -->
+      <!-- ══════ DEMO ══════ -->
       <div class="view" id="v-demo">
 
-        <div class="demo-stage">
-          <div class="demo-phone">
-            <div class="demo-phone-notch"><div class="demo-phone-pill"></div></div>
-            <div class="demo-phone-flag"></div>
-            <div class="demo-phone-top">
-              <div class="demo-back" onclick="switchView('library')">‹</div>
-              <div style="text-align:center">
-                <div class="demo-lesson-name" id="demo-lesson-name">Die ersten Worte</div>
-                <div class="demo-act-label" id="demo-act-label">LISTEN</div>
-              </div>
-              <div class="demo-xp">⚡220</div>
-            </div>
-            <div class="demo-prog-track">
-              <div class="demo-prog-fill" id="demo-prog" style="width:14%"></div>
-            </div>
-            <div class="demo-screen" id="demo-screen">
-
-              <!-- STEP 1: HOOK -->
-              <div class="ds active" id="ds-0">
-                <div class="ds-situation">Berlin Hauptbahnhof. You just arrived.</div>
-                <div class="ds-prompt">Someone approaches you.<br>Listen.</div>
-                <div class="ds-phrase-card">
-                  <div class="ds-phrase-de">"Entschuldigung!<br>Sprechen Sie Englisch?"</div>
-                  <div class="ds-audio-row">
-                    <div class="audio-waves"><div class="aw"></div><div class="aw"></div><div class="aw"></div><div class="aw"></div><div class="aw"></div></div>
-                    <div class="ds-audio-text">playing…</div>
-                  </div>
-                </div>
-                <div style="flex:1"></div>
-                <button class="ds-continue" onclick="nextStep()">I heard it — let's go →</button>
-              </div>
-
-              <!-- STEP 2: PHRASE 1 -->
-              <div class="ds" id="ds-1">
-                <div style="font-size:9px;font-weight:700;color:var(--m);letter-spacing:2px;margin-bottom:20px">1 OF 3</div>
-                <div class="ds-phrase-card" onclick="revealTranslation(1)">
-                  <div class="ds-phrase-de">"Guten Tag!<br>Ich bin Anna Bauer."</div>
-                  <div class="ds-audio-row">
-                    <div class="audio-waves"><div class="aw"></div><div class="aw"></div><div class="aw"></div><div class="aw"></div><div class="aw"></div></div>
-                  </div>
-                </div>
-                <div class="ds-tap-hint" id="taph-1">Tap anywhere to understand</div>
-                <div class="ds-translation" id="trans-1" style="display:none">
-                  <div class="ds-trans-label">TRANSLATION</div>
-                  <div class="ds-trans-text">"Good day! I am Anna Bauer."</div>
-                </div>
-                <div style="flex:1"></div>
-                <button class="ds-continue" id="cont-1" disabled onclick="nextStep()">Got it →</button>
-              </div>
-
-              <!-- STEP 3: PHRASE 2 -->
-              <div class="ds" id="ds-2">
-                <div style="font-size:9px;font-weight:700;color:var(--m);letter-spacing:2px;margin-bottom:20px">2 OF 3</div>
-                <div class="ds-phrase-card" onclick="revealTranslation(2)">
-                  <div class="ds-phrase-de">"Wo ist der Bahnhof,<br>bitte?"</div>
-                  <div class="ds-audio-row">
-                    <div class="audio-waves"><div class="aw"></div><div class="aw"></div><div class="aw"></div><div class="aw"></div><div class="aw"></div></div>
-                  </div>
-                </div>
-                <div class="ds-tap-hint" id="taph-2">Tap anywhere to understand</div>
-                <div class="ds-translation" id="trans-2" style="display:none">
-                  <div class="ds-trans-label">TRANSLATION</div>
-                  <div class="ds-trans-text">"Where is the train station, please?"</div>
-                </div>
-                <div style="flex:1"></div>
-                <button class="ds-continue" id="cont-2" disabled onclick="nextStep()">Got it →</button>
-              </div>
-
-              <!-- STEP 4: PHRASE 3 -->
-              <div class="ds" id="ds-3">
-                <div style="font-size:9px;font-weight:700;color:var(--m);letter-spacing:2px;margin-bottom:20px">3 OF 3</div>
-                <div class="ds-phrase-card" onclick="revealTranslation(3)">
-                  <div class="ds-phrase-de">"Gehen Sie geradeaus —<br>dann links."</div>
-                  <div class="ds-audio-row">
-                    <div class="audio-waves"><div class="aw"></div><div class="aw"></div><div class="aw"></div><div class="aw"></div><div class="aw"></div></div>
-                  </div>
-                </div>
-                <div class="ds-tap-hint" id="taph-3">Tap anywhere to understand</div>
-                <div class="ds-translation" id="trans-3" style="display:none">
-                  <div class="ds-trans-label">TRANSLATION</div>
-                  <div class="ds-trans-text">"Go straight ahead — then left."</div>
-                </div>
-                <div style="flex:1"></div>
-                <button class="ds-continue" id="cont-3" disabled onclick="nextStep()">Got it →</button>
-              </div>
-
-              <!-- STEP 5: NOTICING -->
-              <div class="ds" id="ds-4">
-                <div class="ds-look">LOOK CLOSELY</div>
-                <div class="ds-notice-q">"<span style="color:var(--gold);font-weight:800">Sie</span>" appears in every phrase. What is it?</div>
-                <div class="ds-phrase-row">Sprechen <span class="hl">Sie</span> Englisch?</div>
-                <div class="ds-phrase-row">Gehen <span class="hl">Sie</span> geradeaus.</div>
-                <div class="ds-phrase-row">Kann ich Ihnen helfen?</div>
-                <div class="ds-choices" id="noticing-choices">
-                  <div class="ds-choice" onclick="noticeAnswer(this,true)">"Sie" = formal "you" — for strangers and bosses</div>
-                  <div class="ds-choice" onclick="noticeAnswer(this,false)">It's just the German word for "she"</div>
-                </div>
-                <div class="ds-insight" id="noticing-insight" style="display:none">
-                  <div class="ds-insight-title">✨ Exactly.</div>
-                  <div class="ds-insight-text">Sie (capital S) = formal "you". One word. Infinite doors. Always use it with strangers.</div>
-                </div>
-                <div style="flex:1"></div>
-                <button class="ds-continue" id="cont-4" disabled onclick="nextStep()">I've got this →</button>
-              </div>
-
-              <!-- STEP 6: SCRAMBLE -->
-              <div class="ds" id="ds-5">
-                <div class="ds-build-label">BUILD THE SENTENCE</div>
-                <div class="ds-build-q">"Where is the train station, please?"</div>
-                <div class="ds-drop-zone" id="drop-zone">
-                  <span class="ds-drop-hint">Tap words below to build</span>
-                </div>
-                <div class="ds-tiles" id="scramble-tiles">
-                  <div class="ds-tile" onclick="pickTile(this,'Wo')">Wo</div>
-                  <div class="ds-tile" onclick="pickTile(this,'der')">der</div>
-                  <div class="ds-tile" onclick="pickTile(this,'ist')">ist</div>
-                  <div class="ds-tile" onclick="pickTile(this,'Bahnhof')">Bahnhof</div>
-                  <div class="ds-tile" onclick="pickTile(this,'bitte')">bitte</div>
-                </div>
-                <div style="flex:1"></div>
-                <button class="ds-continue" id="cont-5" onclick="checkScramble()" disabled>Check →</button>
-              </div>
-
-              <!-- STEP 7: SPEAK INTRO -->
-              <div class="ds" id="ds-6">
-                <div class="ds-speak-emoji">🎙️</div>
-                <div class="ds-speak-title">Time to speak</div>
-                <div class="ds-speak-body">
-                  You've heard it. You've understood it. You've built it.<br><br>
-                  <em>Now use it.</em><br><br>
-                  A German teacher is waiting. Write back in German. No timer. No score. Just speak.
-                </div>
-                <button class="ds-continue red" onclick="nextStep()">Start the conversation →</button>
-              </div>
-
-              <!-- STEP 8: COMPLETE -->
-              <div class="ds" id="ds-7">
-                <div class="ds-complete">
-                  <div class="ds-complete-star">⭐</div>
-                  <div class="ds-complete-title">You just spoke German.</div>
-                  <div class="ds-complete-xp">+70 XP</div>
-                  <div class="ds-complete-msg">Your brain is processing everything now. Sleep will consolidate it. Come back tomorrow.</div>
-                </div>
-                <button class="ds-continue green" onclick="switchView('library')">← Back to lessons</button>
-              </div>
-
-            </div><!-- /demo-screen -->
-            <div class="demo-phone-bottom"><div class="demo-home-indicator"></div></div>
-          </div><!-- /demo-phone -->
-        </div>
-
-        <!-- Demo sidebar -->
-        <div class="demo-sidebar">
-          <div class="dsb-title">Die ersten <em>Worte</em></div>
-          <div class="dsb-sub">A1 · Lesson 1 · ~12 min<br>Tap through the live lesson demo on the left.</div>
-
-          <div class="dsb-section">
-            <div class="dsb-section-label">Lesson Flow</div>
-            <div class="step-indicator" id="step-indicator">
-              <div class="si-item active" onclick="jumpToStep(0)">
-                <div class="si-dot">1</div>
-                <span class="si-label">The Hook</span>
-                <span class="si-time" style="color:var(--m)">~1m</span>
-              </div>
-              <div class="si-item" onclick="jumpToStep(1)">
-                <div class="si-dot">2</div>
-                <span class="si-label">Listen — 3 Phrases</span>
-                <span class="si-time">~3m</span>
-              </div>
-              <div class="si-item" onclick="jumpToStep(4)">
-                <div class="si-dot">3</div>
-                <span class="si-label">Discover Pattern</span>
-                <span class="si-time">~1m</span>
-              </div>
-              <div class="si-item" onclick="jumpToStep(5)">
-                <div class="si-dot">4</div>
-                <span class="si-label">Build a Sentence</span>
-                <span class="si-time">~2m</span>
-              </div>
-              <div class="si-item" onclick="jumpToStep(6)">
-                <div class="si-dot">5</div>
-                <span class="si-label">Speak</span>
-                <span class="si-time">~3m</span>
-              </div>
-              <div class="si-item" onclick="jumpToStep(7)">
-                <div class="si-dot">6</div>
-                <span class="si-label">Complete</span>
-                <span class="si-time"></span>
-              </div>
-            </div>
+        <!-- Step nav bar -->
+        <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+          <div class="demo-nav" id="demo-nav">
+            <div class="dnav-step active" id="dsn-0" onclick="jumpToStep(0)"><div class="dnav-dot">1</div>The Hook</div>
+            <div class="dnav-sep"></div>
+            <div class="dnav-step" id="dsn-1" onclick="jumpToStep(1)"><div class="dnav-dot">2</div>Listen</div>
+            <div class="dnav-sep"></div>
+            <div class="dnav-step" id="dsn-4" onclick="jumpToStep(4)"><div class="dnav-dot">3</div>Discover</div>
+            <div class="dnav-sep"></div>
+            <div class="dnav-step" id="dsn-5" onclick="jumpToStep(5)"><div class="dnav-dot">4</div>Build It</div>
+            <div class="dnav-sep"></div>
+            <div class="dnav-step" id="dsn-6" onclick="jumpToStep(6)"><div class="dnav-dot">5</div>Speak</div>
+            <div class="dnav-sep"></div>
+            <div class="dnav-step" id="dsn-7" onclick="jumpToStep(7)"><div class="dnav-dot">6</div>Complete</div>
           </div>
 
-          <div class="dsb-section">
-            <div class="dsb-section-label">Design Principles Active</div>
-            <div class="principle-card">
-              <div class="pc-master">Pimsleur</div>
-              <div class="pc-text">Audio plays automatically — before you see any text.</div>
-            </div>
-            <div class="principle-card">
-              <div class="pc-master">Schmidt</div>
-              <div class="pc-text">One grammar insight per lesson. Discovered, not explained.</div>
-            </div>
-            <div class="principle-card">
-              <div class="pc-master">Thomas</div>
-              <div class="pc-text">Wrong answers get a warm explanation. Never punishment.</div>
-            </div>
-            <div class="principle-card">
-              <div class="pc-master">Benny Lewis</div>
-              <div class="pc-text">Real conversation at the end. Imperfect output beats silence.</div>
-            </div>
-          </div>
+          <div class="demo-wrap">
+            <!-- Stage -->
+            <div class="demo-stage">
 
-          <button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:8px" onclick="switchView('library')">
-            Open full curriculum →
-          </button>
-        </div>
-
-      </div><!-- /v-demo -->
-
-      <!-- ════════════════════ MASTERS VIEW ════════════════════ -->
-      <div class="view" id="v-masters">
-        <div style="padding:32px;max-width:1100px">
-          <div class="masters-hero">
-            <div class="masters-eyebrow">The philosophy behind Wundervoll</div>
-            <h1 class="masters-title">Built on the shoulders<br>of <em>giants.</em></h1>
-            <p class="masters-sub">Seven researchers. Decades of science. Every design decision in Wundervoll traces directly back to evidence — not opinion, not intuition. Evidence.</p>
-          </div>
-
-          <div class="masters-big-grid">
-
-            <div class="master-big-card">
-              <div class="mbc-name">Stephen Krashen</div>
-              <div class="mbc-quote">"Language is acquired, not learned. Stress blocks everything."</div>
-              <div class="mbc-principle">The Affective Filter Hypothesis</div>
-              <div class="mbc-detail">Anxiety raises the affective filter and blocks input from reaching the language acquisition device. A relaxed, emotionally safe learner acquires language. A stressed one does not.</div>
-              <div class="mbc-rule">
-                <div class="mbc-rule-label">In Wundervoll</div>
-                <div class="mbc-rule-text">Every lesson opens with a scene — not a goals list. The learner is emotionally in Berlin before they know they're learning grammar.</div>
+              <!-- STEP 0: HOOK -->
+              <div class="dstep active" id="ds-0">
+                <div class="step-badge">Die ersten Worte · A1 · Lesson 1</div>
+                <div class="step-situation">Berlin Hauptbahnhof. You just arrived.</div>
+                <div class="step-prompt">Someone approaches you.<br>Listen.</div>
+                <div class="phrase-card" style="pointer-events:none">
+                  <div class="phrase-de">"Entschuldigung!<br>Sprechen Sie Englisch?"</div>
+                  <div class="phrase-audio"><div class="audiobars"><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div></div><span>playing…</span></div>
+                </div>
+                <div class="step-actions">
+                  <button class="btn btn-gold btn-lg" onclick="nextStep()">I heard it — let's go →</button>
+                </div>
               </div>
-            </div>
 
-            <div class="master-big-card">
-              <div class="mbc-name">Paul Pimsleur</div>
-              <div class="mbc-quote">"The ear before the eye. Always. Audio is the mother tongue of language."</div>
-              <div class="mbc-principle">Graduated Interval Recall + Audio-First</div>
-              <div class="mbc-detail">Language is fundamentally a sound system. Reading is a secondary representation. Learning begins with the ear — exactly as in first-language acquisition.</div>
-              <div class="mbc-rule">
-                <div class="mbc-rule-label">In Wundervoll</div>
-                <div class="mbc-rule-text">Every phrase plays automatically before the learner sees text. The tap-to-reveal comes after the sound, never before.</div>
+              <!-- STEP 1 -->
+              <div class="dstep" id="ds-1">
+                <div class="step-badge" style="color:var(--gold);border-color:var(--goldbr)">Phrase 1 of 3</div>
+                <div class="phrase-card" onclick="revealTrans(1)">
+                  <div class="phrase-de">"Guten Tag!<br>Ich bin Anna Bauer."</div>
+                  <div class="phrase-audio"><div class="audiobars"><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div></div></div>
+                </div>
+                <div class="tap-hint" id="th-1">Tap the card to understand</div>
+                <div id="tr-1" style="display:none;width:100%"><div class="trans-card"><div class="trans-label">Translation</div><div class="trans-text">"Good day! I am Anna Bauer."</div></div></div>
+                <div class="step-actions"><button class="btn btn-gold btn-lg" id="c-1" disabled onclick="nextStep()">Got it →</button></div>
               </div>
-            </div>
 
-            <div class="master-big-card">
-              <div class="mbc-name">Richard Schmidt</div>
-              <div class="mbc-quote">"You cannot acquire what you haven't noticed."</div>
-              <div class="mbc-principle">The Noticing Hypothesis</div>
-              <div class="mbc-detail">Conscious attention to form in input is necessary (though not sufficient) for acquisition. The learner must notice a feature before it can enter long-term memory.</div>
-              <div class="mbc-rule">
-                <div class="mbc-rule-label">In Wundervoll</div>
-                <div class="mbc-rule-text">Each lesson has exactly ONE noticing moment. The learner discovers it in the phrases they just heard — it is never explained, only revealed through guided attention.</div>
+              <!-- STEP 2 -->
+              <div class="dstep" id="ds-2">
+                <div class="step-badge" style="color:var(--gold);border-color:var(--goldbr)">Phrase 2 of 3</div>
+                <div class="phrase-card" onclick="revealTrans(2)">
+                  <div class="phrase-de">"Wo ist der Bahnhof,<br>bitte?"</div>
+                  <div class="phrase-audio"><div class="audiobars"><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div></div></div>
+                </div>
+                <div class="tap-hint" id="th-2">Tap the card to understand</div>
+                <div id="tr-2" style="display:none;width:100%"><div class="trans-card"><div class="trans-label">Translation</div><div class="trans-text">"Where is the train station, please?"</div></div></div>
+                <div class="step-actions"><button class="btn btn-gold btn-lg" id="c-2" disabled onclick="nextStep()">Got it →</button></div>
               </div>
-            </div>
 
-            <div class="master-big-card">
-              <div class="mbc-name">Michel Thomas</div>
-              <div class="mbc-quote">"It is not the student's fault if they don't know. It is the teacher's fault."</div>
-              <div class="mbc-principle">Learner Responsibility Transfer</div>
-              <div class="mbc-detail">The teacher bears complete responsibility for creating conditions for learning. When a student fails, the teaching method has failed — not the student.</div>
-              <div class="mbc-rule">
-                <div class="mbc-rule-label">In Wundervoll</div>
-                <div class="mbc-rule-text">No red X. Wrong answers receive a warm explanation and the correct form. The app takes responsibility — not the learner.</div>
+              <!-- STEP 3 -->
+              <div class="dstep" id="ds-3">
+                <div class="step-badge" style="color:var(--gold);border-color:var(--goldbr)">Phrase 3 of 3</div>
+                <div class="phrase-card" onclick="revealTrans(3)">
+                  <div class="phrase-de">"Gehen Sie geradeaus —<br>dann links."</div>
+                  <div class="phrase-audio"><div class="audiobars"><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div><div class="abar"></div></div></div>
+                </div>
+                <div class="tap-hint" id="th-3">Tap the card to understand</div>
+                <div id="tr-3" style="display:none;width:100%"><div class="trans-card"><div class="trans-label">Translation</div><div class="trans-text">"Go straight ahead — then left."</div></div></div>
+                <div class="step-actions"><button class="btn btn-gold btn-lg" id="c-3" disabled onclick="nextStep()">Got it →</button></div>
               </div>
-            </div>
 
-            <div class="master-big-card">
-              <div class="mbc-name">Michael Lewis</div>
-              <div class="mbc-quote">"Language is not grammar plus vocabulary. It is chunks."</div>
-              <div class="mbc-principle">The Lexical Approach</div>
-              <div class="mbc-detail">Language consists of multi-word units (chunks) that should be learned as wholes — not assembled from grammar rules. "Entschuldigung!" is not a word. It is a social tool with a sound, a context, a feeling.</div>
-              <div class="mbc-rule">
-                <div class="mbc-rule-label">In Wundervoll</div>
-                <div class="mbc-rule-text">Phrases are presented as complete units with audio — heard, felt, used — before any grammar explanation appears.</div>
+              <!-- STEP 4: DISCOVER -->
+              <div class="dstep" id="ds-4">
+                <div class="step-badge">Look closely</div>
+                <div class="notice-q">"<span style="color:var(--gold)">Sie</span>" appears in every phrase.<br>What is it?</div>
+                <div class="notice-phrases">
+                  <div class="notice-phrase">Sprechen <span class="nph-hl">Sie</span> Englisch?</div>
+                  <div class="notice-phrase">Gehen <span class="nph-hl">Sie</span> geradeaus.</div>
+                  <div class="notice-phrase">Kann ich <span class="nph-hl">Ihnen</span> helfen?</div>
+                </div>
+                <div class="notice-choices" id="nc">
+                  <div class="nc" onclick="noticePick(this,true)">"Sie" = formal "you" — for strangers and bosses</div>
+                  <div class="nc" onclick="noticePick(this,false)">It's just the German word for "she"</div>
+                </div>
+                <div id="insight" style="display:none;width:100%">
+                  <div class="insight"><div class="insight-title">✨ Exactly.</div><div class="insight-text">Sie (capital S) = formal "you". One word. Infinite doors. Always use it with strangers — nobody gets offended by too much politeness.</div></div>
+                </div>
+                <div class="step-actions"><button class="btn btn-gold btn-lg" id="c-4" disabled onclick="nextStep()">I've got this →</button></div>
               </div>
+
+              <!-- STEP 5: BUILD -->
+              <div class="dstep" id="ds-5">
+                <div class="step-badge">Build the sentence</div>
+                <div class="build-q">"Where is the train station, please?"</div>
+                <div class="drop-zone" id="dz"><span class="dz-hint">Tap words below to build</span></div>
+                <div class="tiles" id="tile-pool">
+                  <div class="tile" onclick="pickTile(this,'Wo')">Wo</div>
+                  <div class="tile" onclick="pickTile(this,'ist')">ist</div>
+                  <div class="tile" onclick="pickTile(this,'der')">der</div>
+                  <div class="tile" onclick="pickTile(this,'Bahnhof')">Bahnhof</div>
+                  <div class="tile" onclick="pickTile(this,'bitte')">bitte</div>
+                </div>
+                <div class="step-actions">
+                  <button class="btn btn-ghost" onclick="resetTiles()">↺ Reset</button>
+                  <button class="btn btn-gold btn-lg" id="c-5" disabled onclick="checkBuild()">Check →</button>
+                </div>
+              </div>
+
+              <!-- STEP 6: SPEAK -->
+              <div class="dstep" id="ds-6">
+                <div class="speak-em">🎙️</div>
+                <div class="speak-title">Time to speak.</div>
+                <div class="speak-body">You've heard it. You've understood it. You've built it.<br><br><em>Now use it.</em><br><br>A teacher is waiting. Write back in German. No timer. No score.</div>
+                <div class="step-actions"><button class="btn btn-red btn-lg" onclick="nextStep()">Start the conversation →</button></div>
+              </div>
+
+              <!-- STEP 7: COMPLETE -->
+              <div class="dstep" id="ds-7">
+                <div class="comp-star">⭐</div>
+                <div class="comp-title">You just spoke<br><em>German.</em></div>
+                <div class="comp-xp">+70 XP</div>
+                <div class="comp-msg">Your brain is processing everything right now. Sleep will consolidate it. Come back tomorrow.</div>
+                <div class="step-actions">
+                  <button class="btn btn-green btn-lg" onclick="switchView('library')">← Back to lessons</button>
+                  <button class="btn btn-ghost btn-lg" onclick="jumpToStep(0)">↺ Replay</button>
+                </div>
+              </div>
+
             </div>
 
-            <div class="master-big-card">
-              <div class="mbc-name">Swain · Benny Lewis</div>
-              <div class="mbc-quote">"Speak from day one. Imperfect output beats perfect silence."</div>
-              <div class="mbc-principle">Output Hypothesis + Day-One Speaking</div>
-              <div class="mbc-detail">Merrill Swain demonstrated that pushed output — being required to produce language — accelerates acquisition beyond input alone. Benny Lewis proved this works with zero prior knowledge.</div>
-              <div class="mbc-rule">
-                <div class="mbc-rule-label">In Wundervoll</div>
-                <div class="mbc-rule-text">Every single lesson — including Lesson 1 — ends with a real conversation in German. No timer. No score. Just speak.</div>
+            <!-- Demo sidebar -->
+            <div class="demo-side">
+              <div class="demo-side-inner">
+                <div>
+                  <div class="ds-title">Die ersten <em>Worte</em></div>
+                  <div class="ds-sub" style="margin-top:10px">A1 · Lesson 1 · ~12 min<br>Interactive lesson demo</div>
+                </div>
+                <div>
+                  <div class="ds-label">Active principles</div>
+                  <div class="pc"><div class="pc-master">Pimsleur</div><div class="pc-text">Audio plays before you see text.</div></div>
+                  <div class="pc"><div class="pc-master">Schmidt</div><div class="pc-text">One grammar insight. Discovered, not explained.</div></div>
+                  <div class="pc"><div class="pc-master">Thomas</div><div class="pc-text">No red X. Wrong answers get a warm explanation.</div></div>
+                  <div class="pc"><div class="pc-master">Benny Lewis</div><div class="pc-text">Every lesson ends with a real conversation.</div></div>
+                </div>
+                <button class="btn btn-gold" style="width:100%;justify-content:center;font-size:16px" onclick="switchView('library')">Open full curriculum →</button>
               </div>
             </div>
 
           </div>
-
-          <div class="golden-rule">
-            <div class="gr-label">The Golden Rule of Wundervoll</div>
-            <div class="gr-text">
-              Everything that <em>helps</em> the learner = English.<br>
-              Everything the learner <em>learns</em> = Deutsch.
-            </div>
-            <div class="gr-sub">Every word of UI, instruction and feedback is in English for A1 learners. Every phrase, every example, every conversation — in German.</div>
-          </div>
-
         </div>
       </div>
 
@@ -1391,43 +622,43 @@ body::after{
 <script>
 // ── DATA ────────────────────────────────────────────────────────
 const LEVELS = {
-  A1:{ label:'A1 — Überleben', color:'#C9A84C', bg:'rgba(201,168,76,0.08)', border:'rgba(201,168,76,0.25)', sub:'Survival German', lessons:19 },
-  A2:{ label:'A2 — Leben',     color:'#3B82F6', bg:'rgba(59,130,246,0.08)', border:'rgba(59,130,246,0.25)', sub:'Living German', lessons:12 },
-  B1:{ label:'B1 — Denken',    color:'#8B5CF6', bg:'rgba(139,92,246,0.08)', border:'rgba(139,92,246,0.25)', sub:'Thinking in German', lessons:16 },
-  B2:{ label:'B2 — Argumentieren',color:'#22C55E',bg:'rgba(34,197,94,0.08)',border:'rgba(34,197,94,0.25)', sub:'Arguing in German', lessons:17 },
-  C1:{ label:'C1 — Sein',      color:'#CC0000', bg:'rgba(204,0,0,0.08)', border:'rgba(204,0,0,0.25)', sub:'Being German', lessons:15 },
-  C2:{ label:'C2 — Meistern',  color:'#C8D6E8', bg:'rgba(200,214,232,0.08)', border:'rgba(200,214,232,0.25)', sub:'Mastering German', lessons:13 },
-  MS:{ label:'Muttersprache',  color:'#fff', bg:'rgba(255,255,255,0.05)', border:'rgba(255,255,255,0.15)', sub:'Native-level German', lessons:4 },
+  A1:{ label:'A1 — Überleben', color:'#C9A84C', sub:'Survival German', lessons:19 },
+  A2:{ label:'A2 — Leben',     color:'#3B82F6', sub:'Living German',   lessons:12 },
+  B1:{ label:'B1 — Denken',    color:'#8B5CF6', sub:'Thinking in German', lessons:16 },
+  B2:{ label:'B2 — Argumentieren', color:'#22C55E', sub:'Arguing in German', lessons:17 },
+  C1:{ label:'C1 — Sein',      color:'#CC0000', sub:'Being German',    lessons:15 },
+  C2:{ label:'C2 — Meistern',  color:'#C8D6E8', sub:'Mastering German',lessons:13 },
+  MS:{ label:'Muttersprache',  color:'#ffffff', sub:'Native-level German', lessons:4 },
 };
 
 const LESSONS = {
   A1:[
-    { n:0, title:'Aussprache — Das Fundament', dur:'20 Min', desc:'Learn to sound German before you speak a word.', done:true },
-    { n:1, title:'Die ersten Worte', dur:'18 Min', desc:'Berlin Hauptbahnhof. Day one. Greetings, Sie/du, Bitte.', done:true },
-    { n:2, title:'Wer bin ich? — SEIN', dur:'20 Min', desc:'The most fundamental verb. Introduce yourself.', done:true },
-    { n:3, title:'Zahlen, Preise, Mengen', dur:'20 Min', desc:'Numbers, prices, the market. Mathematics of language.', done:true },
-    { n:4, title:'HABEN — Besitz und Zustände', dur:'20 Min', desc:'The second fundamental verb. Germans HAVE hunger.', done:true },
-    { n:5, title:'Der, Die, Das — Mit System', dur:'22 Min', desc:'The colour method. Crack the article system.', done:true },
-    { n:6, title:'Im Café — Möchten und Akkusativ', dur:'19 Min', desc:'Ordering coffee. The first Akkusativ.', done:false },
-    { n:7, title:'Wo ist...? — Stadtorientierung', dur:'19 Min', desc:'Directions, Dativ, contractions: am, im, zum.', done:false },
-    { n:8, title:'Meine Familie', dur:'20 Min', desc:'Possessives. Adjectives after SEIN. Family vocab.', done:false },
-    { n:9, title:'Wie spät ist es? — Zeit', dur:'20 Min', desc:'Halb drei = 2:30. The German time system.', done:false, locked:true },
-    { n:10, title:'Modalverben', dur:'20 Min', desc:'Können, müssen, wollen, dürfen. Power verbs.', done:false, locked:true },
-    { n:11, title:'Einkaufen', dur:'20 Min', desc:'Shopping. Akkusativ complete. Market dialogue.', done:false, locked:true },
-    { n:12, title:'Das Wetter', dur:'19 Min', desc:'Unpersönliches es. German small talk perfected.', done:false, locked:true },
-    { n:13, title:'Körper und Gesundheit', dur:'20 Min', desc:'Beim Arzt. Weh tun + Dativ. Seit + Präsens.', done:false, locked:true },
-    { n:14, title:'Meine Wohnung', dur:'20 Min', desc:'Wechselpräpositionen. stehen vs. stellen.', done:false, locked:true },
-    { n:15, title:'Freizeit und Hobbys', dur:'19 Min', desc:'Gern, lieber, am liebsten. Einladungen.', done:false, locked:true },
-    { n:16, title:'Im Restaurant', dur:'20 Min', desc:'Es gibt + Akkusativ. German dining culture.', done:false, locked:true },
-    { n:17, title:'Arbeit und Beruf', dur:'20 Min', desc:'Trennbare Verben. German work culture.', done:false, locked:true },
-    { n:18, title:'A1 — Das große Finale', dur:'25 Min', desc:'All A1 structures in one conversation. Bridge to A2.', done:false, locked:true },
+    { n:0,  title:'Aussprache — Das Fundament',     dur:'20 Min', desc:'Learn to sound German before you speak a word.', done:true },
+    { n:1,  title:'Die ersten Worte',                dur:'18 Min', desc:'Berlin Hauptbahnhof. Day one. Greetings, Sie/du, Bitte.', done:true },
+    { n:2,  title:'Wer bin ich? — SEIN',             dur:'20 Min', desc:'The most fundamental verb. Introduce yourself.', done:true },
+    { n:3,  title:'Zahlen, Preise, Mengen',          dur:'20 Min', desc:'Numbers, prices, the market. Mathematics of language.', done:true },
+    { n:4,  title:'HABEN — Besitz und Zustände',     dur:'20 Min', desc:'The second fundamental verb. Germans HAVE hunger.', done:true },
+    { n:5,  title:'Der, Die, Das — Mit System',      dur:'22 Min', desc:'The colour method. Crack the article system.', done:true },
+    { n:6,  title:'Im Café — Möchten und Akkusativ', dur:'19 Min', desc:'Ordering coffee. The first Akkusativ.', done:false },
+    { n:7,  title:'Wo ist...? — Stadtorientierung',  dur:'19 Min', desc:'Directions, Dativ, contractions: am, im, zum.', done:false },
+    { n:8,  title:'Meine Familie',                   dur:'20 Min', desc:'Possessives. Adjectives after SEIN. Family vocab.', done:false },
+    { n:9,  title:'Wie spät ist es? — Zeit',         dur:'20 Min', desc:'Halb drei = 2:30. The German time system.', done:false, locked:true },
+    { n:10, title:'Modalverben',                     dur:'20 Min', desc:'Können, müssen, wollen, dürfen. Power verbs.', done:false, locked:true },
+    { n:11, title:'Einkaufen',                       dur:'20 Min', desc:'Shopping. Akkusativ complete. Market dialogue.', done:false, locked:true },
+    { n:12, title:'Das Wetter',                      dur:'19 Min', desc:'Unpersönliches es. German small talk perfected.', done:false, locked:true },
+    { n:13, title:'Körper und Gesundheit',           dur:'20 Min', desc:'Beim Arzt. Weh tun + Dativ. Seit + Präsens.', done:false, locked:true },
+    { n:14, title:'Meine Wohnung',                   dur:'20 Min', desc:'Wechselpräpositionen. stehen vs. stellen.', done:false, locked:true },
+    { n:15, title:'Freizeit und Hobbys',             dur:'19 Min', desc:'Gern, lieber, am liebsten. Einladungen.', done:false, locked:true },
+    { n:16, title:'Im Restaurant',                   dur:'20 Min', desc:'Es gibt + Akkusativ. German dining culture.', done:false, locked:true },
+    { n:17, title:'Arbeit und Beruf',                dur:'20 Min', desc:'Trennbare Verben. German work culture.', done:false, locked:true },
+    { n:18, title:'A1 — Das große Finale',           dur:'25 Min', desc:'All A1 structures in one conversation. Bridge to A2.', done:false, locked:true },
   ],
-  A2: Array.from({length:12},(_,i)=>({ n:19+i, title:`A2 Lektion ${i+1}`, dur:'20 Min', desc:'A2 content — coming soon.', locked:true })),
-  B1: Array.from({length:16},(_,i)=>({ n:31+i, title:`B1 Lektion ${i+1}`, dur:'22 Min', desc:'B1 content — coming soon.', locked:true })),
-  B2: Array.from({length:17},(_,i)=>({ n:47+i, title:`B2 Lektion ${i+1}`, dur:'22 Min', desc:'B2 content — coming soon.', locked:true })),
-  C1: Array.from({length:15},(_,i)=>({ n:64+i, title:`C1 Lektion ${i+1}`, dur:'25 Min', desc:'C1 content — coming soon.', locked:true })),
-  C2: Array.from({length:13},(_,i)=>({ n:79+i, title:`C2 Lektion ${i+1}`, dur:'25 Min', desc:'C2 content — coming soon.', locked:true })),
-  MS: Array.from({length:4}, (_,i)=>({ n:92+i, title:`Muttersprache Lektion ${i+1}`, dur:'30 Min', desc:'Native-level content.', locked:true })),
+  A2: Array.from({length:12},(_,i)=>({ n:19+i,  title:`A2 Lektion ${i+1}`, dur:'20 Min', desc:'A2 content — coming soon.', locked:true })),
+  B1: Array.from({length:16},(_,i)=>({ n:31+i,  title:`B1 Lektion ${i+1}`, dur:'22 Min', desc:'B1 content — coming soon.', locked:true })),
+  B2: Array.from({length:17},(_,i)=>({ n:47+i,  title:`B2 Lektion ${i+1}`, dur:'22 Min', desc:'B2 content — coming soon.', locked:true })),
+  C1: Array.from({length:15},(_,i)=>({ n:64+i,  title:`C1 Lektion ${i+1}`, dur:'25 Min', desc:'C1 content — coming soon.', locked:true })),
+  C2: Array.from({length:13},(_,i)=>({ n:79+i,  title:`C2 Lektion ${i+1}`, dur:'25 Min', desc:'C2 content — coming soon.', locked:true })),
+  MS: Array.from({length:4}, (_,i)=>({ n:92+i,  title:`Muttersprache ${i+1}`, dur:'30 Min', desc:'Native-level content.', locked:true })),
 };
 
 const A1_DETAIL = {
@@ -1444,291 +675,178 @@ const A1_DETAIL = {
 // ── NAVIGATION ──────────────────────────────────────────────────
 let currentView = 'home';
 let currentLevel = 'A1';
-let selectedLesson = null;
 
-function switchView(view) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.rail-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
+const CRUMBS = {
+  home:    '<span class="cur">Home</span>',
+  library: '<span onclick="switchView(\'home\')" style="cursor:pointer">Home</span><span class="sep"> / </span><span class="cur">Curriculum</span>',
+  demo:    '<span onclick="switchView(\'home\')" style="cursor:pointer">Home</span><span class="sep"> / </span><span class="cur">Live Lesson</span>',
+};
 
-  document.getElementById('v-'+view).classList.add('active');
-  const rb = document.getElementById('rb-'+view);
-  if(rb) rb.classList.add('active');
-
-  currentView = view;
-  updateBreadcrumb();
-
-  const titles = {home:'Home',library:'Curriculum Library',demo:'Live Lesson Demo',masters:'The Method'};
-  if(view==='library') renderLibrary();
+function switchView(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.rail-btn,.sb-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('v-'+v).classList.add('active');
+  ['rb-','sb-'].forEach(p => { const el=document.getElementById(p+v); if(el) el.classList.add('active'); });
+  currentView = v;
+  document.getElementById('breadcrumb').innerHTML = CRUMBS[v]||CRUMBS.home;
+  if(v==='library') renderLessons();
 }
 
-function updateBreadcrumb() {
-  const crumbs = {
-    home:'<span class="current">Home</span>',
-    library:'<span onclick="switchView(\'home\')" style="cursor:pointer">Home</span><span class="sep"> / </span><span class="current">Curriculum</span>',
-    demo:'<span onclick="switchView(\'home\')" style="cursor:pointer">Home</span><span class="sep"> / </span><span class="current">Live Lesson</span>',
-    masters:'<span onclick="switchView(\'home\')" style="cursor:pointer">Home</span><span class="sep"> / </span><span class="current">The Method</span>',
-  };
-  document.getElementById('breadcrumb').innerHTML = crumbs[currentView] || '';
-}
-
-// ── LIBRARY ─────────────────────────────────────────────────────
-function setLevel(lv) {
-  currentLevel = lv;
-  document.querySelectorAll('.level-filter').forEach(f => {
-    const isActive = f.textContent.trim() === lv;
-    f.classList.toggle('active', isActive);
-    if(isActive){ f.style.background = LEVELS[lv].color; f.style.color = '#070B18'; }
-    else { f.style.background = ''; f.style.color = ''; }
+// ── CURRICULUM ──────────────────────────────────────────────────
+function setLevel(lvl) {
+  currentLevel = lvl;
+  const lv = LEVELS[lvl];
+  const keys = ['A1','A2','B1','B2','C1','C2','MS'];
+  document.querySelectorAll('.lvl-tab').forEach((b,i) => {
+    const k = keys[i];
+    b.classList.toggle('active', k === lvl);
+    if(k===lvl){ b.style.background=lv.color; b.style.color='#040810'; }
+    else { b.style.background=''; b.style.color=''; }
   });
-  renderLibrary();
-  // update sidebar
-  document.querySelectorAll('.sb-level').forEach(s => {
-    s.classList.remove('active');
-    if(s.textContent.includes(lv)) s.classList.add('active');
-  });
+  renderLessons();
 }
 
-function renderLibrary() {
-  const body = document.getElementById('lesson-list-body');
-  const lv   = LEVELS[currentLevel];
-  const lessons = LESSONS[currentLevel] || [];
-
-  body.innerHTML = `
-    <div class="lib-section">
-      <div class="lib-section-hdr">
-        <div class="lib-section-badge" style="color:${lv.color};background:${lv.bg};border-color:${lv.border}">${currentLevel}</div>
-        <div>
-          <div class="lib-section-title">${lv.label}</div>
-          <div class="lib-section-sub">${lv.sub}</div>
-        </div>
-        <div class="lib-section-count">${lessons.length} lessons</div>
-      </div>
-      ${lessons.map(l => `
-        <div class="lesson-card${l.done?' done':''}${l.locked?' locked':''}${selectedLesson===l.n?' selected':''}" 
-             onclick="${l.locked?'':'selectLesson('+l.n+')'}">
-          <div class="lc-num-box">${String(l.n).padStart(2,'0')}</div>
-          <div class="lc-body">
-            <div class="lc-title">${l.title}</div>
-            <div class="lc-meta-row">
-              <span class="lc-level">${currentLevel}</span>
-              <span class="lc-dur">${l.dur}</span>
-            </div>
-            <div class="lc-desc">${l.desc}</div>
-          </div>
-          ${l.locked ? '<span class="lc-lock">🔒</span>' : l.done ? '<span class="lc-done">✓</span>' : ''}
-        </div>
-      `).join('')}
-    </div>
-  `;
-}
-
-function selectLesson(n) {
-  selectedLesson = n;
-  renderLibrary();
-
-  const detail = document.getElementById('lib-detail');
-  const lesson = Object.values(LESSONS).flat().find(l => l.n === n);
-  const data = A1_DETAIL[n] || null;
+function renderLessons() {
   const lv = LEVELS[currentLevel];
+  const list = LESSONS[currentLevel]||[];
+  document.getElementById('lesson-list-body').innerHTML = `
+    <div class="lvl-section-hdr">
+      <div class="lvl-badge" style="background:${lv.color}20;border:1px solid ${lv.color}40;color:${lv.color}">${currentLevel}</div>
+      <div class="lvl-info"><div class="lvl-name">${lv.label}</div><div class="lvl-sub">${lv.sub}</div></div>
+      <div class="lvl-cnt">${lv.lessons} lessons</div>
+    </div>
+    <div class="lesson-list">${list.map(l => rowHTML(l)).join('')}</div>
+  `;
+}
 
-  if (!lesson) return;
-
-  const locked = lesson.locked;
-  const done = lesson.done;
-
-  detail.innerHTML = `
-    <div class="ld-body">
-      <div class="ld-eyebrow">${currentLevel} · Lesson ${n}</div>
-      <div class="ld-title">${lesson.title}</div>
-      <div class="ld-badges">
-        <div class="ld-badge" style="color:${lv.color};background:${lv.bg};border-color:${lv.border}">${currentLevel}</div>
-        <div class="ld-badge" style="color:var(--ml);background:var(--bg3);border-color:var(--b)">${lesson.dur}</div>
-        ${done ? '<div class="ld-badge" style="color:var(--green);background:var(--greenbg);border-color:var(--greenbr)">✓ Complete</div>' : ''}
-        ${locked ? '<div class="ld-badge" style="color:var(--m);background:var(--bg3);border-color:var(--b)">🔒 Locked</div>' : ''}
+function rowHTML(l) {
+  const det = (currentLevel==='A1' && A1_DETAIL[l.n]) ? A1_DETAIL[l.n] : null;
+  const locked = !!l.locked;
+  const status = locked ? 'locked' : (l.done ? 'done' : 'next');
+  const icon = locked ? '🔒' : (l.done ? '✓' : '▶');
+  const expand = det ? `
+    <div class="le-grid">
+      <div>
+        <div class="le-col-label">By the end you will</div>
+        ${det.goals.map(g=>`<div class="le-goal">${g}</div>`).join('')}
       </div>
-
-      ${data ? `
-        <div class="ld-section">
-          <div class="ld-section-label">By the end you will be able to…</div>
-          ${data.goals.map(g => `
-            <div class="ld-goal">
-              <div class="ld-goal-dot">✓</div>
-              <div class="ld-goal-text">${g}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="ld-section">
-          <div class="ld-section-label">Phrases you will learn</div>
-          ${data.speak.map(([de,en]) => `
-            <div class="ld-phrase">
-              <span class="ld-phrase-de">${de}</span>
-              <span class="ld-phrase-en">${en}</span>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="ld-section">
-          <div class="ld-section-label">Grammar chunks</div>
-          ${data.chunks.map(c => `<div class="ld-chunk">${c}</div>`).join('')}
-        </div>
-
-        <div class="ld-section">
-          <div class="ld-section-label">Memory trick</div>
-          <div class="ld-mnemonic">
-            <div class="ld-mnemonic-label">🧠 MEMORY TRICK</div>
-            ${data.mnemonic}
-          </div>
-        </div>
-      ` : `
-        <div class="ld-section">
-          <div class="ld-section-label">Description</div>
-          <div style="font-size:13px;color:var(--t);line-height:1.7">${lesson.desc}</div>
-        </div>
-        ${locked ? '<div style="background:var(--bg3);border:1px solid var(--b);border-radius:var(--r12);padding:16px;font-size:12px;color:var(--m);margin-top:12px">Complete previous lessons to unlock this one.</div>' : ''}
-      `}
-
-      <div class="ld-footer" style="margin:0 -28px -28px;padding:20px 28px;border-top:1px solid var(--b)">
-        <button class="ld-start ${locked?'locked':''}" onclick="${locked?'':n===1?'switchView(\'demo\')':'switchView(\'demo\')'}">
-          ${locked ? '🔒 Locked' : '▶ Start Lesson →'}
-        </button>
+      <div>
+        <div class="le-col-label">Phrases you will learn</div>
+        ${det.speak.map(([de,en])=>`<div class="le-phrase"><div class="le-de">${de}</div><div class="le-en">${en}</div></div>`).join('')}
       </div>
+      <div>
+        <div class="le-col-label">Grammar chunks</div>
+        ${det.chunks.map(c=>`<div class="le-chunk">${c}</div>`).join('')}
+        <div class="le-col-label" style="margin-top:18px">Memory trick</div>
+        <div class="le-mnemonic">${det.mnemonic}</div>
+      </div>
+      <div class="le-footer">
+        <button class="btn btn-gold" style="font-size:16px" onclick="switchView('demo')">▶ Start this lesson</button>
+        <button class="btn btn-ghost" style="font-size:16px" onclick="switchView('demo')">Preview →</button>
+      </div>
+    </div>
+  ` : (!locked ? `<div style="padding:24px 32px;font-size:17px;color:var(--ml)">${l.desc}</div>` : '');
+
+  return `
+    <div class="lrow ${status}" id="lr${l.n}">
+      <div class="lrow-hdr" onclick="${!locked?`toggleRow(${l.n})`:''}">
+        <div class="lrow-num">L${String(l.n).padStart(2,'0')}</div>
+        <div class="lrow-icon ${status}">${icon}</div>
+        <div class="lrow-text"><div class="lrow-title">${l.title}</div><div class="lrow-desc">${l.desc}</div></div>
+        <div class="lrow-dur">${l.dur}</div>
+        ${!locked?'<div class="lrow-chev">⌄</div>':''}
+      </div>
+      ${!locked?`<div class="lrow-expand">${expand}</div>`:''}
     </div>
   `;
 }
 
-// ── DEMO LESSON ──────────────────────────────────────────────────
-let currentStep = 0;
-const TOTAL_STEPS = 8;
-const STEP_LABELS = ['HOOK','LISTEN','LISTEN','LISTEN','DISCOVER','PRACTICE','SPEAK','DONE'];
-const scramblePlaced = [];
-const CORRECT_ORDER = ['Wo','ist','der','Bahnhof','bitte'];
+function toggleRow(n) {
+  const r = document.getElementById('lr'+n);
+  if(!r) return;
+  const was = r.classList.contains('open');
+  document.querySelectorAll('.lrow.open').forEach(x=>x.classList.remove('open'));
+  if(!was) r.classList.add('open');
+}
 
-function goToStep(n) {
-  document.querySelectorAll('.ds').forEach((s,i) => {
-    s.classList.toggle('active', i === n);
+// ── DEMO STEP LOGIC ──────────────────────────────────────────────
+let step = 0;
+
+function nextStep() { jumpToStep(step+1); }
+
+function jumpToStep(s) {
+  document.querySelectorAll('.dstep').forEach(el=>el.classList.remove('active'));
+  const el = document.getElementById('ds-'+s);
+  if(el) el.classList.add('active');
+  step = s;
+  const navMap = [0,1,1,1,4,5,6,7];
+  const navKeys = [0,1,4,5,6,7];
+  navKeys.forEach(k => {
+    const el = document.getElementById('dsn-'+k);
+    if(!el) return;
+    el.classList.remove('active','done');
+    const cur = navMap[s];
+    if(k===cur) el.classList.add('active');
+    else if(k<cur) el.classList.add('done');
   });
-  currentStep = n;
-
-  // Progress
-  const pct = Math.round((n / (TOTAL_STEPS-1)) * 100);
-  document.getElementById('demo-prog').style.width = pct + '%';
-
-  // Act label
-  document.getElementById('demo-act-label').textContent = STEP_LABELS[n] || '';
-
-  // Step indicator
-  document.querySelectorAll('.si-item').forEach((item, i) => {
-    const stepMap = [0,1,4,5,6,7];
-    item.classList.toggle('active', stepMap[i] === n);
-    item.classList.toggle('done', stepMap[i] < n);
-  });
 }
 
-function nextStep() {
-  if (currentStep < TOTAL_STEPS - 1) goToStep(currentStep + 1);
+function revealTrans(n) {
+  const tr = document.getElementById('tr-'+n);
+  const th = document.getElementById('th-'+n);
+  const btn = document.getElementById('c-'+n);
+  if(tr){ tr.style.display='block'; tr.style.animation='fadeUp .3s ease'; }
+  if(th) th.style.display='none';
+  if(btn) btn.disabled = false;
 }
 
-function jumpToStep(n) {
-  goToStep(n);
+function noticePick(el, correct) {
+  document.getElementById('nc').querySelectorAll('.nc').forEach(c=>c.style.pointerEvents='none');
+  el.classList.add(correct?'correct':'wrong');
+  if(!correct) document.getElementById('nc').querySelectorAll('.nc').forEach(c=>{ if(c!==el) c.classList.add('correct'); });
+  const ins = document.getElementById('insight');
+  ins.style.display='block'; ins.style.animation='fadeUp .3s ease';
+  document.getElementById('c-4').disabled=false;
 }
 
-function revealTranslation(idx) {
-  const taph = document.getElementById('taph-'+idx);
-  const trans = document.getElementById('trans-'+idx);
-  const cont  = document.getElementById('cont-'+idx);
-  if(taph) taph.style.display = 'none';
-  if(trans){ trans.style.display = 'block'; trans.style.animation = 'fadeUp .35s ease'; }
-  if(cont) cont.disabled = false;
+let placed = [];
+function pickTile(el, w) {
+  if(el.classList.contains('used')) return;
+  el.classList.add('used');
+  placed.push({w, el});
+  const dz = document.getElementById('dz');
+  if(dz.querySelector('.dz-hint')) dz.querySelector('.dz-hint').remove();
+  const t = document.createElement('div');
+  t.className='tile placed'; t.textContent=w;
+  t.onclick=()=>removeTile(t,el);
+  dz.appendChild(t); dz.classList.add('filled');
+  document.getElementById('c-5').disabled = placed.length < 4;
+}
+function removeTile(t, orig) {
+  t.remove(); orig.classList.remove('used');
+  placed = placed.filter(p=>p.el!==orig);
+  const dz=document.getElementById('dz');
+  if(!dz.children.length){ dz.innerHTML='<span class="dz-hint">Tap words below to build</span>'; dz.classList.remove('filled'); }
+  document.getElementById('c-5').disabled = placed.length < 4;
+}
+function resetTiles() {
+  placed=[];
+  const dz=document.getElementById('dz');
+  dz.innerHTML='<span class="dz-hint">Tap words below to build</span>'; dz.classList.remove('filled');
+  document.querySelectorAll('#tile-pool .tile').forEach(t=>t.classList.remove('used'));
+  document.getElementById('c-5').disabled=true;
+}
+function checkBuild() {
+  const built = placed.map(p=>p.w).join(' ').toLowerCase().replace(/,/g,'');
+  const ok = ['wo ist der bahnhof bitte'].includes(built);
+  const dz = document.getElementById('dz');
+  dz.style.borderColor = ok ? 'var(--green)' : 'var(--red)';
+  dz.style.background   = ok ? 'var(--greenbg)' : 'rgba(204,0,0,.08)';
+  setTimeout(()=>{ dz.style.borderColor=''; dz.style.background=''; if(ok) nextStep(); },800);
 }
 
-function noticeAnswer(el, correct) {
-  document.querySelectorAll('.ds-choice').forEach(c => {
-    c.style.pointerEvents = 'none';
-  });
-  el.classList.add(correct ? 'correct' : 'wrong');
-  if(!correct) {
-    document.querySelectorAll('.ds-choice').forEach(c => {
-      if(!c.classList.contains('wrong')) c.classList.add('correct');
-    });
-  }
-  const insight = document.getElementById('noticing-insight');
-  if(insight){ insight.style.display = 'block'; }
-  const cont = document.getElementById('cont-4');
-  if(cont) cont.disabled = false;
-}
-
-// Scramble
-function pickTile(el, word) {
-  if(el.classList.contains('placed')) {
-    // Return tile
-    el.classList.remove('placed');
-    const zone = document.getElementById('drop-zone');
-    const hint = zone.querySelector('.ds-drop-hint');
-    if(hint) hint.style.display = '';
-    // Remove from zone
-    const tiles = zone.querySelectorAll('.ds-tile');
-    tiles.forEach(t => { if(t.dataset.word === word && !document.getElementById('scramble-tiles').contains(t)) t.remove(); });
-    updateCheck();
-    return;
-  }
-  el.classList.add('placed');
-  const zone = document.getElementById('drop-zone');
-  const hint = zone.querySelector('.ds-drop-hint');
-  if(hint) hint.style.display = 'none';
-  const tile = document.createElement('div');
-  tile.className = 'ds-tile placed';
-  tile.dataset.word = word;
-  tile.textContent = word;
-  tile.onclick = () => {
-    tile.remove();
-    el.classList.remove('placed');
-    if(zone.children.length === 0) {
-      const h = document.createElement('span');
-      h.className = 'ds-drop-hint';
-      h.textContent = 'Tap words below to build';
-      zone.appendChild(h);
-    }
-    updateCheck();
-  };
-  zone.appendChild(tile);
-  updateCheck();
-}
-
-function updateCheck() {
-  const zone = document.getElementById('drop-zone');
-  const tiles = [...zone.querySelectorAll('.ds-tile')];
-  const cont = document.getElementById('cont-5');
-  if(cont) cont.disabled = tiles.length === 0;
-}
-
-function checkScramble() {
-  const zone = document.getElementById('drop-zone');
-  const tiles = [...zone.querySelectorAll('.ds-tile')];
-  const answer = tiles.map(t => t.dataset.word || t.textContent.trim());
-  const correct = JSON.stringify(answer) === JSON.stringify(CORRECT_ORDER);
-  zone.style.borderColor = correct ? 'var(--greenbr)' : 'var(--redbr)';
-  zone.style.background  = correct ? 'var(--greenbg)' : 'var(--redbg)';
-  const cont = document.getElementById('cont-5');
-  if(cont){ cont.textContent = correct ? '✓ Perfect! Next →' : 'Not quite. Next →'; cont.onclick = nextStep; }
-  setTimeout(nextStep, 1200);
-}
-
-// ── INIT ─────────────────────────────────────────────────────────
-renderLibrary();
-goToStep(0);
-
-// Auto-advance hook step after 2s
-setTimeout(() => {
-  const hookAudio = document.querySelector('#ds-0 .ds-audio-row');
-  if(hookAudio && currentStep === 0) {
-    hookAudio.innerHTML = '<span style="color:var(--gold);font-size:11px">🔊 Tap to hear again</span>';
-  }
-}, 2200);
-
+// Init
+renderLessons();
 </script>
 </body>
 </html>
-HTMLEOF
-echo "done"
