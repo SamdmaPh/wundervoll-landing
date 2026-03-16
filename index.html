@@ -753,63 +753,62 @@ function renderLessons() {
     </div>
     <div class="lesson-list">${list.map(l => rowHTML(l)).join('')}</div>
   `;
+  initLessonClicks();
 }
 
-function buildExpandHTML(n) {
-  const det = (currentLevel==='A1') ? A1_DETAIL[n] : null;
-  if(!det) return '';
+function detailHTML(det, n) {
+  var goals = '';
+  for(var i=0;i<det.goals.length;i++) goals += '<div class="le-goal">'+det.goals[i]+'</div>';
+  var speaks = '';
+  for(var i=0;i<det.speak.length;i++) speaks += '<div class="le-phrase"><div class="le-de">'+det.speak[i][0]+'</div><div class="le-en">'+det.speak[i][1]+'</div></div>';
+  var chunks = '';
+  for(var i=0;i<det.chunks.length;i++) chunks += '<div class="le-chunk">'+det.chunks[i]+'</div>';
   return '<div class="le-grid">'
-    + '<div>'
-    + '<div class="le-col-label">By the end you will</div>'
-    + det.goals.map(function(g){ return '<div class="le-goal">'+g+'</div>'; }).join('')
-    + '</div>'
-    + '<div>'
-    + '<div class="le-col-label">Phrases you will learn</div>'
-    + det.speak.map(function(p){ return '<div class="le-phrase"><div class="le-de">'+p[0]+'</div><div class="le-en">'+p[1]+'</div></div>'; }).join('')
-    + '</div>'
-    + '<div>'
-    + '<div class="le-col-label">Grammar chunks</div>'
-    + det.chunks.map(function(c){ return '<div class="le-chunk">'+c+'</div>'; }).join('')
-    + '<div class="le-col-label" style="margin-top:18px">Memory trick</div>'
-    + '<div class="le-mnemonic">'+det.mnemonic+'</div>'
-    + '</div>'
-    + '<div class="le-footer">'
-    + '<button class="btn btn-gold" style="font-size:16px" onclick="switchView(\'demo\')">▶ Start this lesson</button>'
-    + '<button class="btn btn-ghost" style="font-size:16px" onclick="switchView(\'demo\')">Preview →</button>'
-    + '</div>'
-    + '</div>';
+    +'<div><div class="le-col-label">By the end you will</div>'+goals+'</div>'
+    +'<div><div class="le-col-label">Phrases you will learn</div>'+speaks+'</div>'
+    +'<div><div class="le-col-label">Grammar chunks</div>'+chunks
+    +'<div class="le-col-label" style="margin-top:18px">Memory trick</div>'
+    +'<div class="le-mnemonic">'+det.mnemonic+'</div></div>'
+    +'<div class="le-footer">'
+    +'<button class="btn btn-gold" style="font-size:16px" data-action="demo">▶ Start this lesson</button>'
+    +'<button class="btn btn-ghost" style="font-size:16px" data-action="demo">Preview →</button>'
+    +'</div></div>';
 }
 
 function rowHTML(l) {
-  const locked = !!l.locked;
-  const status = locked ? 'locked' : (l.done ? 'done' : 'next');
-  const icon = locked ? '🔒' : (l.done ? '✓' : '▶');
-  const hdrOnclick = locked ? '' : ' onclick="toggleRow(' + l.n + ')"';
-  return '<div class="lrow ' + status + '" id="lr' + l.n + '">'
-    + '<div class="lrow-hdr"' + hdrOnclick + '>'
-    + '<div class="lrow-num">L' + String(l.n).padStart(2,'0') + '</div>'
-    + '<div class="lrow-icon ' + status + '">' + icon + '</div>'
-    + '<div class="lrow-text"><div class="lrow-title">' + l.title + '</div><div class="lrow-desc">' + l.desc + '</div></div>'
-    + '<div class="lrow-dur">' + l.dur + '</div>'
-    + (locked ? '' : '<div class="lrow-chev">⌄</div>')
-    + '</div>'
-    + (locked ? '' : '<div class="lrow-expand" id="lx' + l.n + '"></div>')
-    + '</div>';
+  var locked = !!l.locked;
+  var status = locked ? 'locked' : (l.done ? 'done' : 'next');
+  var icon = locked ? '🔒' : (l.done ? '✓' : '▶');
+  var det = (!locked && currentLevel==='A1') ? A1_DETAIL[l.n] : null;
+  var expandContent = det ? detailHTML(det, l.n)
+    : (!locked ? '<div style="padding:24px 32px;font-size:17px;color:var(--ml)">'+l.desc+'</div>' : '');
+  var expandDiv = locked ? '' : '<div class="lrow-expand">'+expandContent+'</div>';
+  var chevron = locked ? '' : '<div class="lrow-chev">⌄</div>';
+  var hdr = '<div class="lrow-hdr"'+(locked?'':' data-n="'+l.n+'"')+'>'
+    +'<div class="lrow-num">L'+String(l.n).padStart(2,'0')+'</div>'
+    +'<div class="lrow-icon '+status+'">'+icon+'</div>'
+    +'<div class="lrow-text"><div class="lrow-title">'+l.title+'</div><div class="lrow-desc">'+l.desc+'</div></div>'
+    +'<div class="lrow-dur">'+l.dur+'</div>'
+    +chevron+'</div>';
+  return '<div class="lrow '+status+'" id="lr'+l.n+'">'+hdr+expandDiv+'</div>';
 }
 
-function toggleRow(n) {
-  const r = document.getElementById('lr'+n);
-  if(!r) return;
-  const was = r.classList.contains('open');
-  document.querySelectorAll('.lrow.open').forEach(function(x){ x.classList.remove('open'); });
-  if(!was) {
-    r.classList.add('open');
-    const xEl = document.getElementById('lx'+n);
-    if(xEl && !xEl.innerHTML) {
-      const det = (currentLevel==='A1') ? A1_DETAIL[n] : null;
-      xEl.innerHTML = det ? buildExpandHTML(n) : '<div style="padding:24px 32px;font-size:17px;color:var(--ml)">'+((LESSONS[currentLevel]||[]).find(function(l){return l.n===n;})||{desc:''}).desc+'</div>';
+function initLessonClicks() {
+  var list = document.getElementById('lesson-list-body');
+  if(!list) return;
+  list.addEventListener('click', function(e) {
+    var hdr = e.target.closest('[data-n]');
+    if(hdr && hdr.dataset.n !== undefined) {
+      var n = parseInt(hdr.dataset.n, 10);
+      var row = document.getElementById('lr'+n);
+      if(!row) return;
+      var was = row.classList.contains('open');
+      document.querySelectorAll('.lrow.open').forEach(function(x){ x.classList.remove('open'); });
+      if(!was) row.classList.add('open');
     }
-  }
+    var btn = e.target.closest('[data-action="demo"]');
+    if(btn) switchView('demo');
+  });
 }
 
 // ── DEMO STEP LOGIC ──────────────────────────────────────────────
