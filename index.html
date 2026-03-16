@@ -755,54 +755,61 @@ function renderLessons() {
   `;
 }
 
+function buildExpandHTML(n) {
+  const det = (currentLevel==='A1') ? A1_DETAIL[n] : null;
+  if(!det) return '';
+  return '<div class="le-grid">'
+    + '<div>'
+    + '<div class="le-col-label">By the end you will</div>'
+    + det.goals.map(function(g){ return '<div class="le-goal">'+g+'</div>'; }).join('')
+    + '</div>'
+    + '<div>'
+    + '<div class="le-col-label">Phrases you will learn</div>'
+    + det.speak.map(function(p){ return '<div class="le-phrase"><div class="le-de">'+p[0]+'</div><div class="le-en">'+p[1]+'</div></div>'; }).join('')
+    + '</div>'
+    + '<div>'
+    + '<div class="le-col-label">Grammar chunks</div>'
+    + det.chunks.map(function(c){ return '<div class="le-chunk">'+c+'</div>'; }).join('')
+    + '<div class="le-col-label" style="margin-top:18px">Memory trick</div>'
+    + '<div class="le-mnemonic">'+det.mnemonic+'</div>'
+    + '</div>'
+    + '<div class="le-footer">'
+    + '<button class="btn btn-gold" style="font-size:16px" onclick="switchView(\'demo\')">▶ Start this lesson</button>'
+    + '<button class="btn btn-ghost" style="font-size:16px" onclick="switchView(\'demo\')">Preview →</button>'
+    + '</div>'
+    + '</div>';
+}
+
 function rowHTML(l) {
-  const det = (currentLevel==='A1' && A1_DETAIL[l.n]) ? A1_DETAIL[l.n] : null;
   const locked = !!l.locked;
   const status = locked ? 'locked' : (l.done ? 'done' : 'next');
   const icon = locked ? '🔒' : (l.done ? '✓' : '▶');
-  const expand = det ? `
-    <div class="le-grid">
-      <div>
-        <div class="le-col-label">By the end you will</div>
-        ${det.goals.map(g=>`<div class="le-goal">${g}</div>`).join('')}
-      </div>
-      <div>
-        <div class="le-col-label">Phrases you will learn</div>
-        ${det.speak.map(([de,en])=>`<div class="le-phrase"><div class="le-de">${de}</div><div class="le-en">${en}</div></div>`).join('')}
-      </div>
-      <div>
-        <div class="le-col-label">Grammar chunks</div>
-        ${det.chunks.map(c=>`<div class="le-chunk">${c}</div>`).join('')}
-        <div class="le-col-label" style="margin-top:18px">Memory trick</div>
-        <div class="le-mnemonic">${det.mnemonic}</div>
-      </div>
-      <div class="le-footer">
-        <button class="btn btn-gold" style="font-size:16px" onclick="switchView('demo')">▶ Start this lesson</button>
-        <button class="btn btn-ghost" style="font-size:16px" onclick="switchView('demo')">Preview →</button>
-      </div>
-    </div>
-  ` : (!locked ? `<div style="padding:24px 32px;font-size:17px;color:var(--ml)">${l.desc}</div>` : '');
-
-  return `
-    <div class="lrow ${status}" id="lr${l.n}">
-      <div class="lrow-hdr" onclick="${!locked?`toggleRow(${l.n})`:''}">
-        <div class="lrow-num">L${String(l.n).padStart(2,'0')}</div>
-        <div class="lrow-icon ${status}">${icon}</div>
-        <div class="lrow-text"><div class="lrow-title">${l.title}</div><div class="lrow-desc">${l.desc}</div></div>
-        <div class="lrow-dur">${l.dur}</div>
-        ${!locked?'<div class="lrow-chev">⌄</div>':''}
-      </div>
-      ${!locked?`<div class="lrow-expand">${expand}</div>`:''}
-    </div>
-  `;
+  const hdrOnclick = locked ? '' : ' onclick="toggleRow(' + l.n + ')"';
+  return '<div class="lrow ' + status + '" id="lr' + l.n + '">'
+    + '<div class="lrow-hdr"' + hdrOnclick + '>'
+    + '<div class="lrow-num">L' + String(l.n).padStart(2,'0') + '</div>'
+    + '<div class="lrow-icon ' + status + '">' + icon + '</div>'
+    + '<div class="lrow-text"><div class="lrow-title">' + l.title + '</div><div class="lrow-desc">' + l.desc + '</div></div>'
+    + '<div class="lrow-dur">' + l.dur + '</div>'
+    + (locked ? '' : '<div class="lrow-chev">⌄</div>')
+    + '</div>'
+    + (locked ? '' : '<div class="lrow-expand" id="lx' + l.n + '"></div>')
+    + '</div>';
 }
 
 function toggleRow(n) {
   const r = document.getElementById('lr'+n);
   if(!r) return;
   const was = r.classList.contains('open');
-  document.querySelectorAll('.lrow.open').forEach(x=>x.classList.remove('open'));
-  if(!was) r.classList.add('open');
+  document.querySelectorAll('.lrow.open').forEach(function(x){ x.classList.remove('open'); });
+  if(!was) {
+    r.classList.add('open');
+    const xEl = document.getElementById('lx'+n);
+    if(xEl && !xEl.innerHTML) {
+      const det = (currentLevel==='A1') ? A1_DETAIL[n] : null;
+      xEl.innerHTML = det ? buildExpandHTML(n) : '<div style="padding:24px 32px;font-size:17px;color:var(--ml)">'+((LESSONS[currentLevel]||[]).find(function(l){return l.n===n;})||{desc:''}).desc+'</div>';
+    }
+  }
 }
 
 // ── DEMO STEP LOGIC ──────────────────────────────────────────────
