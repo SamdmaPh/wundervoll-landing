@@ -664,7 +664,7 @@ function renderHome() {
     var isDone = done.includes(String(l.id));
     var cls    = isDone ? 'done' : (i === 0 ? 'next' : '');
     var icon   = isDone ? '✓'   : (i === 0 ? '▶'   : 'L' + (allLessons.indexOf(l)+1));
-    return '<div class="nli" onclick="openLesson(' + (l.order_index||1) + ')">'  
+    return '<div class="nli" onclick="openLesson(' + (allLessons.indexOf(l)) + ')">'  
       + '<div class="nli-badge ' + cls + '">' + icon + '</div>'
       + '<div class="nli-body"><div class="nli-title">' + (l.title||'Lektion') + '</div>'
       + '<div class="nli-meta">' + (l.level||'A1') + ' · ' + (l.duration||20) + ' Min</div></div>'
@@ -688,7 +688,7 @@ function renderHome() {
 function continueLesson() {
   var done = userProfile?.completed_lessons || [];
   var next = allLessons.find(function(l) { return !done.includes(String(l.id)); });
-  if (next) window.location.href='lesson_player.html?num=' + (next.order_index||1);
+  if (next) window.location.href='lesson_player.html?num=' + allLessons.indexOf(next);
 }
 
 // ── CURRICULUM RENDERING ──────────────────────────────
@@ -764,7 +764,7 @@ function renderLevelLessons() {
         + (mnemonic ? '<div class="le-col-label" style="margin-top:14px">Merktrick</div><div class="le-mnemonic">'+mnemonic+'</div>' : '')
       + '</div>'
       + '<div class="le-footer">'
-        + '<button class="btn btn-gold" style="font-size:14px" onclick="openLesson(' + l.order_index + ')">▶ Lektion starten</button>'
+        + '<button class="btn btn-gold" style="font-size:14px" onclick="openLesson(' + i + ')">▶ Lektion starten</button>'
       + '</div>'
       + '</div></div>';
 
