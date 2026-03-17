@@ -673,7 +673,7 @@ function renderHome() {
 function continueLesson() {
   var done = userProfile?.completed_lessons || [];
   var next = allLessons.find(function(l) { return !done.includes(String(l.id)); });
-  if (next) window.open('lesson_player.html','_blank');
+  if (next) window.location.href='lesson_player.html';
 }
 
 // ── CURRICULUM RENDERING ──────────────────────────────
@@ -813,6 +813,7 @@ var LP_TIPS = {
   6: 'Wiederhole heute Abend! Das Gehirn verankert Sprache im Schlaf. / Review tonight.'
 };
 
+function openLesson() { window.location.href='lesson_player.html'; }
 function startLesson(id) { window.location.href='lesson_player.html'; }
 async function _startLessonOld(id) {
   // showView disabled
