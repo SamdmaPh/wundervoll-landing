@@ -66,7 +66,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 #page-app{flex-direction:row;overflow:hidden;height:100vh}
 
 /* Rail */
-.rail{width:72px;background:var(--bg2);border-right:5px solid transparent;border-image:linear-gradient(180deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%) 1;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px;flex-shrink:0}
+.rail{width:72px;background:var(--bg2);border-right:6px solid transparent;border-image:linear-gradient(180deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%) 1;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px;flex-shrink:0}
 .rail-logo{font-family:var(--fd);font-size:20px;font-weight:900;margin-bottom:18px;line-height:1;cursor:pointer;padding-bottom:16px;border-bottom:1px solid var(--b);width:100%;text-align:center}
 .rl-w{color:rgba(28,28,46,.2)}.rl-u{color:var(--red)}.rl-n{color:var(--gold);font-size:14px}
 .rail-btn{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:none;color:var(--ink3);font-size:20px;position:relative;transition:all .15s}
@@ -361,7 +361,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 <div class="page" id="page-app">
 
   <!-- Flag stripe -->
-  <div style="position:fixed;top:0;left:0;right:0;height:6px;display:flex;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,.25)">
+  <div style="position:fixed;top:0;left:0;right:0;height:12px;display:flex;z-index:1000;box-shadow:0 3px 16px rgba(0,0,0,.35)">
     <div style="flex:1;background:#1C1C1C"></div>
     <div style="flex:1;background:#CC0000"></div>
     <div style="flex:1;background:#C9A84C"></div>
@@ -396,6 +396,12 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
           <div class="spinner"></div>
         </div>
         <div id="home-content" style="display:none;padding:48px 52px;gap:40px;flex-direction:column;position:relative;z-index:1">
+  <!-- Flag watermark -->
+  <div style="position:absolute;right:-20px;top:40px;width:320px;height:480px;opacity:.18;filter:blur(6px);pointer-events:none;z-index:0;transform:rotate(8deg);overflow:hidden;border-radius:4px">
+    <div style="height:33.3%;background:#1C1C1C"></div>
+    <div style="height:33.3%;background:#CC0000"></div>
+    <div style="height:33.4%;background:#C9A84C"></div>
+  </div>
 
           <div class="hero">
             <div>
@@ -403,7 +409,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
               <h1 class="hero-title">German,<br><em>made wonderful.</em></h1>
               <p class="hero-sub" id="home-sub">Lade Daten…</p>
               <div class="hero-actions">
-                <button class="btn btn-gold btn-lg" id="continue-btn" onclick="openLesson()">▶ Weiter lernen</button>
+                <button class="btn btn-gold btn-lg" id="continue-btn" onclick="continueLesson()">▶ Weiter lernen</button>
                 <button class="btn btn-ghost btn-lg" onclick="showView('library')">Alle Lektionen →</button>
               </div>
             </div>
@@ -414,7 +420,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
             </div>
           </div>
 
-          <div class="continue-card" onclick="openLesson()">
+          <div class="continue-card" onclick="continueLesson()">
             <div class="cc-icon">🚉</div>
             <div class="cc-body">
               <div class="cc-eye" id="cc-eye">Nächste Lektion · A1</div>
@@ -658,7 +664,7 @@ function renderHome() {
     var isDone = done.includes(String(l.id));
     var cls    = isDone ? 'done' : (i === 0 ? 'next' : '');
     var icon   = isDone ? '✓'   : (i === 0 ? '▶'   : 'L' + (allLessons.indexOf(l)+1));
-    return '<div class="nli" onclick="openLesson()">'  
+    return '<div class="nli" onclick="openLesson(' + (l.order_index||1) + ')">'  
       + '<div class="nli-badge ' + cls + '">' + icon + '</div>'
       + '<div class="nli-body"><div class="nli-title">' + (l.title||'Lektion') + '</div>'
       + '<div class="nli-meta">' + (l.level||'A1') + ' · ' + (l.duration||20) + ' Min</div></div>'
@@ -682,7 +688,7 @@ function renderHome() {
 function continueLesson() {
   var done = userProfile?.completed_lessons || [];
   var next = allLessons.find(function(l) { return !done.includes(String(l.id)); });
-  if (next) window.location.href='lesson_player.html';
+  if (next) window.location.href='lesson_player.html?num=' + (next.order_index||1);
 }
 
 // ── CURRICULUM RENDERING ──────────────────────────────
@@ -758,7 +764,7 @@ function renderLevelLessons() {
         + (mnemonic ? '<div class="le-col-label" style="margin-top:14px">Merktrick</div><div class="le-mnemonic">'+mnemonic+'</div>' : '')
       + '</div>'
       + '<div class="le-footer">'
-        + '<button class="btn btn-gold" style="font-size:14px" onclick="openLesson()">▶ Lektion starten</button>'
+        + '<button class="btn btn-gold" style="font-size:14px" onclick="openLesson(' + l.order_index + ')">▶ Lektion starten</button>'
       + '</div>'
       + '</div></div>';
 
@@ -822,8 +828,8 @@ var LP_TIPS = {
   6: 'Wiederhole heute Abend! Das Gehirn verankert Sprache im Schlaf. / Review tonight.'
 };
 
-function openLesson() { window.location.href='lesson_player.html'; }
-function startLesson(id) { window.location.href='lesson_player.html'; }
+function openLesson(num) { window.location.href='lesson_player.html?num=' + (num||1); }
+function startLesson(id) { openLesson(id); }
 async function _startLessonOld(id) {
   // showView disabled
   lpSteps = []; lpStepIdx = 0; lpPhases = []; lpCorrect = 0; lpXP = 0; lpLesson = null;
