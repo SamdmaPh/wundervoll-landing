@@ -92,10 +92,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 .app-content{flex:1;overflow:hidden;display:flex}
 
 /* Views */
-.view{display:none;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--b) transparent;background:var(--bg);position:relative}
-.view::before{content:'';position:fixed;right:-100px;top:50%;transform:translateY(-50%) rotate(15deg);width:400px;height:600px;opacity:.06;filter:blur(4px);pointer-events:none;z-index:0;
-  background:linear-gradient(180deg,#1C1C1C 33.3%,#CC0000 33.3%,#CC0000 66.6%,#C9A84C 66.6%);
-}
+.view{display:none;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--b) transparent;background:var(--bg)}
 .view.active{display:flex;flex-direction:column}
 
 /* Buttons */
@@ -511,6 +508,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
       </div>
 
     </div>
+  </div>
   </div>
 </div>
 

@@ -75,19 +75,30 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);-webkit-font-smoo
 /* ── STAGE WRAP ──────────────────────────────── */
 .stage-wrap{flex:1;display:flex;overflow:hidden}
 .stage{flex:1;overflow-y:auto;display:flex;align-items:flex-start;justify-content:center;padding:48px 48px;position:relative;min-height:0}
-.stage::before{content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,
-    rgba(28,28,28,0.07) 0%,
-    rgba(28,28,28,0.07) 33.33%,
-    rgba(204,0,0,0.10) 33.33%,
-    rgba(204,0,0,0.10) 66.66%,
-    rgba(201,168,76,0.13) 66.66%,
-    rgba(201,168,76,0.13) 100%
-  );
+.stage::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    linear-gradient(180deg,
+      rgba(28,28,28,0.12) 0%,      rgba(28,28,28,0.12) 33.33%,
+      rgba(204,0,0,0.14) 33.33%,   rgba(204,0,0,0.14) 66.66%,
+      rgba(201,168,76,0.18) 66.66%,rgba(201,168,76,0.18) 100%
+    );
+  filter:blur(0px);
 }
-.stage::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%);
+/* Big blurred flag on the right */
+.stage::after{
+  content:'';
+  position:absolute;
+  right:-120px;
+  top:50%;
+  transform:translateY(-50%) rotate(12deg);
+  width:500px;
+  height:700px;
   pointer-events:none;
+  z-index:0;
+  background:linear-gradient(180deg,#1C1C1C 0%,#1C1C1C 33.33%,#CC0000 33.33%,#CC0000 66.66%,#C9A84C 66.66%,#C9A84C 100%);
+  opacity:0.12;
+  filter:blur(40px);
+  border-radius:40px;
 }
 
 /* ── SIDEBAR ─────────────────────────────────── */
@@ -255,6 +266,12 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);-webkit-font-smoo
 <body>
 <div class="shell">
   <div class="flag-stripe"><div class="flag-stripe-black"></div><div class="flag-stripe-red"></div><div class="flag-stripe-gold"></div></div>
+  <!-- Left flag watermark -->
+  <div style="position:fixed;left:-80px;top:50%;transform:translateY(-50%) rotate(-8deg);width:300px;height:500px;pointer-events:none;z-index:0;border-radius:30px;opacity:0.10;filter:blur(35px);overflow:hidden">
+    <div style="height:33.33%;background:#1C1C1C"></div>
+    <div style="height:33.33%;background:#CC0000"></div>
+    <div style="height:33.34%;background:#C9A84C"></div>
+  </div>
 
   <!-- TOP BAR -->
   <div class="topbar">
@@ -297,20 +314,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);-webkit-font-smoo
 
   <!-- STAGE + SIDEBAR -->
   <div class="stage-wrap">
-    <div class="stage" id="stage">
-      <!-- Flag watermark -->
-      <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0">
-        <div style="position:absolute;right:-80px;top:50%;transform:translateY(-50%) rotate(15deg);width:320px;height:480px;opacity:.07;filter:blur(2px)">
-          <div style="height:33.3%;background:#1C1C1C"></div>
-          <div style="height:33.3%;background:#CC0000"></div>
-          <div style="height:33.3%;background:#C9A84C"></div>
-        </div>
-        <div style="position:absolute;left:-60px;bottom:10%;transform:rotate(-10deg);width:200px;height:300px;opacity:.05;filter:blur(3px)">
-          <div style="height:33.3%;background:#1C1C1C"></div>
-          <div style="height:33.3%;background:#CC0000"></div>
-          <div style="height:33.3%;background:#C9A84C"></div>
-        </div>
-      </div>
+    <div class="stage" id="stage"></div>
     <div class="sidebar" id="sidebar">
 
       <div class="sb-section">
