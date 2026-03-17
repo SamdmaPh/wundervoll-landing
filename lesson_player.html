@@ -1904,21 +1904,46 @@ ALL_LESSONS[30] = {
 
 // ── LESSON IMAGES ────────────────────────────────────────────
 var LESSON_IMAGES = {
-  'pronunciation':  'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=900&q=80',
-  'market':         'https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?w=900&q=80',
-  'lunch':          'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&q=80',
-  'city':           'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=900&q=80',
-  'cafe':           'https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=900&q=80',
-  'berlin':         'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=900&q=80',
-  'family':         'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=900&q=80',
-  'clock':          'https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=900&q=80',
-  'rules':          'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80',
-  'SEIN':           'https://images.unsplash.com/photo-1527030280862-64139fba04ca?w=900&q=80',
-  'ersten Worte':   'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=900&q=80',
-  'default':        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=900&q=80',
+  'pronunciation': 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=900&q=80',
+  'bahnhof': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80',
+  'networking': 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=900&q=80',
+  'markt': 'https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=900&q=80',
+  'mittagspause': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&q=80',
+  'berlin_city': 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=900&q=80',
+  'cafe': 'https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=900&q=80',
+  'directions': 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=900&q=80',
+  'family': 'https://images.unsplash.com/photo-1511895426328-dc8714191011?w=900&q=80',
+  'clock': 'https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=900&q=80',
+  'flatmate': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80',
+  'shopping': 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=80',
+  'wetter': 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=900&q=80',
+  'arzt': 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=900&q=80',
+  'wohnung': 'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=900&q=80',
+  'freizeit': 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=900&q=80',
+  'restaurant': 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80',
+  'arbeit': 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80',
+  'berlin_finale': 'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=900&q=80',
+  'vergangenheit': 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=900&q=80',
+  'vergleich': 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=900&q=80',
+  'denken': 'https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?w=900&q=80',
+  'adjektive': 'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=900&q=80',
+  'hilfe': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80',
+  'gefuehle': 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=900&q=80',
+  'zukunft': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=900&q=80',
+  'geschichte': 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=900&q=80',
+  'hoeflich': 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=900&q=80',
+  'erzaehlen': 'https://images.unsplash.com/photo-1519791883288-dc8bd696e667?w=900&q=80',
+  'brief': 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=900&q=80',
+  'finale_a2': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80',
+  'default': 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=900&q=80',
 };
 
-function getLessonImageUrl(key) {
+
+var LESSON_NUM_TO_IMAGE = {"0": "pronunciation", "1": "bahnhof", "2": "networking", "3": "markt", "4": "mittagspause", "5": "berlin_city", "6": "cafe", "7": "directions", "8": "family", "9": "clock", "10": "flatmate", "11": "shopping", "12": "wetter", "13": "arzt", "14": "wohnung", "15": "freizeit", "16": "restaurant", "17": "arbeit", "18": "berlin_finale", "19": "vergangenheit", "20": "vergleich", "21": "denken", "22": "adjektive", "23": "hilfe", "24": "gefuehle", "25": "zukunft", "26": "geschichte", "27": "hoeflich", "28": "erzaehlen", "29": "brief", "30": "finale_a2"};
+function getLessonImageUrl(key, num) {
+  if (num !== undefined && LESSON_NUM_TO_IMAGE[String(num)]) {
+    return LESSON_IMAGES[LESSON_NUM_TO_IMAGE[String(num)]] || LESSON_IMAGES['default'];
+  }
   return LESSON_IMAGES[key] || LESSON_IMAGES['default'];
 }
 
@@ -1931,7 +1956,7 @@ function getLessonImage(title) {
 }
 
 function lessonHeroHTML(imageKey, level, num) {
-  var url = getLessonImageUrl(imageKey);
+  var url = getLessonImageUrl(imageKey, num);
   return '<div class="lesson-hero">'
     + '<img src="' + url + '" alt="Lektion" loading="eager" onerror="this.parentElement.style.display=&quot;none&quot;">'
     + '<div class="lesson-hero-overlay"></div>'
@@ -1951,7 +1976,7 @@ function goBack() { window.location.href = "index.html"; }
 function loadLessonFromURL() {
   var params = new URLSearchParams(window.location.search);
   var num = parseInt(params.get('num') || params.get('lesson') || '1', 10);
-  if (isNaN(num) || num < 0 || num > 18) num = 1;
+  if (isNaN(num) || num < 0 || num > 30) num = 1;
   CURRENT_LESSON_NUM = num;
   CURRENT_LESSON = ALL_LESSONS[num];
 
@@ -1989,7 +2014,7 @@ function buildDynamicSteps() {
   // Phase 0: Hook
   var hookL = L;
   STEPS.push({ phase:0, render: function(){
-    return lessonHeroHTML(hookL.image||'default', hookL.level, hookL.num)
+    return lessonHeroHTML(hookL.image||'default', hookL.level, hookL.num, hookL.num)
       + '<div class="tag">A1 · Lektion ' + hookL.num + '</div>'
       + '<div class="hook-title">' + hookL.title.replace(/—/, '—<br>') + '</div>'
       + (hookL.titleEN ? '<div style="font-size:18px;color:var(--ink3);text-align:center;font-style:italic;font-weight:300;margin-top:-14px">' + hookL.titleEN + '</div>' : '')
