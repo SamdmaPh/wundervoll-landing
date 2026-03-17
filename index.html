@@ -530,6 +530,24 @@ var currentUser = null;
 var userProfile = null;
 var allLessons  = [];
 var currentLevel = 'A1';
+
+// Static lesson list (A1 from Supabase, A2 static)
+var STATIC_LESSONS = {
+  'A2': [
+    {id:'a2-19', order_index:19, title:'Das Perfekt', level:'A2', duration:22, description:'Talking about the past — what you did, where you went, what happened.'},
+    {id:'a2-20', order_index:20, title:'Größer, schöner, am besten', level:'A2', duration:20, description:'Comparatives and superlatives — comparing everything in German.'},
+    {id:'a2-21', order_index:21, title:'weil, obwohl, dass — Nebensätze', level:'A2', duration:20, description:'Subordinate clauses — connecting ideas, giving reasons, expressing contrasts.'},
+    {id:'a2-22', order_index:22, title:'Adjektivdeklination', level:'A2', duration:22, description:'Adjective endings — describing things precisely with the right forms.'},
+    {id:'a2-23', order_index:23, title:'Dativ vertieft', level:'A2', duration:22, description:'Dative in depth — pronouns, verbs, and the 7 dative prepositions.'},
+    {id:'a2-24', order_index:24, title:'Reflexive Verben', level:'A2', duration:20, description:'Reflexive verbs — sich freuen, sich ärgern, sich fühlen and more.'},
+    {id:'a2-25', order_index:25, title:'Zukunft — werden und Präsens', level:'A2', duration:20, description:'Expressing the future — with werden and the natural present tense.'},
+    {id:'a2-26', order_index:26, title:'Präteritum', level:'A2', duration:20, description:'Simple past — war, hatte, konnte, musste for stories and writing.'},
+    {id:'a2-27', order_index:27, title:'Konjunktiv II', level:'A2', duration:22, description:'Subjunctive II — polite requests, wishes, and hypotheticals.'},
+    {id:'a2-28', order_index:28, title:'Konnektoren vertieft', level:'A2', duration:20, description:'Advanced connectors — als vs. wenn, deshalb, während and more.'},
+    {id:'a2-29', order_index:29, title:'Formelles Schreiben', level:'A2', duration:20, description:'Formal writing — letters, emails, complaints, and professional German.'},
+    {id:'a2-30', order_index:30, title:'A2 — Das große Finale', level:'A2', duration:25, description:'Everything together — A2 complete and ready for B1.'},
+  ]
+};
 var lessonSteps = [];
 var lessonStepIdx = 0;
 var lessonCorrect = 0;
@@ -723,7 +741,9 @@ function setLevel(lv) {
 
 function renderLevelLessons() {
   var cfg  = LEVEL_CONFIG[currentLevel];
-  var list = allLessons.filter(function(l){ return l.level === currentLevel; });
+  var list = currentLevel === 'A1'
+    ? allLessons.filter(function(l){ return l.level === 'A1'; })
+    : (STATIC_LESSONS[currentLevel] || []);
   var done = userProfile?.completed_lessons || [];
 
   document.getElementById('lib-sub').textContent = list.length + ' Lektionen · Klick zum Ausklappen';
