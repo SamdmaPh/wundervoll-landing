@@ -212,7 +212,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 /* ══════════════════════════════════════════════
    LESSON PLAYER VIEW
 ══════════════════════════════════════════════ */
-#v-lesson{flex-direction:column;overflow:hidden}
+#v-lesson{flex-direction:column;overflow:hidden;height:100%}
 
 .lp-header{display:flex;align-items:center;gap:16px;padding:16px 28px;border-bottom:1px solid var(--b);flex-shrink:0}
 .lp-back{background:none;border:none;color:var(--gold);font-size:22px;cursor:pointer;padding:4px 8px;border-radius:8px;font-family:var(--fb)}
@@ -227,7 +227,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 .lp-count{font-family:var(--fm);font-size:11px;color:var(--m);text-align:right;margin-top:5px}
 
 /* Step container */
-.lp-stage{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px}
+.lp-stage{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 80px}
 
 /* Loading */
 .lp-loading{display:flex;flex-direction:column;align-items:center;gap:14px}
@@ -235,43 +235,43 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
 /* Steps */
-.step{display:none;flex-direction:column;align-items:center;text-align:center;max-width:680px;width:100%;gap:28px;animation:fadeUp .35s ease}
+.step{display:none;flex-direction:column;align-items:center;text-align:center;max-width:900px;width:100%;gap:36px;animation:fadeUp .35s ease}
 .step.active{display:flex}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-.step-tag{font-family:var(--fm);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--m);padding:6px 14px;border:1px solid var(--b);border-radius:20px}
-.step-title{font-family:var(--fd);font-size:36px;font-weight:700;color:var(--w);line-height:1.2}
-.step-sub{font-size:16px;color:var(--ml);line-height:1.7;font-weight:300;max-width:480px}
+.step-tag{font-family:var(--fm);font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--m);padding:8px 18px;border:1px solid var(--b);border-radius:20px}
+.step-title{font-family:var(--fd);font-size:52px;font-weight:700;color:var(--w);line-height:1.15}
+.step-sub{font-size:20px;color:var(--ml);line-height:1.7;font-weight:300;max-width:680px}
 
 /* Intro goals */
-.goal-box{background:rgba(255,255,255,.03);border:1px solid var(--goldbr);border-radius:16px;padding:24px;width:100%;text-align:left}
-.goal-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.goal-box{background:rgba(255,255,255,.03);border:1px solid var(--goldbr);border-radius:20px;padding:36px 40px;width:100%;text-align:left}
+.goal-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
 .goal-row:last-child{margin-bottom:0}
-.goal-dot{width:20px;height:20px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:800;color:#fff;margin-top:1px}
-.goal-text{font-size:15px;color:var(--t);line-height:1.5}
+.goal-dot{width:26px;height:26px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:800;color:#fff;margin-top:2px}
+.goal-text{font-size:20px;color:var(--t);line-height:1.5}
 
 /* Phrase card */
-.phrase-card{background:rgba(255,255,255,.03);border:1px solid var(--bl);border-radius:20px;padding:36px 44px;width:100%;cursor:pointer;transition:all .25s}
+.phrase-card{background:rgba(255,255,255,.03);border:1px solid var(--bl);border-radius:24px;padding:56px 64px;width:100%;cursor:pointer;transition:all .25s}
 .phrase-card:hover{border-color:var(--gold);background:rgba(201,168,76,.06);transform:translateY(-2px)}
-.phrase-de{font-family:var(--fd);font-size:48px;font-weight:700;color:var(--w);line-height:1.2;margin-bottom:18px}
+.phrase-de{font-family:var(--fd);font-size:72px;font-weight:700;color:var(--w);line-height:1.2;margin-bottom:24px}
 .phrase-en-box{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:14px;padding:18px 24px;margin-top:4px}
-.phrase-en{font-size:18px;color:var(--gold);font-style:italic;line-height:1.5}
-.phrase-hint{font-size:15px;color:var(--m);font-style:italic}
+.phrase-en{font-size:26px;color:var(--gold);font-style:italic;line-height:1.5}
+.phrase-hint{font-size:18px;color:var(--m);font-style:italic}
 
 /* Chunk box */
-.chunk-box{background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.2);border-radius:14px;padding:22px 26px;width:100%;text-align:left}
-.chunk-num{width:32px;height:32px;border-radius:50%;background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.4);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#a78bfa;flex-shrink:0}
-.chunk-text{font-size:17px;font-weight:700;color:var(--w);line-height:1.5;flex:1}
+.chunk-box{background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.2);border-radius:18px;padding:36px 40px;width:100%;text-align:left}
+.chunk-num{width:48px;height:48px;border-radius:50%;background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.4);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#a78bfa;flex-shrink:0}
+.chunk-text{font-size:26px;font-weight:700;color:var(--w);line-height:1.55;flex:1}
 
 /* Mnemonic */
-.memo-box{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:14px;padding:24px;width:100%;text-align:left}
-.memo-label{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:500}
-.memo-text{font-size:16px;color:var(--goldl);line-height:1.7;font-style:italic}
+.memo-box{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:18px;padding:36px 40px;width:100%;text-align:left}
+.memo-label{font-family:var(--fm);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500}
+.memo-text{font-size:22px;color:var(--goldl);line-height:1.7;font-style:italic}
 
 /* Quiz / Übung */
-.q-box{background:var(--bg2);border:1px solid var(--b);border-radius:14px;padding:22px;width:100%;text-align:left}
-.q-text{font-size:18px;font-weight:700;color:var(--w);line-height:1.5}
-.opt-btn{width:100%;padding:14px 18px;background:var(--bg2);border:1px solid var(--b);border-radius:12px;font-size:15px;color:var(--t);cursor:pointer;text-align:left;font-family:var(--fb);transition:all .2s;display:flex;align-items:center;justify-content:space-between;font-weight:500;line-height:1.4}
+.q-box{background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:32px 36px;width:100%;text-align:left}
+.q-text{font-size:26px;font-weight:700;color:var(--w);line-height:1.5}
+.opt-btn{width:100%;padding:20px 24px;background:var(--bg2);border:1px solid var(--b);border-radius:14px;font-size:20px;color:var(--t);cursor:pointer;text-align:left;font-family:var(--fb);transition:all .2s;display:flex;align-items:center;justify-content:space-between;font-weight:500;line-height:1.4}
 .opt-btn:hover{background:rgba(255,255,255,.04);border-color:var(--bl);color:var(--w)}
 .opt-btn.correct{background:var(--greenbg);border-color:var(--greenbr);color:var(--green)}
 .opt-btn.wrong{background:var(--redbg);border-color:var(--redbr);color:var(--redl)}
@@ -281,18 +281,29 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 
 /* Complete */
 .comp-card{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:20px;padding:36px;text-align:center;width:100%}
-.comp-star{font-size:56px;display:block;margin-bottom:14px;animation:bounce .8s ease}
+.comp-star{font-size:80px;display:block;margin-bottom:18px;animation:bounce .8s ease}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.comp-title{font-family:var(--fd);font-size:42px;font-weight:900;color:var(--w);margin-bottom:8px}
-.comp-xp{font-size:28px;font-weight:800;color:var(--gold);margin-bottom:8px}
+.comp-title{font-family:var(--fd);font-size:64px;font-weight:900;color:var(--w);margin-bottom:12px}
+.comp-xp{font-size:40px;font-weight:800;color:var(--gold);margin-bottom:12px}
 .comp-msg{font-size:15px;color:var(--ml);line-height:1.6}
 
 /* Weiter button */
-.weiter-btn{padding:16px 36px;border-radius:13px;font-size:16px;font-weight:800;cursor:pointer;border:none;font-family:var(--fb);background:linear-gradient(135deg,#C9A84C,#A87A30);color:#040810;transition:all .2s;width:100%;max-width:400px}
+.weiter-btn{padding:22px 36px;border-radius:16px;font-size:20px;font-weight:800;cursor:pointer;border:none;font-family:var(--fb);background:linear-gradient(135deg,#C9A84C,#A87A30);color:#040810;transition:all .2s;width:100%;max-width:560px}
 .weiter-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.3)}
 .weiter-btn:disabled{opacity:.4;transform:none;cursor:default}
 .weiter-btn.red{background:linear-gradient(135deg,#CC0000,#990000);color:#fff}
 .weiter-btn.green{background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff}
+
+/* Phase nav */
+.phase-nav{display:flex;align-items:center;padding:0 28px;border-bottom:1px solid var(--b);flex-shrink:0;background:rgba(7,11,24,.6);overflow-x:auto;scrollbar-width:none}
+.phase-nav::-webkit-scrollbar{display:none}
+.phase-step{display:flex;align-items:center;gap:8px;height:48px;padding:0 16px;font-size:13px;font-weight:600;color:var(--m);white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;cursor:default;flex-shrink:0}
+.phase-step.active{color:var(--gold);border-bottom-color:var(--gold)}
+.phase-step.done{color:var(--green)}
+.phase-dot{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--fm);flex-shrink:0;transition:all .2s}
+.phase-step.active .phase-dot{background:var(--gold);color:#040810}
+.phase-step.done .phase-dot{background:var(--green);color:#fff}
+.phase-sep{width:20px;height:1px;background:var(--b);flex-shrink:0}
 
 /* Loading spinner */
 .spinner{width:40px;height:40px;border:3px solid rgba(201,168,76,.2);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto}
@@ -384,7 +395,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
               <h1 class="hero-title">German,<br><em>made wonderful.</em></h1>
               <p class="hero-sub" id="home-sub">Lade Daten…</p>
               <div class="hero-actions">
-                <button class="btn btn-gold btn-lg" id="continue-btn" onclick="continueLesson()">▶ Weiter lernen</button>
+                <button class="btn btn-gold btn-lg" id="continue-btn" onclick="window.open('lesson_player.html','_blank')">▶ Weiter lernen</button>
                 <button class="btn btn-ghost btn-lg" onclick="showView('library')">Alle Lektionen →</button>
               </div>
             </div>
@@ -395,7 +406,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
             </div>
           </div>
 
-          <div class="continue-card" onclick="continueLesson()">
+          <div class="continue-card" onclick="window.open('lesson_player.html','_blank')">
             <div class="cc-icon">🚉</div>
             <div class="cc-body">
               <div class="cc-eye" id="cc-eye">Nächste Lektion · A1</div>
@@ -433,20 +444,58 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 
       <!-- ── LESSON PLAYER ── -->
       <div class="view" id="v-lesson">
-        <div class="lp-header">
-          <button class="lp-back" onclick="backFromLesson()">‹</button>
-          <div class="lp-title" id="lp-title">Lektion</div>
-          <div class="lp-xp" id="lp-xp">⚡0</div>
+        <!-- Phase Nav -->
+        <div class="phase-nav">
+          <div class="ph active" id="lph-0" onclick="lpJumpPhase(0)"><div class="ph-dot">1</div>Hook</div>
+          <div class="ph-sep"></div>
+          <div class="ph" id="lph-1" onclick="lpJumpPhase(1)"><div class="ph-dot">2</div>Hören</div>
+          <div class="ph-sep"></div>
+          <div class="ph" id="lph-2" onclick="lpJumpPhase(2)"><div class="ph-dot">3</div>Entdecken</div>
+          <div class="ph-sep"></div>
+          <div class="ph" id="lph-3" onclick="lpJumpPhase(3)"><div class="ph-dot">4</div>Phrasen</div>
+          <div class="ph-sep"></div>
+          <div class="ph" id="lph-4" onclick="lpJumpPhase(4)"><div class="ph-dot">5</div>Üben</div>
+          <div class="ph-sep"></div>
+          <div class="ph" id="lph-5" onclick="lpJumpPhase(5)"><div class="ph-dot">6</div>Kultur</div>
+          <div class="ph-sep"></div>
+          <div class="ph" id="lph-6" onclick="lpJumpPhase(6)"><div class="ph-dot">7</div>Fertig</div>
         </div>
-        <div class="lp-progress">
-          <div class="lp-track"><div class="lp-fill" id="lp-fill" style="width:0%"></div></div>
-          <div class="lp-count" id="lp-count">0 / 0</div>
-        </div>
-        <div class="lp-stage" id="lp-stage">
-          <div class="lp-loading">
-            <div class="spinner"></div>
-            <div style="color:var(--m);font-size:14px">Lektion wird vorbereitet…</div>
+        <!-- Topbar -->
+        <div style="display:flex;align-items:center;border-bottom:1px solid var(--b);height:52px;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:8px;padding:0 20px;color:var(--gold);font-size:14px;font-weight:600;cursor:pointer;border-right:1px solid var(--b);height:100%" onclick="backFromLesson()">‹ Curriculum</div>
+          <div id="lp-prev-btn" onclick="lpPrev()" style="display:none;padding:0 16px;font-size:14px;font-weight:600;color:var(--m);cursor:pointer;border-right:1px solid var(--b);height:100%;align-items:center">← Zurück</div>
+          <div style="flex:1;text-align:center">
+            <div style="font-size:14px;font-weight:700;color:var(--w)" id="lp-title">Lektion</div>
+            <div style="font-size:11px;color:var(--m);font-family:var(--fm)" id="lp-meta">A1</div>
           </div>
+          <div style="padding:0 20px;font-family:var(--fm);font-size:12px;font-weight:700;color:var(--gold)" id="lp-xp-display">⚡ 0 XP</div>
+        </div>
+        <!-- Progress -->
+        <div class="lp-prog-wrap">
+          <div class="lp-prog-track"><div class="lp-prog-fill" id="lp-prog-fill" style="width:0%"></div></div>
+        </div>
+        <!-- Stage + Sidebar -->
+        <div class="lp-stage-wrap">
+          <div class="lp-stage" id="lp-stage">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:14px">
+              <div class="spinner"></div>
+              <div style="color:var(--m);font-size:14px">Lektion wird geladen…</div>
+            </div>
+          </div>
+          <div class="lp-sidebar" id="lp-sidebar">
+            <div class="lp-sb-label">Schlüssel-Vokabular</div>
+            <div class="lp-sb-vocab" id="lp-vocab"></div>
+            <div class="lp-sb-tip">
+              <div class="lp-sb-tip-label">💡 Tipp</div>
+              <div class="lp-sb-tip-text" id="lp-tip">Lies den Dialog laut — dein Gehirn lernt Sprache durch Sprechen.</div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom Nav -->
+        <div class="lp-nav-bar">
+          <button class="btn btn-ghost" id="lp-nav-prev" onclick="lpPrev()" style="display:none;padding:10px 20px;font-size:14px">← Zurück</button>
+          <div class="lp-nav-info" id="lp-nav-info">1 / 1</div>
+          <button class="btn btn-gold" id="lp-nav-next" onclick="lpNext()" style="padding:10px 24px;font-size:14px">Weiter →</button>
         </div>
       </div>
 
@@ -600,7 +649,7 @@ function renderHome() {
     var isDone = done.includes(String(l.id));
     var cls    = isDone ? 'done' : (i === 0 ? 'next' : '');
     var icon   = isDone ? '✓'   : (i === 0 ? '▶'   : 'L' + (allLessons.indexOf(l)+1));
-    return '<div class="nli" onclick="startLesson(\'' + l.id + '\')">'
+    return '<div class="nli" onclick="window.open(&quot;lesson_player.html&quot;,&quot;_blank&quot;)">'  
       + '<div class="nli-badge ' + cls + '">' + icon + '</div>'
       + '<div class="nli-body"><div class="nli-title">' + (l.title||'Lektion') + '</div>'
       + '<div class="nli-meta">' + (l.level||'A1') + ' · ' + (l.duration||20) + ' Min</div></div>'
@@ -624,7 +673,7 @@ function renderHome() {
 function continueLesson() {
   var done = userProfile?.completed_lessons || [];
   var next = allLessons.find(function(l) { return !done.includes(String(l.id)); });
-  if (next) startLesson(next.id);
+  if (next) window.open('lesson_player.html','_blank');
 }
 
 // ── CURRICULUM RENDERING ──────────────────────────────
@@ -700,7 +749,7 @@ function renderLevelLessons() {
         + (mnemonic ? '<div class="le-col-label" style="margin-top:14px">Merktrick</div><div class="le-mnemonic">'+mnemonic+'</div>' : '')
       + '</div>'
       + '<div class="le-footer">'
-        + '<button class="btn btn-gold" style="font-size:14px" onclick="startLesson(\'' + l.id + '\')">▶ Lektion starten</button>'
+        + '<button class="btn btn-gold" style="font-size:14px" onclick="window.open(&quot;lesson_player.html&quot;,&quot;_blank&quot;)">▶ Lektion starten</button>'
       + '</div>'
       + '</div></div>';
 
@@ -746,293 +795,419 @@ function showView(v) {
   document.getElementById('breadcrumb').innerHTML = crumbs[v] || crumbs.home;
 }
 
-// ── LESSON PLAYER ─────────────────────────────────────
+// ── LESSON PLAYER (New 7-Phase) ────────────────────
+var lpSteps = [];
+var lpStepIdx = 0;
+var lpPhases = [];
+var lpCorrect = 0;
+var lpXP = 0;
+var lpLesson = null;
+
+var LP_TIPS = {
+  0: 'Lies die Ziele durch. Was möchtest du nach dieser Lektion können? / Read the goals — what will you be able to do?',
+  1: 'Lies den Dialog laut — auch wenn du allein bist. / Read the dialog aloud, even alone.',
+  2: 'Klicke auf jede Karte — entdecke die Regeln selbst! / Click each card to discover the rules.',
+  3: 'Tippe bevor du schaust — versuche die Übersetzung zu denken! / Tap before revealing.',
+  4: 'Keine Panik bei Fehlern! Jeder Fehler ist Lernen. / No panic — every error is learning.',
+  5: 'Sprache ist Kultur. Dieser Kontext hilft dir wirklich zu verstehen. / Language is culture.',
+  6: 'Wiederhole heute Abend! Das Gehirn verankert Sprache im Schlaf. / Review tonight.'
+};
+
 async function startLesson(id) {
   showView('lesson');
-  lessonSteps    = [];
-  lessonStepIdx  = 0;
-  lessonCorrect  = 0;
-  lessonTotal    = 0;
-  currentLesson  = null;
+  lpSteps = []; lpStepIdx = 0; lpPhases = []; lpCorrect = 0; lpXP = 0; lpLesson = null;
 
-  document.getElementById('lp-stage').innerHTML = '<div class="lp-loading"><div class="spinner"></div><div style="color:var(--m);font-size:14px;margin-top:14px">Lektion wird geladen…</div></div>';
+  document.getElementById('lp-stage').innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:60px"><div class="spinner"></div><div style="color:var(--m);font-size:14px">Lektion wird geladen…</div></div>';
 
-  var { data, error } = await sb.from('lessons').select('*').eq('id', id).single();
-  if (error || !data) {
-    document.getElementById('lp-stage').innerHTML = '<div style="color:var(--redl);font-size:16px">Fehler beim Laden der Lektion.</div>';
+  var res = await sb.from('lessons').select('*').eq('id', id).single();
+  if (res.error || !res.data) {
+    document.getElementById('lp-stage').innerHTML = '<div style="color:var(--redl);font-size:16px;padding:40px">Fehler beim Laden.</div>';
     return;
   }
 
-  currentLesson = data;
-  document.getElementById('lp-title').textContent = data.title || 'Lektion';
+  lpLesson = res.data;
+  document.getElementById('lp-title').textContent = lpLesson.title || 'Lektion';
+  document.getElementById('lp-meta').textContent = (lpLesson.level||'A1') + ' · ' + (lpLesson.duration||20) + ' Min';
+  document.getElementById('lp-xp-display').textContent = '⚡ 0 XP';
 
-  buildSteps(data);
-  renderCurrentStep();
+  lpBuildSteps(lpLesson);
+  lpBuildVocab(lpLesson);
+  lpRender();
 }
 
-function buildSteps(lesson) {
-  var content  = lesson.content || {};
-  var speaks   = content.speak   || [];
-  var chunks   = content.chunks  || [];
-  var goals    = content.goals   || [];
-  var mnemonic = content.mnemonic || '';
-  var science  = content.science  || '';
-
-  lessonSteps = [];
-
-  // 1. INTRO
-  lessonSteps.push({ type: 'intro', goals: goals, science: science, speaks: speaks });
-
-  // 2. SÄTZE (max 6)
-  speaks.slice(0, 6).forEach(function(sp, i) {
+function lpBuildVocab(lesson) {
+  var speaks = (lesson.content||{}).speak || [];
+  var vocabEl = document.getElementById('lp-vocab');
+  if (!vocabEl) return;
+  var html = speaks.slice(0,6).map(function(sp) {
     var parts = sp.split(' :: ');
     var de = (parts[0]||'').trim();
     var en = (parts[1]||'').trim();
-    if (de) lessonSteps.push({ type: 'satz', de: de, en: en, index: i+1, total: Math.min(speaks.length,6) });
-  });
-
-  // 3. GRAMMATIK (Chunks)
-  chunks.forEach(function(chunk, i) {
-    lessonSteps.push({ type: 'chunk', text: chunk, index: i+1, total: chunks.length });
-  });
-
-  // 4. MERKTRICK
-  if (mnemonic) {
-    lessonSteps.push({ type: 'mnemonic', text: mnemonic });
-  }
-
-  // 5. ÜBUNGEN aus Paaren
-  var pairs = speaks.map(function(sp) {
-    var parts = sp.split(' :: ');
-    return { de: (parts[0]||'').trim(), en: (parts[1]||'').trim() };
-  }).filter(function(p){ return p.de && p.en; });
-
-  if (pairs.length >= 2) {
-    buildExercises(pairs).forEach(function(ex) { lessonSteps.push(ex); });
-  }
-
-  // 6. ABSCHLUSS
-  lessonSteps.push({ type: 'abschluss' });
+    return '<div class="lp-sb-row"><span class="lp-sb-de">' + de + ' ' + lpAudioInline(de) + '</span><span class="lp-sb-en">' + en + '</span></div>';
+  }).join('');
+  vocabEl.innerHTML = html;
 }
 
-function shuffle(arr) {
-  var a = arr.slice();
-  for (var i = a.length-1; i > 0; i--) {
-    var j = Math.floor(Math.random()*(i+1));
-    var t = a[i]; a[i] = a[j]; a[j] = t;
+function lpBuildSteps(lesson) {
+  var c       = lesson.content || {};
+  var speaks  = c.speak    || [];
+  var chunks  = c.chunks   || [];
+  var goals   = c.goals    || [];
+  var mnemonic= c.mnemonic || '';
+  var science = c.science  || '';
+
+  lpSteps  = [];
+  lpPhases = [];
+
+  // Phase 0: Hook
+  lpSteps.push({ type:'hook', goals:goals, science:science, speaks:speaks, title:lesson.title, level:lesson.level, duration:lesson.duration });
+  lpPhases.push(0);
+
+  // Phase 1: Hören — Dialog aus speak-Phrasen aufbauen
+  if (speaks.length > 0) {
+    var pairs = speaks.map(function(sp){ var p=sp.split(' :: '); return {de:(p[0]||'').trim(),en:(p[1]||'').trim()}; }).filter(function(p){return p.de&&p.en;});
+    lpSteps.push({ type:'dialog', pairs:pairs });
+    lpPhases.push(1);
+    // Verständnisfragen
+    if (pairs.length >= 2) {
+      lpSteps.push({ type:'compq', question:'Was bedeutet der erste Satz? / What does the first sentence mean?', deAudio:pairs[0].de, opts:[pairs[0].en, pairs[Math.min(1,pairs.length-1)].en, 'I do not know / Weiß ich nicht'], correct:0, correctMsg:'✓ Richtig! / Correct!', wrongMsg:'Nicht ganz. / Not quite: ' + pairs[0].en });
+      lpPhases.push(1);
+    }
   }
+
+  // Phase 2: Entdecken — Chunks als Regelkarten
+  if (chunks.length > 0) {
+    lpSteps.push({ type:'rules', chunks:chunks, mnemonic:mnemonic });
+    lpPhases.push(2);
+  }
+
+  // Phase 3: Phrasen — Tap to Reveal
+  speaks.slice(0,6).forEach(function(sp,i) {
+    var p = sp.split(' :: ');
+    var de = (p[0]||'').trim();
+    var en = (p[1]||'').trim();
+    if (de && en) {
+      lpSteps.push({ type:'phrase', de:de, en:en, idx:i+1, total:Math.min(speaks.length,6) });
+      lpPhases.push(3);
+    }
+  });
+
+  // Phase 4: Üben — Multiple Choice
+  var pairs2 = speaks.map(function(sp){ var p=sp.split(' :: '); return {de:(p[0]||'').trim(),en:(p[1]||'').trim()}; }).filter(function(p){return p.de&&p.en;});
+  if (pairs2.length >= 3) {
+    lpShuffle(pairs2).slice(0,3).forEach(function(pair) {
+      var others = pairs2.filter(function(p){ return p.de !== pair.de; });
+      var wrongs = lpShuffle(others).slice(0,3).map(function(o){ return o.en; });
+      var opts = lpShuffle([pair.en].concat(wrongs));
+      lpSteps.push({ type:'practice', question:'Was bedeutet: / What means: "' + pair.de + '"?', deAudio:pair.de, opts:opts, correct:opts.indexOf(pair.en), correctMsg:'✓ Richtig! / Correct!', wrongMsg:'Nicht ganz. / Not quite: ' + pair.en });
+      lpPhases.push(4);
+    });
+  }
+
+  // Phase 5: Kultur — science field oder mnemonic
+  var cultureText = science || mnemonic || '';
+  if (cultureText) {
+    lpSteps.push({ type:'culture', title:lesson.title, text:cultureText });
+    lpPhases.push(5);
+  }
+
+  // Phase 6: Fertig
+  lpSteps.push({ type:'complete' });
+  lpPhases.push(6);
+}
+
+function lpShuffle(arr) {
+  var a = arr.slice();
+  for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i];a[i]=a[j];a[j]=t; }
   return a;
 }
 
-function norm(s) {
-  return (s||'').toLowerCase().trim().replace(/[.,!?;:"""''„"]/g,'').replace(/\s+/g,' ');
-}
+function lpRender() {
+  var total = lpSteps.length;
+  var idx   = lpStepIdx;
+  var pct   = total > 1 ? Math.round(idx/(total-1)*100) : 0;
 
-function buildExercises(pairs) {
-  var exs = [];
-  shuffle(pairs).slice(0, 5).forEach(function(pair, i) {
-    var others = pairs.filter(function(p){ return norm(p.de) !== norm(pair.de); });
-    if (!others.length) return;
-    if (i % 2 === 0) {
-      var wrongs = shuffle(others).slice(0,3).map(function(o){ return o.en; });
-      var opts   = shuffle([pair.en].concat(wrongs));
-      exs.push({ type: 'choice', question: 'Was bedeutet: "' + pair.de + '"?', options: opts, answer: pair.en });
-    } else {
-      var wrongs = shuffle(others).slice(0,3).map(function(o){ return o.de; });
-      var opts   = shuffle([pair.de].concat(wrongs));
-      exs.push({ type: 'choice', question: 'Wie sagt man: "' + pair.en + '"?', options: opts, answer: pair.de });
-    }
-  });
-  return exs;
-}
+  var fill = document.getElementById('lp-prog-fill');
+  if (fill) fill.style.width = pct + '%';
 
-function renderCurrentStep() {
-  var total = lessonSteps.length;
-  var idx   = lessonStepIdx;
-  var pct   = total > 0 ? Math.round(idx / (total-1) * 100) : 0;
-  document.getElementById('lp-fill').style.width  = pct + '%';
-  document.getElementById('lp-count').textContent = idx + ' / ' + (total-1);
+  var navInfo = document.getElementById('lp-nav-info');
+  if (navInfo) navInfo.textContent = (idx+1) + ' / ' + total;
 
-  if (idx >= total) return;
-  var step = lessonSteps[idx];
+  var navPrev = document.getElementById('lp-nav-prev');
+  if (navPrev) navPrev.style.display = idx > 0 ? 'inline-flex' : 'none';
+
+  var prevBtn = document.getElementById('lp-prev-btn');
+  if (prevBtn) prevBtn.style.display = idx > 0 ? 'flex' : 'none';
+
+  var navNext = document.getElementById('lp-nav-next');
+  var isLast = idx === total - 1;
+  if (navNext) { navNext.textContent = isLast ? '✓ Fertig' : 'Weiter →'; navNext.style.display = 'inline-flex'; }
+
+  var phase = lpPhases[idx] !== undefined ? lpPhases[idx] : 0;
+  lpUpdatePhaseNav(phase);
+
+  var tipEl = document.getElementById('lp-tip');
+  if (tipEl && LP_TIPS[phase]) tipEl.textContent = LP_TIPS[phase];
+
+  var step = lpSteps[idx];
   var html = '';
+  if (step.type === 'hook')      html = lpRenderHook(step);
+  else if (step.type === 'dialog') html = lpRenderDialog(step);
+  else if (step.type === 'compq')  html = lpRenderCompQ(step);
+  else if (step.type === 'rules')  html = lpRenderRules(step);
+  else if (step.type === 'phrase') html = lpRenderPhrase(step);
+  else if (step.type === 'practice') html = lpRenderPractice(step);
+  else if (step.type === 'culture')  html = lpRenderCulture(step);
+  else if (step.type === 'complete') html = lpRenderComplete();
 
-  if (step.type === 'intro') {
-    html = renderIntro(step);
-  } else if (step.type === 'satz') {
-    html = renderSatz(step);
-  } else if (step.type === 'chunk') {
-    html = renderChunk(step);
-  } else if (step.type === 'mnemonic') {
-    html = renderMnemonic(step);
-  } else if (step.type === 'choice') {
-    html = renderChoice(step);
-  } else if (step.type === 'abschluss') {
-    html = renderAbschluss();
-  }
-
-  document.getElementById('lp-stage').innerHTML = '<div class="step active">' + html + '</div>';
-  // attach event listeners after render
-  attachStepEvents(step);
+  var stage = document.getElementById('lp-stage');
+  stage.innerHTML = '<div class="lp-step active">' + html + '</div>';
+  stage.scrollTop = 0;
 }
 
-function renderIntro(step) {
-  var goalsHTML = step.goals.slice(0,4).map(function(g){
-    return '<div class="goal-row"><div class="goal-dot">✓</div><div class="goal-text">'+g+'</div></div>';
+function lpUpdatePhaseNav(phaseIdx) {
+  for (var i=0;i<=6;i++) {
+    var el = document.getElementById('lph-'+i);
+    if (!el) continue;
+    el.classList.remove('active','done');
+    if (i < phaseIdx) el.classList.add('done');
+    else if (i === phaseIdx) el.classList.add('active');
+  }
+}
+
+function lpNext() { if (lpStepIdx < lpSteps.length-1) { lpStepIdx++; lpRender(); } }
+function lpPrev() { if (lpStepIdx > 0) { lpStepIdx--; lpRender(); } }
+function lpJumpPhase(p) {
+  for (var i=0;i<lpPhases.length;i++) { if (lpPhases[i]===p) { lpStepIdx=i; lpRender(); return; } }
+}
+
+// ── RENDER FUNCTIONS ────────────────────────────────────────
+function lpGoalRow(de, en) {
+  return '<div class="lp-goal-row"><div class="lp-goal-check">✓</div><div class="lp-goal-text">'
+    + de + lpAudioInline(de) + '<br><em style="font-size:13px;color:var(--m)">' + en + '</em></div></div>';
+}
+
+function lpRenderHook(step) {
+  var goals = step.goals || [];
+  var goalsHtml = goals.slice(0,4).map(function(g){ return lpGoalRow(g, ''); }).join('');
+  return '<div class="lp-tag">A1 · ' + (step.level||'A1') + '</div>'
+    + '<div class="lp-hook-title">' + (step.title||'Lektion') + '</div>'
+    + '<div class="lp-hook-sub">' + (step.science || 'Surviving in German from day one.') + '</div>'
+    + '<div class="lp-goals-box">' + goalsHtml + '</div>';
+}
+
+function lpDlLine(sp, de, en) {
+  var cls = sp === 'A' ? 'lp-dl-a' : 'lp-dl-b';
+  return '<div class="lp-dl-line">'
+    + '<div class="lp-dl-sp ' + cls + '">' + sp + '</div>'
+    + '<div class="lp-dl-content"><div class="lp-dl-de">' + de + lpAudioInline(de) + '</div><div class="lp-dl-en">' + en + '</div></div>'
+    + '</div>';
+}
+
+function lpRenderDialog(step) {
+  var pairs = step.pairs || [];
+  var speakers = ['A','B','A','B','A','B','A','B'];
+  var lines = pairs.map(function(p,i){ return lpDlLine(speakers[i%2]||'A', p.de, p.en); }).join('');
+  return '<div class="lp-tag lp-tag-gold">Hören · Dialog</div>'
+    + '<div style="font-size:16px;color:var(--ml);text-align:center;font-weight:300">Lies und höre den Dialog.' + lpAudioInline('Lies den Dialog.') + '<br><em style="font-size:14px;color:var(--m)">Read the dialog aloud. What do you notice?</em></div>'
+    + '<div class="lp-dialog-box">'
+      + '<div class="lp-dialog-hdr"><div class="lp-dialog-scene">📖 Dialog</div><div class="lp-dialog-noticing">Was fällt dir auf? / What do you notice?</div></div>'
+      + lines
+    + '</div>';
+}
+
+function lpRenderCompQ(step) {
+  var id = 'lpcq' + lpStepIdx;
+  var optsHtml = (step.opts||[]).map(function(opt,i){
+    return '<button class="lp-comp-opt" id="' + id + 'o' + i + '" data-id="' + id + '" data-i="' + i + '" data-c="' + step.correct + '" data-cm="' + cm + '" data-wm="' + wm + '" onclick="lpPickComp(this.dataset.id,+this.dataset.i,+this.dataset.c,this.dataset.cm,this.dataset.wm)">' + opt + '</button>';
   }).join('');
-
-  var previewHTML = '';
-  if (step.speaks && step.speaks.length > 0) {
-    previewHTML = '<div class="memo-box"><div class="memo-label">Heute lernst du z.B.</div>'
-      + step.speaks.slice(0,3).map(function(sp){
-          var de = sp.split(' :: ')[0] || '';
-          return '<div style="font-size:15px;color:var(--goldl);margin-bottom:6px">„' + de.trim() + '"</div>';
-        }).join('')
-      + '</div>';
-  }
-
-  return '<div class="step-tag">HEUTE</div>'
-    + '<div class="step-title" style="font-size:32px">' + (currentLesson.title||'Lektion') + '</div>'
-    + '<div class="goal-box">' + goalsHTML + (step.science ? '<div style="margin-top:12px;font-size:13px;color:var(--m);font-style:italic;line-height:1.6">'+step.science+'</div>' : '') + '</div>'
-    + previewHTML
-    + '<button class="weiter-btn" onclick="nextStep()">Los geht\'s →</button>';
+  return '<div class="lp-tag lp-tag-gold">Hörverständnis</div>'
+    + '<div class="lp-comp-q"><div class="lp-comp-q-text">' + step.question + (step.deAudio ? lpAudioInline(step.deAudio) : '') + '</div><div class="lp-comp-opts">' + optsHtml + '</div></div>'
+    + '<div class="lp-fb" id="' + id + 'fb"></div>'
+    + '<button class="btn btn-gold" id="' + id + 'next" style="display:none;padding:12px 24px" onclick="lpNext()">Weiter →</button>';
 }
 
-function renderSatz(step) {
-  return '<div class="step-tag">SATZ ' + step.index + ' VON ' + step.total + '</div>'
-    + '<div class="phrase-card" id="phrase-card">'
-      + '<div class="phrase-de">' + step.de + '</div>'
-      + '<div id="phrase-reveal"><div class="phrase-hint">Klick für Übersetzung</div></div>'
-    + '</div>'
-    + '<button class="weiter-btn" id="weiter" disabled onclick="nextStep()">Weiter →</button>';
-}
-
-function renderChunk(step) {
-  return '<div class="step-tag">GRAMMATIK ' + step.index + ' VON ' + step.total + '</div>'
-    + '<div class="chunk-box" style="display:flex;gap:16px;align-items:flex-start">'
-      + '<div class="chunk-num">' + step.index + '</div>'
-      + '<div class="chunk-text">' + step.text + '</div>'
-    + '</div>'
-    + '<button class="weiter-btn" onclick="nextStep()">Weiter →</button>';
-}
-
-function renderMnemonic(step) {
-  return '<div class="step-tag">🧠 MERKTRICK</div>'
-    + '<div class="step-title" style="font-size:26px">Einprägen.</div>'
-    + '<div class="memo-box"><div class="memo-label">Eselsbrücke</div><div class="memo-text">' + step.text + '</div></div>'
-    + '<button class="weiter-btn" onclick="nextStep()">Einprägt! →</button>';
-}
-
-function renderChoice(step) {
-  var optsHTML = step.options.map(function(opt, i) {
-    return '<button class="opt-btn" id="opt-' + i + '" onclick="chooseOption(' + i + ')">' + opt + '</button>';
-  }).join('');
-
-  return '<div class="step-tag">🔄 ÜBUNG</div>'
-    + '<div class="q-box"><div class="q-text">' + step.question + '</div></div>'
-    + '<div style="display:flex;flex-direction:column;gap:10px;width:100%">' + optsHTML + '</div>'
-    + '<div id="feedback" style="display:none;width:100%"></div>'
-    + '<button class="weiter-btn" id="weiter" style="display:none" onclick="nextStep()">Weiter →</button>';
-}
-
-function renderAbschluss() {
-  var xp = 50 + lessonCorrect * 8;
-  return '<div class="comp-card">'
-    + '<span class="comp-star">⭐</span>'
-    + '<div class="comp-title">Lektion abgeschlossen!</div>'
-    + '<div class="comp-xp">+' + xp + ' XP</div>'
-    + (lessonTotal > 0 ? '<div class="comp-msg">' + lessonCorrect + ' von ' + lessonTotal + ' Übungen richtig.</div>' : '')
-    + '</div>'
-    + '<button class="weiter-btn green" onclick="completeLesson()">✓ Fertig — zurück</button>';
-}
-
-function attachStepEvents(step) {
-  if (step.type === 'satz') {
-    var card = document.getElementById('phrase-card');
-    if (card) {
-      card.addEventListener('click', function() {
-        var reveal = document.getElementById('phrase-reveal');
-        if (reveal) {
-          reveal.innerHTML = '<div class="phrase-en-box"><div class="phrase-en">' + step.en + '</div></div>';
-          var weiter = document.getElementById('weiter');
-          if (weiter) weiter.disabled = false;
-        }
-      });
-    }
-  }
-}
-
-function chooseOption(i) {
-  var step    = lessonSteps[lessonStepIdx];
-  var chosen  = step.options[i];
-  var correct = norm(chosen) === norm(step.answer);
-
-  document.querySelectorAll('.opt-btn').forEach(function(b){ b.disabled = true; });
-
-  var btn = document.getElementById('opt-' + i);
-  if (btn) btn.classList.add(correct ? 'correct' : 'wrong');
-
-  if (!correct) {
-    step.options.forEach(function(opt, j) {
-      if (norm(opt) === norm(step.answer)) {
-        var ab = document.getElementById('opt-' + j);
-        if (ab) ab.classList.add('correct');
-      }
-    });
-  }
-
-  lessonTotal++;
-  if (correct) lessonCorrect++;
-
-  var fb = document.getElementById('feedback');
-  if (fb) {
-    fb.style.display = 'block';
-    fb.innerHTML = '<div class="feedback-box" style="border-color:' + (correct?'var(--greenbr)':'var(--redbr)') + ';background:' + (correct?'var(--greenbg)':'var(--redbg)') + '">'
-      + '<div class="feedback-title" style="color:' + (correct?'var(--green)':'var(--redl)') + '">'
-      + (correct ? '✓ Richtig!' : '✗ Richtig wäre: ' + step.answer)
+function lpRenderRules(step) {
+  var chunks = step.chunks || [];
+  var cardsHtml = chunks.map(function(chunk,i){
+    return '<div class="lp-rule-card" id="lprc' + i + '" onclick="lpRevealRule(' + i + ')">'
+      + '<div class="lp-rule-num">' + (i+1) + '</div>'
+      + '<div class="lp-rule-body">'
+        + '<div class="lp-rule-label">Regel ' + (i+1) + ' · Rule ' + (i+1) + '</div>'
+        + '<div class="lp-rule-title">' + chunk + lpAudioInline(chunk.replace(/<[^>]+>/g,'').split(':')[0].trim()) + '</div>'
+        + '<div class="lp-rule-tap" id="lptap'+i+'">👆 Klicke zum Entdecken / Click to reveal</div>'
       + '</div></div>';
+  }).join('');
+  var memoHtml = step.mnemonic ? '<div style="background:var(--goldbg);border:1px solid var(--goldbr);border-radius:12px;padding:20px 24px;width:100%;font-size:16px;color:var(--goldl);line-height:1.7;font-style:italic"><strong style="color:var(--gold);font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:8px;font-style:normal">🧠 Merktrick / Memory Trick</strong>' + step.mnemonic + lpAudioInline(step.mnemonic) + '</div>' : '';
+  return '<div class="lp-tag lp-tag-purple">Entdecken · Click to reveal</div>'
+    + '<div style="font-size:16px;color:var(--ml);text-align:center;font-weight:300">Klicke auf jede Karte um die Regel zu entdecken.<br><em style="font-size:13px;color:var(--m)">Click each card to discover the rule.</em></div>'
+    + '<div class="lp-rule-cards">' + cardsHtml + '</div>'
+    + memoHtml;
+}
+
+function lpRevealRule(i) {
+  var card = document.getElementById('lprc'+i);
+  var tap  = document.getElementById('lptap'+i);
+  if (card) card.classList.add('revealed');
+  if (tap) tap.style.display = 'none';
+}
+
+function lpRenderPhrase(step) {
+  var safe = (step.en||'').replace(/"/g,'&quot;');
+  return '<div class="lp-tag lp-tag-gold">Phrase ' + step.idx + ' / ' + step.total + '</div>'
+    + '<div style="font-size:15px;color:var(--m);text-align:center">Tippe die Karte · <em>Tap to reveal</em></div>'
+    + '<button class="audio-btn" data-text="' + (step.de||'').replace(/"/g,'&quot;') + '" onclick="lpSpeak(this.dataset.text,this)">' + lpAudioIcon() + ' Anhören / Listen</button>'
+    + '<div class="lp-phrase-card" id="lppc" data-en="' + safe + '" onclick="lpRevealPhrase(this.dataset.en)">'
+      + '<div class="lp-phrase-de">' + (step.de||'') + '</div>'
+      + '<div class="lp-phrase-tap" id="lp-ptap">Tippe für Übersetzung / Tap for translation</div>'
+      + '<div class="lp-phrase-en-reveal" id="lp-pen" style="display:none"><div class="lp-phrase-en">' + (step.en||'') + '</div></div>'
+    + '</div>'
+    + '<button class="btn btn-gold" id="lpnext" disabled onclick="lpNext()" style="padding:12px 28px">Weiter / Next →</button>';
+}
+
+function lpRevealPhrase(en) {
+  var card = document.getElementById('lppc');
+  var tap  = document.getElementById('lp-ptap');
+  var rev  = document.getElementById('lp-pen');
+  var next = document.getElementById('lpnext');
+  if (card) { card.classList.add('revealed'); card.onclick = null; }
+  if (tap)  tap.style.display  = 'none';
+  if (rev)  rev.style.display  = 'block';
+  if (next) next.disabled = false;
+  lpXP += 5;
+  document.getElementById('lp-xp-display').textContent = '⚡ ' + lpXP + ' XP';
+}
+
+function lpRenderPractice(step) {
+  var id = 'lppq' + lpStepIdx;
+  var optsHtml = (step.opts||[]).map(function(opt,i){
+    return '<button class="lp-popt" id="' + id + 'o' + i + '" data-id="' + id + '" data-i="' + i + '" data-c="' + step.correct + '" data-cm="' + cm2 + '" data-wm="' + wm2 + '" onclick="lpPickPractice(this.dataset.id,+this.dataset.i,+this.dataset.c,this.dataset.cm,this.dataset.wm)">' + opt + '</button>';
+  }).join('');
+  return '<div class="lp-tag lp-tag-green">Üben · Practice</div>'
+    + '<div class="lp-pract-box"><div class="lp-pract-label">Wähle die richtige Antwort / Choose the correct answer</div>'
+    + '<div class="lp-pract-q">' + step.question + (step.deAudio ? lpAudioInline(step.deAudio) : '') + '</div></div>'
+    + '<div class="lp-pract-opts">' + optsHtml + '</div>'
+    + '<div class="lp-fb" id="' + id + 'fb"></div>'
+    + '<button class="btn btn-gold" id="' + id + 'next" style="display:none;padding:12px 24px" onclick="lpNext()">Weiter →</button>';
+}
+
+function lpRenderCulture(step) {
+  return '<div style="font-size:48px;text-align:center">🇩🇪</div>'
+    + '<div style="font-family:var(--fd);font-size:36px;font-weight:700;color:var(--w);text-align:center">' + (step.title||'') + '</div>'
+    + '<div class="lp-culture-box"><div class="lp-culture-text">' + (step.text||'') + lpAudioInline((step.text||'').substring(0,80)) + '</div></div>';
+}
+
+function lpRenderComplete() {
+  var xpEarned = 50 + lpCorrect * 10;
+  return '<div class="lp-comp-star">⭐</div>'
+    + '<div class="lp-comp-big">Lektion<br><em>abgeschlossen!</em></div>'
+    + '<div style="font-size:16px;color:var(--m);text-align:center;font-style:italic">Lesson complete!</div>'
+    + '<div class="lp-comp-xp">+' + xpEarned + ' XP</div>'
+    + '<div class="lp-sr-box">'
+      + '<div class="lp-sr-label">🔁 Heute Abend wiederholen / Review tonight</div>'
+      + (lpLesson && lpLesson.content && lpLesson.content.speak || []).slice(0,4).map(function(sp){
+          var p = sp.split(' :: '); return '<div class="lp-sr-item">' + (p[0]||'').trim() + lpAudioInline((p[0]||'').trim()) + ' = ' + (p[1]||'').trim() + '</div>';
+        }).join('')
+    + '</div>'
+    + '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'
+      + '<button class="btn btn-green" onclick="lpCompleteAndSave()">✓ Fertig & Speichern</button>'
+      + '<button class="btn btn-ghost" onclick="lpStepIdx=0;lpRender()">↺ Wiederholen</button>'
+    + '</div>';
+}
+
+// ── INTERACTIONS ────────────────────────────────────────────
+function lpPickComp(id, chosen, correct, correctMsg, wrongMsg) {
+  document.querySelectorAll('[id^="'+id+'o"]').forEach(function(b){b.disabled=true;});
+  var isRight = chosen === correct;
+  var cb = document.getElementById(id+'o'+chosen);
+  var rightB = document.getElementById(id+'o'+correct);
+  if (cb) cb.classList.add(isRight?'correct':'wrong');
+  if (!isRight && rightB) rightB.classList.add('correct');
+  if (isRight) lpCorrect++;
+  var fb = document.getElementById(id+'fb');
+  if (fb) {
+    fb.className='lp-fb show';
+    fb.style.background = isRight?'var(--greenbg)':'var(--redbg)';
+    fb.style.border = '1px solid '+(isRight?'var(--greenbr)':'var(--redbr)');
+    fb.style.color = isRight?'var(--green)':'#E03535';
+    fb.style.borderRadius = '11px'; fb.style.padding='14px 18px';
+    fb.textContent = isRight ? correctMsg : wrongMsg;
   }
-
-  var weiter = document.getElementById('weiter');
-  if (weiter) weiter.style.display = 'block';
+  var nb = document.getElementById(id+'next');
+  if (nb) nb.style.display='inline-flex';
 }
 
-function nextStep() {
-  lessonStepIdx++;
-  renderCurrentStep();
+function lpPickPractice(id, chosen, correct, correctMsg, wrongMsg) {
+  document.querySelectorAll('[id^="'+id+'o"]').forEach(function(b){b.disabled=true;});
+  var isRight = chosen === correct;
+  var cb = document.getElementById(id+'o'+chosen);
+  var rightB = document.getElementById(id+'o'+correct);
+  if (cb) cb.classList.add(isRight?'correct':'wrong');
+  if (!isRight && rightB) rightB.classList.add('correct');
+  if (isRight) { lpCorrect++; lpXP += 10; document.getElementById('lp-xp-display').textContent = '⚡ '+lpXP+' XP'; }
+  var fb = document.getElementById(id+'fb');
+  if (fb) {
+    fb.className='lp-fb show';
+    fb.style.background = isRight?'var(--greenbg)':'var(--redbg)';
+    fb.style.border = '1px solid '+(isRight?'var(--greenbr)':'var(--redbr)');
+    fb.style.borderRadius='12px'; fb.style.padding='16px 20px';
+    fb.innerHTML='<span style="font-size:15px;font-weight:700;color:'+(isRight?'var(--green)':'#E03535')+'">'+(isRight?correctMsg:wrongMsg)+'</span>';
+  }
+  var nb = document.getElementById(id+'next');
+  if (nb) nb.style.display='inline-flex';
 }
 
-async function completeLesson() {
-  if (!currentLesson) return;
-
-  // XP speichern (wenn user_progress Tabelle existiert)
-  var xp = 50 + lessonCorrect * 8;
+async function lpCompleteAndSave() {
+  if (!currentLesson) currentLesson = lpLesson;
+  var xpEarned = 50 + lpCorrect * 10;
   try {
-    var completed = (userProfile?.completed_lessons || []);
-    if (!completed.includes(String(currentLesson.id))) {
-      completed.push(String(currentLesson.id));
-    }
-    var newXP = (userProfile?.xp || 0) + xp;
-    await sb.from('user_progress').upsert({
-      user_id: currentUser.id,
-      xp: newXP,
-      completed_lessons: completed,
-      streak: userProfile?.streak || 1,
-    });
+    var done = (userProfile&&userProfile.completed_lessons) ? userProfile.completed_lessons.slice() : [];
+    var lid = String(lpLesson.id);
+    if (!done.includes(lid)) done.push(lid);
+    var newXP = ((userProfile&&userProfile.xp)||0) + xpEarned;
+    await sb.from('user_progress').upsert({ user_id: currentUser.id, xp: newXP, completed_lessons: done, streak: (userProfile&&userProfile.streak)||1 });
     if (!userProfile) userProfile = {};
-    userProfile.xp = newXP;
-    userProfile.completed_lessons = completed;
-  } catch(e) {}
-
-  showToast('+' + xp + ' XP verdient! 🎉');
+    userProfile.xp = newXP; userProfile.completed_lessons = done;
+  } catch(e) { console.log('Progress save:', e); }
+  showToast('+' + xpEarned + ' XP verdient! 🎉');
   await loadProgress();
   renderHome();
   showView('library');
   renderLevelLessons();
 }
 
+// ── AUDIO ────────────────────────────────────────────────────
+function lpSpeak(text, btn) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  if (btn && btn.classList.contains('playing')) { btn.classList.remove('playing'); return; }
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE'; u.rate = 0.85;
+  var voices = window.speechSynthesis.getVoices();
+  var dv = voices.find(function(v){ return v.lang.startsWith('de'); });
+  if (dv) u.voice = dv;
+  if (btn) {
+    btn.classList.add('playing');
+    u.onend = u.onerror = function(){ btn.classList.remove('playing'); };
+  }
+  window.speechSynthesis.speak(u);
+}
+
+function lpAudioIcon() {
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+}
+
+function lpAudioInline(text) {
+  if (!text || !text.trim()) return '';
+  var safe = text.replace(/"/g,'&quot;');
+  return '<button class="audio-inline" data-text="' + safe + '" onclick="event.stopPropagation();lpSpeak(this.dataset.text,this)">' + lpAudioIcon() + '</button>';
+}
+
+function lpEsc(s) { return (s||'').replace(/'/g,"\'").replace(/"/g,'&quot;'); }
+
 function backFromLesson() {
   showView('library');
+  renderLevelLessons();
 }
 
 // ── UTILS ─────────────────────────────────────────────

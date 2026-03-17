@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wundervoll — Die ersten Worte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070B18;--bg2:#0C1428;--bg3:#111D35;
+  --b:#1E2E45;--bl:#263A56;
+  --gold:#C9A84C;--goldl:#E8C97A;--goldd:#7A6230;
+  --goldbg:rgba(201,168,76,0.08);--goldbr:rgba(201,168,76,0.25);
+  --red:#CC0000;--redbg:rgba(204,0,0,0.08);--redbr:rgba(204,0,0,0.3);
+  --green:#22C55E;--greenbg:rgba(34,197,94,0.08);--greenbr:rgba(34,197,94,0.3);
+  --purple:#8B5CF6;--purplebg:rgba(139,92,246,0.08);--purplebr:rgba(139,92,246,0.3);
+  --w:#FFFFFF;--t:#D4E4F4;--m:#4A6480;--ml:#6B87A3;
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Sora',system-ui,sans-serif;
+  --fm:'DM Mono',monospace;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--t);font-family:var(--fb);-webkit-font-smoothing:antialiased}
+
+/* ── SHELL ───────────────────────────────────── */
+.shell{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* ── TOP BAR ─────────────────────────────────── */
+.topbar{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--b);flex-shrink:0;background:rgba(7,11,24,.9);backdrop-filter:blur(16px);height:56px}
+.tb-back{display:flex;align-items:center;gap:10px;padding:0 24px;color:var(--gold);font-size:14px;font-weight:600;cursor:pointer;border-right:1px solid var(--b);height:100%;transition:background .15s}
+.tb-back:hover{background:rgba(255,255,255,.04)}
+.tb-back span{font-size:20px;font-weight:300}
+.tb-lesson{flex:1;text-align:center}
+.tb-lesson-title{font-size:15px;font-weight:700;color:var(--w)}
+.tb-lesson-meta{font-size:11px;color:var(--m);font-family:var(--fm);margin-top:1px}
+.tb-right{padding:0 20px;display:flex;align-items:center;gap:12px}
+.xp-pill{background:var(--goldbg);border:1px solid var(--goldbr);color:var(--gold);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;font-family:var(--fm)}
+
+/* ── PHASE NAV ───────────────────────────────── */
+.phase-nav{display:flex;align-items:stretch;border-bottom:1px solid var(--b);flex-shrink:0;overflow-x:auto;scrollbar-width:none;background:rgba(7,11,24,.6)}
+.phase-nav::-webkit-scrollbar{display:none}
+.ph{display:flex;align-items:center;gap:10px;padding:0 20px;height:46px;font-size:13px;font-weight:600;color:var(--m);border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:all .2s;cursor:pointer}
+.ph:hover{color:var(--t)}
+.ph.active{color:var(--gold);border-bottom-color:var(--gold)}
+.ph.done{color:var(--green)}
+.ph-dot{width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--fm);transition:all .2s}
+.ph.active .ph-dot{background:var(--gold);color:#040810}
+.ph.done .ph-dot{background:var(--green);color:#fff;font-size:13px}
+.ph-sep{width:20px;height:1px;background:var(--b);flex-shrink:0;align-self:center}
+
+/* ── PROGRESS ────────────────────────────────── */
+.prog-wrap{padding:0;flex-shrink:0}
+.prog-track{height:3px;background:var(--bg3)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--goldl));transition:width .5s ease}
+
+/* ── NAV BAR BOTTOM ─────────────────────────── */
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-top:1px solid var(--b);flex-shrink:0;background:rgba(7,11,24,.9);backdrop-filter:blur(12px)}
+.nav-bar-center{flex:1;text-align:center}
+.nav-step-info{font-family:var(--fm);font-size:12px;color:var(--m)}
+
+/* ── STAGE WRAP ──────────────────────────────── */
+.stage-wrap{flex:1;display:flex;overflow:hidden}
+.stage{flex:1;overflow-y:auto;display:flex;align-items:flex-start;justify-content:center;padding:48px 48px;position:relative;min-height:0}
+.stage::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(201,168,76,.04),transparent 65%);pointer-events:none}
+
+/* ── SIDEBAR ─────────────────────────────────── */
+.sidebar{width:340px;border-left:1px solid var(--b);background:#07101E;overflow-y:auto;flex-shrink:0;padding:28px 24px;display:flex;flex-direction:column;gap:22px}
+.sb-section{display:flex;flex-direction:column;gap:10px}
+.sb-label{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--m);font-weight:500}
+.sb-phase-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .15s;border:1px solid transparent}
+.sb-phase-item:hover{background:rgba(255,255,255,.04);border-color:var(--b)}
+.sb-phase-item.active{background:var(--goldbg);border-color:var(--goldbr)}
+.sb-phase-item.done{opacity:.6}
+.sb-phase-dot{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--fm);flex-shrink:0;transition:all .2s}
+.sb-phase-item.active .sb-phase-dot{background:var(--gold);color:#040810}
+.sb-phase-item.done .sb-phase-dot{background:var(--green);color:#fff}
+.sb-phase-name{font-size:14px;font-weight:600;color:var(--ml)}
+.sb-phase-item.active .sb-phase-name{color:var(--gold)}
+.sb-divider{height:1px;background:var(--b)}
+.sb-tip{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:12px;padding:16px}
+.sb-tip-label{font-size:10px;font-family:var(--fm);letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:500}
+.sb-tip-text{font-size:13px;color:var(--ml);line-height:1.6}
+.sb-vocab{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:16px}
+.sb-vocab-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.sb-vocab-row:last-child{border:none}
+.sb-vocab-de{color:var(--w);font-weight:600}
+.sb-vocab-en{color:var(--m);font-style:italic}
+
+/* ── STEPS ───────────────────────────────────── */
+.step{display:none;flex-direction:column;align-items:center;width:100%;max-width:820px;gap:32px;animation:fadeUp .4s ease}
+.step.active{display:flex}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TAGS ────────────────────────────────────── */
+.tag{font-family:var(--fm);font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--m);padding:7px 16px;border:1px solid var(--b);border-radius:20px;align-self:center}
+.tag-gold{color:var(--gold);border-color:var(--goldbr);background:var(--goldbg)}
+.tag-green{color:var(--green);border-color:var(--greenbr);background:var(--greenbg)}
+.tag-purple{color:var(--purple);border-color:var(--purplebr);background:var(--purplebg)}
+.tag-red{color:#E03535;border-color:var(--redbr);background:var(--redbg)}
+
+/* ── HOOK SCREEN ─────────────────────────────── */
+.hook-situation{font-size:17px;color:var(--ml);font-style:italic;font-weight:300;text-align:center;line-height:1.7}
+.hook-title{font-family:var(--fd);font-size:64px;font-weight:900;color:var(--w);text-align:center;line-height:1.05}
+.hook-title em{color:var(--gold);font-style:italic}
+.hook-sub{font-size:18px;color:var(--ml);font-weight:300;text-align:center;line-height:1.7;max-width:560px}
+.goals-box{background:rgba(255,255,255,.025);border:1px solid var(--goldbr);border-radius:20px;padding:32px 36px;width:100%}
+.goal-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.goal-row:last-child{margin-bottom:0}
+.goal-check{width:24px;height:24px;border-radius:50%;background:var(--greenbg);border:1px solid var(--greenbr);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;margin-top:1px}
+.goal-text{font-size:17px;color:var(--t);line-height:1.5}
+
+/* ── DIALOG SCREEN ───────────────────────────── */
+.dialog-intro{font-size:18px;color:var(--ml);font-weight:300;text-align:center;line-height:1.7}
+.dialog-box{background:var(--bg2);border:1px solid var(--b);border-radius:20px;width:100%;overflow:hidden}
+.dialog-header{padding:16px 24px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
+.dialog-scene{font-size:13px;color:var(--gold);font-weight:600;font-family:var(--fm);letter-spacing:.08em}
+.dialog-noticing{font-size:13px;color:var(--ml);font-style:italic}
+.dialog-line{display:flex;gap:16px;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.04);align-items:flex-start;transition:background .2s}
+.dialog-line:last-child{border-bottom:none}
+.dialog-line:hover{background:rgba(255,255,255,.02)}
+.dl-speaker{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;margin-top:2px;font-family:var(--fm)}
+.dl-a{background:var(--goldbg);border:1px solid var(--goldbr);color:var(--gold)}
+.dl-b{background:var(--purplebg);border:1px solid var(--purplebr);color:var(--purple)}
+.dl-content{flex:1}
+.dl-de{font-size:18px;font-weight:600;color:var(--w);line-height:1.4;margin-bottom:5px}
+.dl-en{font-size:14px;color:var(--m);font-style:italic;line-height:1.4}
+.dl-highlight{color:var(--gold);font-weight:800}
+
+.noticing-q{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:14px;padding:20px 24px;width:100%;display:flex;align-items:center;gap:14px}
+.noticing-icon{font-size:24px;flex-shrink:0}
+.noticing-text{font-size:16px;color:var(--goldl);line-height:1.5;font-style:italic}
+
+/* ── COMPREHENSION ───────────────────────────── */
+.comp-q{background:var(--bg2);border:1px solid var(--b);border-radius:16px;padding:24px 28px;width:100%}
+.comp-q-text{font-size:18px;font-weight:700;color:var(--w);margin-bottom:16px;line-height:1.4}
+.comp-opts{display:flex;flex-direction:column;gap:10px}
+.comp-opt{padding:14px 18px;border-radius:12px;border:1px solid var(--b);background:rgba(255,255,255,.03);font-size:16px;color:var(--t);cursor:pointer;transition:all .2s;font-family:var(--fb);font-weight:500;text-align:left}
+.comp-opt:hover{border-color:var(--bl);background:rgba(255,255,255,.05);color:var(--w)}
+.comp-opt.correct{border-color:var(--greenbr);background:var(--greenbg);color:var(--green)}
+.comp-opt.wrong{border-color:var(--redbr);background:var(--redbg);color:#E03535}
+.comp-feedback{border-radius:12px;padding:16px 20px;font-size:15px;font-weight:600;line-height:1.5;display:none}
+.comp-feedback.show{display:block}
+
+/* ── DISCOVER SCREEN ─────────────────────────── */
+.discover-title{font-family:var(--fd);font-size:44px;font-weight:700;color:var(--w);text-align:center;line-height:1.1}
+.discover-title em{color:var(--gold);font-style:italic}
+.rule-cards{display:flex;flex-direction:column;gap:12px;width:100%}
+.rule-card{background:var(--bg2);border:1px solid var(--b);border-radius:16px;padding:24px 28px;display:flex;gap:20px;align-items:flex-start;transition:all .3s;cursor:default}
+.rule-card.revealed{border-color:var(--goldbr);background:rgba(201,168,76,.05)}
+.rule-num{width:40px;height:40px;border-radius:50%;background:var(--purplebg);border:1px solid var(--purplebr);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;font-family:var(--fm);flex-shrink:0}
+.rule-card.revealed .rule-num{background:var(--goldbg);border-color:var(--goldbr);color:var(--gold)}
+.rule-body{flex:1}
+.rule-label{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:8px;font-weight:500}
+.rule-text{font-size:20px;font-weight:700;color:var(--w);line-height:1.5;margin-bottom:8px}
+.rule-card.revealed .rule-text{color:var(--goldl)}
+.rule-example{font-size:15px;color:var(--ml);font-style:italic;line-height:1.5}
+.rule-memo{margin-top:10px;font-size:14px;color:var(--gold);font-style:italic;line-height:1.5}
+
+/* ── PHRASE SCREEN ───────────────────────────── */
+.phrase-counter{font-size:14px;color:var(--m);font-family:var(--fm);text-align:center}
+.phrase-card{background:var(--bg2);border:2px solid var(--b);border-radius:24px;padding:52px 64px;width:100%;cursor:pointer;transition:all .3s;text-align:center;position:relative;overflow:hidden}
+.phrase-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,168,76,.06),transparent 70%);pointer-events:none}
+.phrase-card:hover{border-color:var(--goldbr);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.phrase-card.revealed{border-color:var(--goldbr);background:rgba(201,168,76,.04);cursor:default}
+.phrase-card.revealed:hover{transform:none}
+.phrase-de{font-family:var(--fd);font-size:56px;font-weight:700;color:var(--w);line-height:1.2;margin-bottom:12px}
+.phrase-tap{font-size:15px;color:var(--m);font-style:italic;margin-top:16px}
+.phrase-en-reveal{margin-top:24px;padding-top:24px;border-top:1px solid var(--goldbr);animation:fadeUp .3s ease}
+.phrase-en{font-size:26px;color:var(--gold);font-style:italic;line-height:1.4}
+
+/* ── PRACTICE SCREEN ─────────────────────────── */
+.practice-q-box{background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:28px 32px;width:100%}
+.practice-q-label{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:12px;font-weight:500}
+.practice-q-text{font-size:22px;font-weight:700;color:var(--w);line-height:1.4}
+.practice-opts{display:flex;flex-direction:column;gap:10px;width:100%}
+.popt{padding:18px 22px;border-radius:14px;border:1px solid var(--b);background:var(--bg2);font-size:18px;color:var(--t);cursor:pointer;transition:all .2s;font-family:var(--fb);font-weight:500;text-align:left;display:flex;align-items:center;justify-content:space-between;line-height:1.4}
+.popt:hover:not(:disabled){border-color:var(--bl);background:rgba(255,255,255,.04);color:var(--w)}
+.popt.correct{border-color:var(--greenbr);background:var(--greenbg);color:var(--green)}
+.popt.wrong{border-color:var(--redbr);background:var(--redbg);color:#E03535}
+.popt:disabled{cursor:default}
+.pfeedback{border-radius:14px;padding:20px 24px;width:100%;display:none}
+.pfeedback.show{display:block;animation:fadeUp .3s ease}
+.pfeedback-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.pfeedback-hint{font-size:14px;color:var(--ml);line-height:1.6}
+
+/* ── CULTURE SCREEN ──────────────────────────── */
+.culture-flag{font-size:56px;text-align:center}
+.culture-title{font-family:var(--fd);font-size:40px;font-weight:700;color:var(--w);text-align:center;line-height:1.1}
+.culture-title em{color:var(--gold);font-style:italic}
+.culture-box{background:var(--bg2);border:1px solid var(--b);border-left:3px solid var(--gold);border-radius:0 16px 16px 0;padding:28px 32px;width:100%}
+.culture-text{font-size:18px;color:var(--t);line-height:1.8;font-weight:300}
+.culture-text strong{color:var(--gold);font-weight:700}
+
+/* ── COMPLETE SCREEN ─────────────────────────── */
+.comp-star{font-size:80px;text-align:center;animation:bounce .8s ease}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.comp-big{font-family:var(--fd);font-size:72px;font-weight:900;color:var(--w);text-align:center;line-height:1.05}
+.comp-big em{color:var(--gold);font-style:italic}
+.comp-xp{font-size:28px;font-weight:800;color:var(--gold);text-align:center;font-family:var(--fm)}
+.comp-msg{font-size:18px;color:var(--ml);text-align:center;line-height:1.7;font-weight:300;max-width:520px}
+.spaced-rep{background:var(--goldbg);border:1px solid var(--goldbr);border-radius:16px;padding:24px 28px;width:100%}
+.sr-label{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:500}
+.sr-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;font-size:15px;color:var(--t);line-height:1.5}
+.sr-item::before{content:'▸';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:2px}
+
+/* ── BUTTONS ─────────────────────────────────── */
+.btn-wrap{display:flex;gap:12px;justify-content:center;width:100%;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:18px 40px;border-radius:14px;font-family:var(--fb);font-size:17px;font-weight:700;cursor:pointer;border:none;transition:all .2s;letter-spacing:.01em}
+.btn-gold{background:linear-gradient(135deg,#C9A84C,#A87A30);color:#040810;box-shadow:0 4px 20px rgba(201,168,76,.2)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(201,168,76,.35)}
+.btn-gold:disabled{opacity:.4;transform:none;cursor:default;box-shadow:none}
+.btn-ghost{background:rgba(255,255,255,.05);border:1px solid var(--b);color:var(--t)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:var(--bl);color:var(--w)}
+.btn-green{background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff}
+.btn-green:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(34,197,94,.3)}
+/* ── AUDIO BUTTON ────────────────────────────── */
+.audio-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:20px;border:1px solid var(--goldbr);background:var(--goldbg);color:var(--gold);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--fb)}
+.audio-btn:hover{background:rgba(201,168,76,.15);transform:scale(1.03)}
+.audio-btn.playing{background:var(--gold);color:#040810;border-color:var(--gold)}
+.audio-inline{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:1px solid var(--goldbr);background:var(--goldbg);color:var(--gold);cursor:pointer;vertical-align:middle;margin-left:6px;transition:all .2s;padding:0}
+.audio-inline:hover{background:rgba(201,168,76,.2);transform:scale(1.1)}
+.audio-inline.playing{background:var(--gold);color:#040810}
+.audio-inline svg{width:12px;height:12px}
+.audio-btn svg{width:16px;height:16px;flex-shrink:0}
+.audio-wrap{display:flex;justify-content:center;width:100%}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="tb-back" onclick="window.location.href='index.html'">
+      <span>‹</span> Curriculum
+    </div>
+    <div class="tb-back" id="tb-prev" onclick="prev()" style="border-left:none;border-right:none;padding:0 16px;font-size:15px;font-weight:600;color:var(--m);display:none" title="Zurück">← Zurück</div>
+    <div class="tb-lesson">
+      <div class="tb-lesson-title">Die ersten Worte</div>
+      <div class="tb-lesson-meta">A1 · Lektion 1 · 18 Min</div>
+    </div>
+    <div class="tb-right">
+      <div class="xp-pill" id="xp-display">⚡ 0 XP</div>
+    </div>
+  </div>
+
+  <!-- PHASE NAV -->
+  <div class="phase-nav">
+    <div class="ph active" id="ph-0" onclick="jumpToPhase(0)"><div class="ph-dot">1</div>Hook</div>
+    <div class="ph-sep"></div>
+    <div class="ph" id="ph-1" onclick="jumpToPhase(1)"><div class="ph-dot">2</div>Hören</div>
+    <div class="ph-sep"></div>
+    <div class="ph" id="ph-2" onclick="jumpToPhase(2)"><div class="ph-dot">3</div>Entdecken</div>
+    <div class="ph-sep"></div>
+    <div class="ph" id="ph-3" onclick="jumpToPhase(3)"><div class="ph-dot">4</div>Phrasen</div>
+    <div class="ph-sep"></div>
+    <div class="ph" id="ph-4" onclick="jumpToPhase(4)"><div class="ph-dot">5</div>Üben</div>
+    <div class="ph-sep"></div>
+    <div class="ph" id="ph-5" onclick="jumpToPhase(5)"><div class="ph-dot">6</div>Kultur</div>
+    <div class="ph-sep"></div>
+    <div class="ph" id="ph-6" onclick="jumpToPhase(6)"><div class="ph-dot">7</div>Fertig</div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="prog-wrap">
+    <div class="prog-track">
+      <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- STAGE + SIDEBAR -->
+  <div class="stage-wrap">
+    <div class="stage" id="stage"></div>
+    <div class="sidebar" id="sidebar">
+
+      <div class="sb-section">
+        <div class="sb-label">Schlüssel-Vokabular</div>
+        <div class="sb-vocab">
+          <div class="sb-vocab-row"><span class="sb-vocab-de">Sie <button class="audio-inline" data-text="Sie" onclick="speak(this.dataset.text,this)" style="width:20px;height:20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></span><span class="sb-vocab-en">you (formal)</span></div>
+          <div class="sb-vocab-row"><span class="sb-vocab-de">du <button class="audio-inline" data-text="du" onclick="speak(this.dataset.text,this)" style="width:20px;height:20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></span><span class="sb-vocab-en">you (informal)</span></div>
+          <div class="sb-vocab-row"><span class="sb-vocab-de">Bitte <button class="audio-inline" data-text="Bitte" onclick="speak(this.dataset.text,this)" style="width:20px;height:20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></span><span class="sb-vocab-en">please / welcome / pardon</span></div>
+          <div class="sb-vocab-row"><span class="sb-vocab-de">Danke schön <button class="audio-inline" data-text="Danke schön" onclick="speak(this.dataset.text,this)" style="width:20px;height:20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></span><span class="sb-vocab-en">thank you very much</span></div>
+          <div class="sb-vocab-row"><span class="sb-vocab-de">Entschuldigung <button class="audio-inline" data-text="Entschuldigung" onclick="speak(this.dataset.text,this)" style="width:20px;height:20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></span><span class="sb-vocab-en">excuse me / sorry</span></div>
+          <div class="sb-vocab-row"><span class="sb-vocab-de">Auf Wiedersehen <button class="audio-inline" data-text="Auf Wiedersehen" onclick="speak(this.dataset.text,this)" style="width:20px;height:20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button></span><span class="sb-vocab-en">goodbye (formal)</span></div>
+        </div>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-tip" id="sb-tip">
+        <div class="sb-tip-label">💡 Tipp</div>
+        <div class="sb-tip-text" id="sb-tip-text">Lies den Dialog laut — auch wenn du allein bist. Dein Gehirn lernt Sprache durch Sprechen, nicht nur Lesen.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV BAR -->
+  <div class="nav-bar">
+    <button class="btn btn-ghost" id="nav-prev" onclick="prev()" style="display:none;padding:12px 24px;font-size:15px">← Zurück</button>
+    <div style="flex:1"></div>
+    <div class="nav-step-info" id="nav-info"></div>
+    <div style="flex:1"></div>
+    <button class="btn btn-gold" id="nav-next" onclick="next()" style="padding:12px 28px;font-size:15px">Weiter →</button>
+  </div>
+
+</div>
+
+<script>
+var stepIdx = 0;
+var xp = 0;
+var correctCount = 0;
+
+// ── STEP DEFINITIONS ──────────────────────────
+var STEPS = [
+
+  // ─── PHASE 0: HOOK ────────────────────────
+  {
+    phase: 0,
+    render: function() {
+      return '<div class="tag">A1 · Lektion 1</div>'
+        + '<div class="hook-title">Die ersten <em>Worte.</em></div>'
+        + '<div style="font-size:20px;color:var(--m);text-align:center;font-style:italic;font-weight:300;margin-top:-16px">The first words.</div>'
+        + '<div class="hook-sub">Berlin Hauptbahnhof. Du bist gerade angekommen. Du brauchst Hilfe. Und du weißt noch kein Deutsch.' + audioInline('Berlin Hauptbahnhof. Du bist gerade angekommen. Du brauchst Hilfe. Und du weißt noch kein Deutsch.') + '<br><em style="font-size:16px;color:var(--m);font-weight:300">Berlin Central Station. You just arrived. You need help. And you do not speak any German yet.</em></div>'
+        + '<div class="goals-box">'
+          + goalRow('Auf Deutsch grüßen und verabschieden — formal und informell', 'Greet and say goodbye in German — formal and informal')
+          + goalRow('Bitte, Danke, Entschuldigung natürlich einsetzen', 'Use Bitte, Danke, Entschuldigung naturally')
+          + goalRow('Das formale Sie vom informellen du unterscheiden', 'Understand the formal Sie vs. informal du system')
+          + goalRow('Deine ersten vollständigen Sätze auf Deutsch sagen', 'Say your first complete sentences in German')
+        + '</div>'
+        + btn('Los geht\'s / Let\'s go →', 'next()')
+    }
+  },
+
+  // ─── PHASE 1: HÖREN ───────────────────────
+  {
+    phase: 1,
+    render: function() {
+      return '<div class="tag tag-gold">Hören · Dialog</div>'
+        + '<div class="dialog-intro">Lies den Dialog. Stell dir vor, du hörst ihn.' + audioInline('Lies den Dialog. Stell dir vor, du hörst ihn.') + '<br><em style="font-size:16px;color:var(--m)">Read the dialog. Imagine you can hear it. Ask yourself: What do you notice?</em></div>'
+        + '<div class="dialog-box">'
+          + '<div class="dialog-header">'
+            + '<div class="dialog-scene">🚉 Bahnhof Berlin — Erster Tag</div>'
+            + '<div class="dialog-noticing">Zähle: Wie oft siehst du <strong style="color:var(--gold)">Sie / Ihnen</strong> (das formelle "you-System")?</div>'
+          + '</div>'
+          + dlLine('A', 'Entschuldigung! Sprechen <span class="dl-highlight">Sie</span> Englisch?', 'Excuse me! Do you speak English?')
+          + dlLine('B', 'Ja, ein bisschen. Kann ich <span class="dl-highlight">Ihnen</span> helfen?', 'Yes, a little. Can I help you?')
+          + dlLine('A', 'Wo ist der Bahnhof, bitte?', 'Where is the train station, please?')
+          + dlLine('B', 'Gehen <span class="dl-highlight">Sie</span> geradeaus — dann links.', 'Go straight ahead — then left.')
+          + dlLine('A', 'Danke! Das ist sehr freundlich.', 'Thank you! That is very kind.')
+          + dlLine('B', 'Bitte sehr! Schönen Tag noch!', 'You\'re welcome! Have a nice day!')
+          + dlLine('A', 'Danke! Auf Wiedersehen!', 'Thank you! Goodbye!')
+          + dlLine('B', 'Tschüss! Schönen Abend!', 'Bye! Have a nice evening!')
+        + '</div>'
+        + '<div class="noticing-q"><div class="noticing-icon">🔍</div><div class="noticing-text"><strong style="color:var(--gold)">Noticing-Aufgabe / Noticing task:</strong><br>Du hast "Sie" und "Ihnen" gesehen — beide gehören zum formellen System.<br><em style="color:var(--m);font-size:14px">You saw "Sie" and "Ihnen" — both belong to the formal system.</em><br><br>"Sie" = formelles "you" / formal "you"<br>"Ihnen" = "to you" (formell / formal, Dativform)<br><br>Zähle: Wie oft kommen "Sie" oder "Ihnen" zusammen vor?<br><em style="color:var(--m);font-size:14px">Count: How many times do "Sie" or "Ihnen" appear together?</em></div></div>'
+        + btn('Ich hab nachgedacht →', 'next()')
+    }
+  },
+
+  // ─── COMPREHENSION Q1 ─────────────────────
+  {
+    phase: 1,
+    render: function() {
+      return '<div class="tag tag-gold">Hörverständnis</div>'
+        + compQ(
+            '1. Worum bittet Person A? / What does person A ask for?',
+            ['Ein Restaurant / A restaurant', 'Den Bahnhof / The train station', 'Die Toilette / The toilet'],
+            1,
+            '✓ Richtig! / Correct! "Wo ist der Bahnhof, bitte?" — A sucht den Bahnhof. / A is looking for the train station.',
+            'Nicht ganz. / Not quite. Schau nochmal: "Wo ist der Bahnhof, bitte?" / Look again: "Where is the train station, please?"'
+          )
+    }
+  },
+
+  {
+    phase: 1,
+    render: function() {
+      return '<div class="tag tag-gold">Hörverständnis</div>'
+        + compQ(
+            '2. In welche Richtung soll A gehen? / Which direction should A go?',
+            ['Rechts dann links / Right then left', 'Geradeaus dann links / Straight then left', 'Geradeaus dann rechts / Straight then right'],
+            1,
+            '✓ Perfekt! / Perfect! "Gehen Sie geradeaus — dann links." / Go straight ahead — then left.',
+            'Nicht ganz. / Not quite. B sagt: / B says: "Gehen Sie geradeaus — dann links." = Go straight ahead — then left.'
+          )
+    }
+  },
+
+  {
+    phase: 1,
+    render: function() {
+      return '<div class="tag tag-gold">Hörverständnis · Schlussfolgerung</div>'
+        + compQ(
+            '3. Warum benutzt A "Sie" statt "du"? / Why does A use "Sie" instead of "du"?',
+            ['Weil A aus Wien ist / Because A is from Vienna', 'Weil A und B sich nicht kennen — Sie ist höflich zu Fremden / Because A and B do not know each other — Sie is polite to strangers', 'Weil "du" auf Deutsch falsch ist / Because "du" is wrong in German'],
+            1,
+            '✓ Genau! / Exactly! Das ist der Kern: Sie = formell, für Fremde und Autoritäten. / That is the key: Sie = formal, for strangers and authorities.',
+            'Nicht ganz. / Not quite. Sie benutzt man bei Fremden. / You use Sie with strangers — you will learn this now.'
+          )
+    }
+  },
+
+  // ─── PHASE 2: ENTDECKEN ───────────────────
+  {
+    phase: 2,
+    render: function() {
+      return '<div class="tag tag-purple">Entdecken · Click to reveal</div>'
+        + '<div style="font-size:18px;color:var(--ml);text-align:center;font-weight:300;line-height:1.7">Klicke auf jede Karte um mehr zu entdecken.' + audioInline('Klicke auf jede Karte um mehr zu entdecken.') + '<br><em style="font-size:15px;color:var(--m)">Click each card to reveal the full rule.</em></div>'
+        + '<div class="rule-cards">'
+          + ruleCard(1,
+              'Regel 1 · Rule 1',
+              'Sie vs. du',
+              '<span style="color:var(--gold)">Sie</span> (Großbuchstabe / Capital S!) = formell / formal<br><span style="color:var(--ml);font-size:16px;">→ Fremde, Chef, Behörden · Strangers, boss, authorities</span><br><br><span style="color:var(--gold)">du</span> (klein / lowercase) = informell / informal<br><span style="color:var(--ml);font-size:16px;">→ Freunde, Familie, Kinder · Friends, family, children</span>',
+              '"Sprechen <strong>Sie</strong> Englisch?" ← formell<br>"Sprichst <strong>du</strong> Englisch?" ← informell',
+              '🧠 Merktrick / Memory trick: Im Zweifel → <strong>Sie</strong>. Nobody gets offended by too much politeness!')
+          + ruleCard(2,
+              'Regel 2 · Rule 2',
+              'Bitte — 3 Bedeutungen / 3 meanings',
+              '<span style="color:var(--gold)">Bitte!</span> = Please ← beim Bitten / when asking<br><br><span style="color:var(--gold)">Bitte sehr!</span> = You\'re welcome! ← nach Danke / after Danke<br><br><span style="color:var(--gold)">Wie bitte?</span> = Pardon? / Sorry, what? ← nicht gehört / didn\'t hear',
+              '"Wo ist der Bahnhof, <strong>bitte</strong>?" — "Bitte sehr!"',
+              '🧠 Merktrick: Bitte gives and gives. One word, three meanings!')
+          + ruleCard(3,
+              'Regel 3 · Rule 3',
+              'Grüße nach Tageszeit / Time-based greetings',
+              '<span style="color:var(--gold)">Guten Morgen!</span> — Good morning! <span style="color:var(--m)">(bis ~10 Uhr / until ~10am)</span><br><br><span style="color:var(--gold)">Guten Tag!</span> — Good day / Hello! <span style="color:var(--m)">(tagsüber / daytime)</span><br><br><span style="color:var(--gold)">Guten Abend!</span> — Good evening! <span style="color:var(--m)">(ab ~18 Uhr / from ~6pm)</span><br><br><span style="color:var(--gold)">Hallo!</span> — Hello! <span style="color:var(--m)">(informell / informal, jederzeit / anytime)</span>',
+              '"Tschüss! Schönen <strong>Abend</strong>!" — im Dialog am Abend',
+              '🧠 Think: Match the light — Morning bright, Day full, Evening warm.')
+        + '</div>'
+        + btn('Verstanden / Got it →', 'next()')
+    }
+  },
+
+  // ─── PHASE 3: PHRASEN ─────────────────────
+  {
+    phase: 3,
+    render: function() { return phraseScreen('Entschuldigung!', 'Excuse me! / Sorry!', 1, 5) }
+  },
+  {
+    phase: 3,
+    render: function() { return phraseScreen('Sprechen Sie Englisch?', 'Do you speak English?', 2, 5) }
+  },
+  {
+    phase: 3,
+    render: function() { return phraseScreen('Wo ist der Bahnhof, bitte?', 'Where is the train station, please?', 3, 5) }
+  },
+  {
+    phase: 3,
+    render: function() { return phraseScreen('Gehen Sie geradeaus — dann links.', 'Go straight ahead — then left.', 4, 5) }
+  },
+  {
+    phase: 3,
+    render: function() { return phraseScreen('Danke schön! Schönen Tag noch!', 'Thank you very much! Have a nice day!', 5, 5) }
+  },
+
+  // ─── PHASE 4: ÜBEN ────────────────────────
+  {
+    phase: 4,
+    render: function() {
+      return '<div class="tag tag-green">Üben · Practice · Sie oder du?</div>'
+        + practiceQ(
+            'Du sprichst mit einem Polizisten. Welche Form benutzt du?<br><em style="font-size:16px;color:var(--m);font-weight:300">You are speaking to a police officer. Which form do you use?</em>',
+            ['Sprichst du Deutsch? <span style="color:var(--m);font-size:14px">(informal)</span>', 'Sprechen Sie Deutsch? <span style="color:var(--m);font-size:14px">(formal)</span>', 'Sprechen wir Deutsch? <span style="color:var(--m);font-size:14px">(we)</span>'],
+            1,
+            '✓ Richtig! / Correct! Autoritäten → immer Sie. Authorities → always Sie.',
+            'Eine Autorität → immer Sie! / An authority → always Sie! "Sprechen Sie Deutsch?"'
+          )
+    }
+  },
+  {
+    phase: 4,
+    render: function() {
+      return '<div class="tag tag-green">Üben · Practice · Sie oder du?</div>'
+        + practiceQ(
+            'Du schreibst einer Schulfreundin eine Nachricht. Welche Form?<br><em style="font-size:16px;color:var(--m);font-weight:300">You are texting a school friend. Which form?</em>',
+            ['Wie geht es Ihnen? <span style="color:var(--m);font-size:14px">(formal)</span>', 'Wie geht es dir? <span style="color:var(--m);font-size:14px">(informal)</span>', 'Wie geht es euch? <span style="color:var(--m);font-size:14px">(plural)</span>'],
+            1,
+            '✓ Richtig! / Correct! Freunde → du. Friends → du. "Wie geht es dir?"',
+            'Eine Freundin → du! / A friend → du! "Wie geht es dir?"'
+          )
+    }
+  },
+  {
+    phase: 4,
+    render: function() {
+      return '<div class="tag tag-green">Üben · Practice · Bitte</div>'
+        + practiceQ(
+            'Jemand sagt "Danke!" — du antwortest:<br><em style="font-size:16px;color:var(--m);font-weight:300">Someone says "Danke!" — you reply:</em>',
+            ['Wie bitte? <span style="color:var(--m);font-size:14px">(Pardon?)</span>', 'Bitte sehr! <span style="color:var(--m);font-size:14px">(You\'re welcome!)</span>', 'Guten Tag! <span style="color:var(--m);font-size:14px">(Hello!)</span>'],
+            1,
+            '✓ Perfekt! Bitte sehr! = You\'re welcome! Bitte has 3 meanings — this is one of them!',
+            '"Bitte sehr!" is the reply to Danke — one of Bitte\'s 3 meanings!'
+          )
+    }
+  },
+  {
+    phase: 4,
+    render: function() {
+      return '<div class="tag tag-green">Üben · Practice · Grüße / Greetings</div>'
+        + practiceQ(
+            'Es ist 19 Uhr. Du betrittst ein Restaurant. Du sagst:<br><em style="font-size:16px;color:var(--m);font-weight:300">It is 7pm. You enter a restaurant. You say:</em>',
+            ['Guten Morgen! <span style="color:var(--m);font-size:14px">(Good morning!)</span>', 'Hallo! <span style="color:var(--m);font-size:14px">(informal / anytime)</span>', 'Guten Abend! <span style="color:var(--m);font-size:14px">(Good evening!)</span>'],
+            2,
+            '✓ Genau! / Exactly! From ~18:00: Guten Abend! — or informally: Hallo!',
+            'From 6pm: Guten Abend! is the formal evening greeting.'
+          )
+    }
+  },
+
+  // ─── PHASE 5: KULTUR ──────────────────────
+  {
+    phase: 5,
+    render: function() {
+      return '<div class="culture-flag">🇩🇪</div>'
+        + '<div class="culture-title">Siezen und <em>Duzen</em></div>'
+        + '<div class="culture-box">'
+          + '<div class="culture-text">'
+          + 'Die Sie/du-Unterscheidung ist eine der kulturell bedeutendsten Aspekte des Deutschen.' + audioInline('Die Sie-du-Unterscheidung ist eine der kulturell bedeutendsten Aspekte des Deutschen.') + '<br>'
+          + '<em style="font-size:15px;color:var(--m)">The Sie/du distinction is one of the most culturally significant aspects of German.</em><br><br>'
+          + 'Jemandem das <strong>Duzen anzubieten</strong> (auf du wechseln) ist ein soziales Ritual — '
+          + 'normalerweise von der älteren oder ranghöheren Person initiiert.' + audioInline('Jemandem das Duzen anzubieten ist ein soziales Ritual, normalerweise von der älteren Person initiiert.') + '<br>'
+          + '<em style="font-size:15px;color:var(--m)">Offering to "duzen" someone (switch to du) is a social ritual — usually initiated by the older or higher-status person.</em><br><br>'
+          + 'In den 1960ern versuchte die Studentenbewegung, das Sie abzuschaffen. <strong>Es hat nicht geklappt.</strong>' + audioInline('In den 1960ern versuchte die Studentenbewegung, das Sie abzuschaffen. Es hat nicht geklappt.') + '<br>'
+          + '<em style="font-size:15px;color:var(--m)">In the 1960s, the student movement tried to abolish Sie. It did not work.</em><br><br>'
+          + 'Heute benutzen Tech-Startups oft du firmenweit — Banken und Anwaltskanzleien bleiben fest beim Sie.' + audioInline('Heute benutzen Tech-Startups oft du firmenweit. Banken und Anwaltskanzleien bleiben fest beim Sie.') + '<br>'
+          + '<em style="font-size:15px;color:var(--m)">Today, tech startups often use du company-wide — banks and law firms stay firmly in Sie territory.</em><br><br>'
+          + '<strong>Im Zweifel: immer mit Sie beginnen.</strong>' + audioInline('Im Zweifel: immer mit Sie beginnen.') + '<br>'
+          + '<em style="font-size:15px;color:var(--m)">When in doubt: always start with Sie.</em>'
+          + '</div>'
+        + '</div>'
+        + btn('Weiter →', 'next()')
+    }
+  },
+
+  // ─── PHASE 6: FERTIG ──────────────────────
+  {
+    phase: 6,
+    render: function() {
+      var xpEarned = 50 + correctCount * 10;
+      return '<div class="comp-star">⭐</div>'
+        + '<div class="comp-big">Lektion 1<br><em>abgeschlossen.</em></div>'
+        + '<div style="font-size:18px;color:var(--m);text-align:center;font-style:italic">Lesson 1 complete.</div>'
+        + '<div class="comp-xp">+' + xpEarned + ' XP verdient / earned</div>'
+        + '<div class="comp-msg">Du kennst jetzt die ersten deutschen Worte. Wiederhole heute Abend — das Gehirn verankert Sprache im Schlaf.<br><em style="font-size:15px;color:var(--m)">You now know the first German words. Review tonight — the brain consolidates language during sleep.</em></div>'
+        + '<div class="spaced-rep">'
+          + '<div class="sr-label">🔁 Spaced Repetition — Heute Abend wiederholen / Review tonight</div>'
+          + srItem('Sie (Großbuchstabe / Capital S) = formell / formal. du (klein / lowercase) = informell / informal. Im Zweifel → Sie! / When in doubt → Sie!')
+          + srItem('Bitte = please / You\'re welcome / Pardon? — 3 Bedeutungen / 3 meanings, ein Wort / one word!')
+          + srItem('Guten Morgen (morning) · Guten Tag (daytime) · Guten Abend (evening) · Hallo (informal, anytime)')
+          + srItem('Entschuldigung = Excuse me / Sorry. Auf Wiedersehen = formal goodbye. Tschüss = informal bye.')
+        + '</div>'
+        + '<div class="btn-wrap">'
+          + '<button class="btn btn-green" onclick="alert(\'Zur nächsten Lektion / Next lesson\')">Nächste Lektion / Next lesson →</button>'
+          + '<button class="btn btn-ghost" onclick="stepIdx=0;render()">↺ Wiederholen / Repeat</button>'
+        + '</div>'
+    }
+  },
+
+];
+
+// ── HELPERS ───────────────────────────────────
+function goalRow(deText, enText) {
+  return '<div class="goal-row"><div class="goal-check">✓</div><div class="goal-text">'
+    + deText + audioInline(deText.replace(/<[^>]+>/g,''))
+    + '<br><em style="font-size:14px;color:var(--m);font-weight:300">' + enText + '</em>'
+    + '</div></div>';
+}
+
+function dlLine(speaker, de, en) {
+  var plainDE = de.replace(/<[^>]+>/g, '');
+  return '<div class="dialog-line">'
+    + '<div class="dl-speaker dl-' + speaker.toLowerCase() + '">' + speaker + '</div>'
+    + '<div class="dl-content">'
+      + '<div class="dl-de">' + de + audioInline(plainDE) + '</div>'
+      + '<div class="dl-en">' + en + '</div>'
+    + '</div>'
+
+    + '</div>';
+}
+
+function compQ(question, deAudio, opts, correctIdx, correctMsg, wrongMsg) {
+  var id = 'cq' + stepIdx;
+  var audioBtn = deAudio ? audioInline(deAudio) : '';
+  var html = '<div class="comp-q"><div class="comp-q-text">' + question + audioBtn + '</div>'
+    + '<div class="comp-opts">';
+  opts.forEach(function(opt, i) {
+    html += '<button class="comp-opt" id="' + id + 'o' + i + '" onclick="pickComp(\'' + id + '\',' + i + ',' + correctIdx + ',\'' + escQ(correctMsg) + '\',\'' + escQ(wrongMsg) + '\')">' + opt + '</button>';
+  });
+  html += '</div></div>';
+  html += '<div class="comp-feedback" id="' + id + 'fb"></div>';
+  html += '<button class="btn btn-gold" id="' + id + 'next" style="display:none" onclick="next()">Weiter →</button>';
+  return html;
+}
+
+function ruleCard(num, label, title, text, example, memo) {
+  return '<div class="rule-card" id="rc' + num + '" onclick="revealRule(' + num + ')" style="cursor:pointer">'
+    + '<div class="rule-num">' + num + '</div>'
+    + '<div class="rule-body">'
+      + '<div class="rule-label">' + label + '</div>'
+      + '<div class="rule-text">' + title + audioInline(title.replace(/<[^>]+>/g,'').split('/')[0].trim()) + '</div>'
+      + '<div class="rule-detail" id="rex' + num + '" style="display:none;margin-top:14px;font-size:16px;color:var(--t);line-height:1.8">' + text + '</div>'
+      + '<div class="rule-example" id="rexex' + num + '" style="display:none;margin-top:12px;padding:12px 16px;background:rgba(255,255,255,.03);border-radius:10px;font-size:14px;color:var(--ml);border-left:2px solid var(--gold)"><strong style="color:var(--gold);font-size:11px;letter-spacing:.1em;text-transform:uppercase">Beispiel / Example</strong><br><span style="font-size:15px">' + example + '</span></div>'
+      + '<div class="rule-memo" id="rmemo' + num + '" style="display:none;margin-top:10px">' + memo + '</div>'
+      + '<div id="rtap' + num + '" style="margin-top:10px;font-size:13px;color:var(--m);font-style:italic">👆 Klicke um zu entdecken / Click to reveal</div>'
+    + '</div>'
+  + '</div>';
+}
+
+function phraseScreen(de, en, idx, total) {
+  var escapedDE = de.replace(/'/g, "\'");
+  return '<div class="tag tag-gold">Phrase ' + idx + ' von / of ' + total + '</div>'
+    + '<div style="font-size:16px;color:var(--m);text-align:center;font-weight:300">Tippe die Karte um die Übersetzung zu sehen · <em>Tap the card to reveal the translation</em></div>'
+    + audioBtnHTML(de)
+    + '<div class="phrase-card" id="pcard" onclick="revealPhrase(\'' + escQ(en) + '\')">'
+      + '<div class="phrase-de">' + de + audioInline(de) + '</div>'
+      + '<div class="phrase-tap" id="ptap">Tippe für Übersetzung / Tap for translation</div>'
+      + '<div class="phrase-en-reveal" id="pen" style="display:none"><div class="phrase-en">' + en + '</div></div>'
+    + '</div>'
+    + '<button class="btn btn-gold" id="pnext" disabled onclick="next()">Weiter / Next →</button>'
+}
+
+function practiceQ(question, opts, correctIdx, correctMsg, wrongMsg) {
+  var id = 'pq' + stepIdx;
+  var deQ = question.replace(/<br>[\s\S]*/,'').replace(/<[^>]+>/g,'');
+  var html = '<div class="practice-q-box"><div class="practice-q-label">Wähle die richtige Antwort / Choose the correct answer</div>'
+    + '<div class="practice-q-text">' + question + audioInline(deQ) + '</div></div>'
+    + '<div class="practice-opts">';
+  opts.forEach(function(opt, i) {
+    html += '<button class="popt" id="' + id + 'o' + i + '" onclick="pickPractice(\'' + id + '\',' + i + ',' + correctIdx + ',\'' + escQ(correctMsg) + '\',\'' + escQ(wrongMsg) + '\')">' + opt + '</button>';
+  });
+  html += '</div>';
+  html += '<div class="pfeedback" id="' + id + 'fb"></div>';
+  html += '<button class="btn btn-gold" id="' + id + 'next" style="display:none" onclick="next()">Weiter →</button>';
+  return html;
+}
+
+function srItem(text) {
+  var deOnly = text.split('/')[0].replace(/[·→]/g,' ').trim();
+  return '<div class="sr-item">' + text + audioInline(deOnly) + '</div>';
+}
+
+function btn(label, action) {
+  return '<button class="btn btn-gold" onclick="' + action + '">' + label + '</button>';
+}
+
+function escQ(s) {
+  return (s||'').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+// ── INTERACTIONS ──────────────────────────────
+function pickComp(id, chosen, correct, correctMsg, wrongMsg) {
+  document.querySelectorAll('[id^="' + id + 'o"]').forEach(function(b){ b.disabled = true; });
+  var isRight = chosen === correct;
+  var chosenBtn = document.getElementById(id + 'o' + chosen);
+  var correctBtn = document.getElementById(id + 'o' + correct);
+  if (chosenBtn) chosenBtn.classList.add(isRight ? 'correct' : 'wrong');
+  if (!isRight && correctBtn) correctBtn.classList.add('correct');
+  if (isRight) correctCount++;
+  var fb = document.getElementById(id + 'fb');
+  if (fb) {
+    fb.className = 'comp-feedback show';
+    fb.style.background = isRight ? 'var(--greenbg)' : 'var(--redbg)';
+    fb.style.border = '1px solid ' + (isRight ? 'var(--greenbr)' : 'var(--redbr)');
+    fb.style.color = isRight ? 'var(--green)' : '#E03535';
+    fb.style.borderRadius = '12px';
+    fb.style.padding = '14px 18px';
+    fb.style.fontSize = '15px';
+    fb.style.fontWeight = '600';
+    fb.textContent = isRight ? correctMsg : wrongMsg;
+  }
+  var nextBtn = document.getElementById(id + 'next');
+  if (nextBtn) nextBtn.style.display = 'inline-flex';
+}
+
+function pickPractice(id, chosen, correct, correctMsg, wrongMsg) {
+  document.querySelectorAll('[id^="' + id + 'o"]').forEach(function(b){ b.disabled = true; });
+  var isRight = chosen === correct;
+  var chosenBtn = document.getElementById(id + 'o' + chosen);
+  var correctBtn = document.getElementById(id + 'o' + correct);
+  if (chosenBtn) chosenBtn.classList.add(isRight ? 'correct' : 'wrong');
+  if (!isRight && correctBtn) correctBtn.classList.add('correct');
+  if (isRight) { correctCount++; xp += 10; updateXP(); }
+  var fb = document.getElementById(id + 'fb');
+  if (fb) {
+    fb.className = 'pfeedback show';
+    fb.style.background = isRight ? 'var(--greenbg)' : 'var(--redbg)';
+    fb.style.border = '1px solid ' + (isRight ? 'var(--greenbr)' : 'var(--redbr)');
+    fb.style.borderRadius = '14px';
+    fb.style.padding = '18px 22px';
+    fb.innerHTML = '<div class="pfeedback-title" style="color:' + (isRight ? 'var(--green)' : '#E03535') + '">' + (isRight ? correctMsg : wrongMsg) + '</div>';
+  }
+  var nextBtn = document.getElementById(id + 'next');
+  if (nextBtn) nextBtn.style.display = 'inline-flex';
+}
+
+function revealPhrase(en) {
+  var card  = document.getElementById('pcard');
+  var tap   = document.getElementById('ptap');
+  var reveal= document.getElementById('pen');
+  var next  = document.getElementById('pnext');
+  if (tap)   tap.style.display   = 'none';
+  if (reveal) reveal.style.display = 'block';
+  if (card)  { card.classList.add('revealed'); card.onclick = null; }
+  if (next)  next.disabled = false;
+  xp += 5; updateXP();
+}
+
+function revealRule(num) {
+  var card = document.getElementById('rc' + num);
+  var detail = document.getElementById('rex' + num);
+  var exex = document.getElementById('rexex' + num);
+  var memo = document.getElementById('rmemo' + num);
+  var tap  = document.getElementById('rtap' + num);
+  if (card)   card.classList.add('revealed');
+  if (detail) detail.style.display = 'block';
+  if (exex)   exex.style.display   = 'block';
+  if (memo)   memo.style.display   = 'block';
+  if (tap)    tap.style.display    = 'none';
+}
+
+function updateXP() {
+  var el = document.getElementById('xp-display');
+  if (el) el.textContent = '⚡ ' + xp + ' XP';
+}
+
+// ── NAVIGATION ────────────────────────────────
+function updatePhaseNav(phaseIdx) {
+  for (var i = 0; i <= 6; i++) {
+    var el = document.getElementById('ph-' + i);
+    if (!el) continue;
+    el.classList.remove('active','done');
+    if (i < phaseIdx) el.classList.add('done');
+    else if (i === phaseIdx) el.classList.add('active');
+  }
+}
+
+function render() {
+  var total = STEPS.length;
+  var pct   = total > 1 ? Math.round(stepIdx / (total-1) * 100) : 0;
+  var fill  = document.getElementById('prog-fill');
+  if (fill) fill.style.width = pct + '%';
+
+  var step = STEPS[stepIdx];
+  if (!step) return;
+
+  updatePhaseNav(step.phase);
+  updateSidebar(step.phase);
+
+  var prevBtn = document.getElementById('tb-prev');
+  if (prevBtn) prevBtn.style.display = stepIdx > 0 ? 'flex' : 'none';
+
+  // Bottom nav bar
+  var navPrev = document.getElementById('nav-prev');
+  var navNext = document.getElementById('nav-next');
+  var navInfo = document.getElementById('nav-info');
+  if (navPrev) navPrev.style.display = stepIdx > 0 ? 'inline-flex' : 'none';
+  if (navInfo) navInfo.textContent = (stepIdx + 1) + ' / ' + STEPS.length;
+  if (navNext) {
+    var isLast = stepIdx === STEPS.length - 1;
+    navNext.textContent = isLast ? '✓ Abgeschlossen' : 'Weiter →';
+    navNext.style.display = isLast ? 'none' : 'inline-flex';
+  }
+
+  var stage = document.getElementById('stage');
+  stage.innerHTML = '<div class="step active">' + step.render() + '</div>';
+  stage.scrollTop = 0;
+}
+
+function next() {
+  if (stepIdx < STEPS.length - 1) {
+    stepIdx++;
+    render();
+  }
+}
+
+function prev() {
+  if (stepIdx > 0) {
+    stepIdx--;
+    render();
+  }
+}
+
+var PHASE_TIPS = {
+  0: 'Lies die Ziele durch. Was möchtest du nach dieser Lektion können? / Read the goals. What do you want to be able to do after this lesson?',
+  1: 'Lies den Dialog laut — auch wenn du allein bist. Dein Gehirn lernt durch Sprechen. / Read the dialog aloud, even alone.',
+  2: 'Klicke auf jede Karte. Entdecke die Regeln selbst — das bleibt besser im Gedächtnis. / Click each card to discover the rules yourself.',
+  3: 'Tippe auf die Karte bevor du schaust. Versuche die Übersetzung selbst zu denken! / Tap before revealing. Try to think of the translation first!',
+  4: 'Keine Panik bei Fehlern! Jeder Fehler ist Lernen. / No panic with mistakes — every error is learning.',
+  5: 'Sprache ist Kultur. Dieser Kontext hilft dir die Sprache wirklich zu verstehen. / Language is culture. This context helps you truly understand.',
+  6: 'Wiederhole heute Abend! Das Gehirn verankert Sprache im Schlaf. / Review tonight — the brain consolidates language during sleep.'
+};
+
+function jumpToPhase(targetPhase) {
+  var targetIdx = 0;
+  for (var i = 0; i < STEPS.length; i++) {
+    if (STEPS[i].phase === targetPhase) { targetIdx = i; break; }
+  }
+  stepIdx = targetIdx;
+  render();
+}
+
+function updateSidebar(phaseIdx) {
+  for (var i = 0; i <= 6; i++) {
+    var el = document.getElementById('sb-ph-' + i);
+    if (!el) continue;
+    el.classList.remove('active','done');
+    if (i < phaseIdx) el.classList.add('done');
+    else if (i === phaseIdx) el.classList.add('active');
+  }
+  var tipEl = document.getElementById('sb-tip-text');
+  if (tipEl && PHASE_TIPS[phaseIdx]) tipEl.textContent = PHASE_TIPS[phaseIdx];
+}
+
+// ── AUDIO (Web Speech API → ElevenLabs ab 26.3) ──
+function speak(text, btn) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+
+  if (btn && btn.classList.contains('playing')) {
+    btn.classList.remove('playing');
+    btn.innerHTML = audioIcon() + ' Anhören / Listen';
+    return;
+  }
+
+  var utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'de-DE';
+  utter.rate = 0.85;
+  utter.pitch = 1;
+
+  // Try to find a German voice
+  var voices = window.speechSynthesis.getVoices();
+  var deVoice = voices.find(function(v){ return v.lang.startsWith('de'); });
+  if (deVoice) utter.voice = deVoice;
+
+  if (btn) {
+    btn.classList.add('playing');
+    btn.innerHTML = audioIcon() + ' Spielt... / Playing...';
+    utter.onend = function() {
+      btn.classList.remove('playing');
+      btn.innerHTML = audioIcon() + ' Anhören / Listen';
+    };
+    utter.onerror = function() {
+      btn.classList.remove('playing');
+      btn.innerHTML = audioIcon() + ' Anhören / Listen';
+    };
+  }
+  window.speechSynthesis.speak(utter);
+}
+
+function audioIcon() {
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+}
+
+function audioInline(text) {
+  var safe = text.replace(/"/g, '&quot;');
+  return ' <button class="audio-inline" data-text="' + safe + '" onclick="event.stopPropagation();speak(this.dataset.text,this)" title="Anhören / Listen">' + audioIcon() + '</button>';
+}
+
+function audioBtnHTML(text, extraStyle) {
+  var safe = text.replace(/"/g, '&quot;');
+  return '<div class="audio-wrap" style="' + (extraStyle||'') + '"><button class="audio-btn" data-text="' + safe + '" onclick="speak(this.dataset.text, this)">' + audioIcon() + ' Anhören / Listen</button></div>';
+}
+// Init
+render();
+</script>
+</body>
+</html>
