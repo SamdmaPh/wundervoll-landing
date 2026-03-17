@@ -51,7 +51,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);-webkit-font-smoo
 .xp-pill{background:var(--goldbg);border:1px solid var(--goldbr);color:var(--goldd);font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;font-family:var(--fm)}
 
 /* ── PHASE NAV ───────────────────────────────── */
-.phase-nav{display:flex;align-items:stretch;border-bottom:4px solid transparent;border-image:linear-gradient(90deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%) 1;flex-shrink:0;overflow-x:auto;scrollbar-width:none;background:var(--bg2)}
+.phase-nav{display:flex;align-items:stretch;border-bottom:2px solid transparent;border-image:linear-gradient(90deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%) 1;flex-shrink:0;overflow-x:auto;scrollbar-width:none;background:var(--bg2)}
 .phase-nav::-webkit-scrollbar{display:none}
 .ph{display:flex;align-items:center;gap:10px;padding:0 20px;height:46px;font-size:13px;font-weight:600;color:var(--m);border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;transition:all .2s;cursor:pointer}
 .ph:hover{color:var(--t)}
@@ -71,15 +71,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);-webkit-font-smoo
 /* ── STAGE WRAP ──────────────────────────────── */
 .stage-wrap{flex:1;display:flex;overflow:hidden}
 .stage{flex:1;overflow-y:auto;display:flex;align-items:flex-start;justify-content:center;padding:48px 48px;position:relative;min-height:0}
-.stage::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
-  background:
-    linear-gradient(180deg,
-      rgba(28,28,28,0.12) 0%,      rgba(28,28,28,0.12) 33.33%,
-      rgba(204,0,0,0.14) 33.33%,   rgba(204,0,0,0.14) 66.66%,
-      rgba(201,168,76,0.18) 66.66%,rgba(201,168,76,0.18) 100%
-    );
-  filter:blur(0px);
-}
+.stage::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(28,28,28,0.018) 0%,rgba(28,28,28,0.018) 33.33%,rgba(204,0,0,0.025) 33.33%,rgba(204,0,0,0.025) 66.66%,rgba(201,168,76,0.03) 66.66%,rgba(201,168,76,0.03) 100%)}
 /* Big blurred flag on the right */
 .stage::after{
   content:'';
