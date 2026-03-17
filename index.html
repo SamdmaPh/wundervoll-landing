@@ -769,6 +769,16 @@ var lessonSteps = [];
 var lessonStepIdx = 0;
 var lessonCorrect = 0;
 var lessonTotal   = 0;
+var userLevel = 'A1';
+var uiLang = (typeof localStorage !== 'undefined' && localStorage.getItem('wv_lang')) || 'de';
+
+function setLang(l) {
+  uiLang = l;
+  if (typeof localStorage !== 'undefined') localStorage.setItem('wv_lang', l);
+  var btn = document.getElementById('lang-toggle');
+  if (btn) btn.textContent = uiLang === 'de' ? '🌐 EN' : '🌐 DE';
+}
+
 var currentLesson = null;
 
 // ── INIT ──────────────────────────────────────────────
@@ -850,7 +860,6 @@ async function showApp() {
 
   userLevel = localStorage.getItem('wv_userLevel') || 'A1';
   currentLevel = userLevel;
-  applyLang();
   await loadLessons();
   await loadProgress();
   renderHome();
