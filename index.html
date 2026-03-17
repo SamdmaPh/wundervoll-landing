@@ -66,7 +66,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 #page-app{flex-direction:row;overflow:hidden;height:100vh}
 
 /* Rail */
-.rail{width:72px;background:var(--bg2);border-right:3px solid transparent;border-image:linear-gradient(180deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%) 1;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px;flex-shrink:0}
+.rail{width:72px;background:var(--bg2);border-right:5px solid transparent;border-image:linear-gradient(180deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%) 1;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px;flex-shrink:0}
 .rail-logo{font-family:var(--fd);font-size:20px;font-weight:900;margin-bottom:18px;line-height:1;cursor:pointer;padding-bottom:16px;border-bottom:1px solid var(--b);width:100%;text-align:center}
 .rl-w{color:rgba(28,28,46,.2)}.rl-u{color:var(--red)}.rl-n{color:var(--gold);font-size:14px}
 .rail-btn{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:none;color:var(--ink3);font-size:20px;position:relative;transition:all .15s}
@@ -92,7 +92,10 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 .app-content{flex:1;overflow:hidden;display:flex}
 
 /* Views */
-.view{display:none;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--b) transparent;background:var(--bg)}
+.view{display:none;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--b) transparent;background:var(--bg);position:relative}
+.view::before{content:'';position:fixed;right:-100px;top:50%;transform:translateY(-50%) rotate(15deg);width:400px;height:600px;opacity:.06;filter:blur(4px);pointer-events:none;z-index:0;
+  background:linear-gradient(180deg,#1C1C1C 33.3%,#CC0000 33.3%,#CC0000 66.6%,#C9A84C 66.6%);
+}
 .view.active{display:flex;flex-direction:column}
 
 /* Buttons */
@@ -395,7 +398,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
         <div id="home-loading" style="display:flex;align-items:center;justify-content:center;flex:1">
           <div class="spinner"></div>
         </div>
-        <div id="home-content" style="display:none;padding:48px 52px;gap:40px;flex-direction:column">
+        <div id="home-content" style="display:none;padding:48px 52px;gap:40px;flex-direction:column;position:relative;z-index:1">
 
           <div class="hero">
             <div>
@@ -440,7 +443,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 
       <!-- ── CURRICULUM ── -->
       <div class="view" id="v-library">
-        <div style="padding:48px 52px 40px">
+        <div style="padding:48px 52px 40px;position:relative;z-index:1">
           <div class="lib-hdr">
             <h1 class="lib-title">Curriculum <em>Library</em></h1>
             <div class="lib-sub" id="lib-sub">Lade Lektionen…</div>
