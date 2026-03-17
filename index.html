@@ -66,8 +66,8 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 #page-app{flex-direction:row;overflow:hidden;height:100vh}
 
 /* Rail */
-.rail{width:72px;background:var(--bg2);border-right:6px solid transparent;border-image:linear-gradient(180deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%) 1;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px;flex-shrink:0}
-.rail-logo{font-family:var(--fd);font-size:20px;font-weight:900;margin-bottom:18px;line-height:1;cursor:pointer;padding-bottom:16px;border-bottom:1px solid var(--b);width:100%;text-align:center}
+.rail{width:64px;background:var(--bg2);border-right:6px solid transparent;border-image:linear-gradient(180deg,#1C1C1C 33%,#CC0000 33%,#CC0000 66%,#C9A84C 66%) 1;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px;flex-shrink:0}
+.rail-logo{display:none}
 .rl-w{color:rgba(28,28,46,.2)}.rl-u{color:var(--red)}.rl-n{color:var(--gold);font-size:14px}
 .rail-btn{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:none;color:var(--ink3);font-size:20px;position:relative;transition:all .15s}
 .rail-btn:hover{background:rgba(0,0,0,.06);color:var(--ink)}
@@ -404,6 +404,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
     <button class="rail-btn active" id="rb-home"    data-tip="Home"       onclick="showView('home')">🏠</button>
     <button class="rail-btn"        id="rb-library" data-tip="Curriculum" onclick="showView('library')">📚</button>
     <button class="rail-btn"        id="rb-wotd"    data-tip="Wort des Tages" onclick="showView('wotd')">✨</button>
+    <button class="rail-btn"        id="rb-placement" data-tip="Einstufungstest" onclick="showView('placement')">🎯</button>
     <div class="rail-spacer"></div>
     <div class="rail-avatar" id="rail-avatar" onclick="signOut()">P</div>
   </div>
@@ -429,10 +430,15 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
   <!-- Main -->
   <div class="app-main">
     <div class="topbar">
+      <div class="topbar-logo" onclick="showView('home')" style="cursor:pointer;display:flex;align-items:baseline;gap:2px;flex-shrink:0;margin-right:20px;line-height:1">
+        <span style="font-family:var(--fd);font-size:28px;font-weight:900;color:rgba(28,28,46,.25);letter-spacing:-1px">WUNDER</span><span style="font-family:var(--fd);font-size:28px;font-weight:900;color:var(--red);letter-spacing:-1px">VOL</span><span style="font-family:var(--fd);font-size:22px;font-weight:900;color:var(--gold);letter-spacing:-1px">L</span>
+      </div>
+      <div class="topbar-divider" style="width:1px;height:28px;background:var(--b);margin-right:4px;flex-shrink:0"></div>
       <div class="topbar-crumb" id="breadcrumb"><span class="cur">Home</span></div>
       <div class="topbar-right">
         <div class="badge badge-gold" id="streak-badge">🔥 0 Tage</div>
         <div class="badge badge-red" id="xp-badge">⚡ 0 XP</div>
+        <button class="tb-btn" id="lang-toggle" onclick="setLang(uiLang==='de'?'en':'de')" title="Sprache / Language" style="font-size:12px;font-weight:700;width:auto;padding:0 10px">🌐 EN</button>
         <button class="tb-btn" onclick="signOut()" title="Ausloggen">⏏</button>
       </div>
     </div>
@@ -465,7 +471,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
             <div class="hero-stats">
               <div class="hstat"><span class="hstat-n" id="stat-done">0</span><div class="hstat-l">Lektionen</div></div>
               <div class="hstat"><span class="hstat-n" id="stat-streak">0</span><div class="hstat-l">Tage Streak</div></div>
-              <div class="hstat"><span class="hstat-n">A1</span><div class="hstat-l">Aktuelles Level</div></div>
+              <div class="hstat" style="cursor:pointer" onclick="showView('placement')" title="Einstufungstest machen"><span class="hstat-n" id="stat-level">A1</span><div class="hstat-l">Dein Level</div></div>
             </div>
           </div>
 
@@ -518,6 +524,57 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
         </div>
       </div>
 
+
+      <!-- ── PLACEMENT TEST ── -->
+      <div class="view" id="v-placement">
+        <div style="padding:48px 52px 60px;max-width:780px;margin:0 auto;width:100%">
+
+          <!-- Intro -->
+          <div id="pt-intro">
+            <div style="font-family:var(--fm);font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:14px">🎯 EINSTUFUNGSTEST</div>
+            <h1 style="font-family:var(--fd);font-size:52px;font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:12px">Find your <em style="color:var(--gold)">level.</em></h1>
+            <p style="font-size:17px;color:var(--ink3);line-height:1.7;margin-bottom:32px;font-weight:300">20 Fragen · ca. 5 Minuten · Findet dein Deutsch-Niveau von A1 bis C1.<br>Dein Ergebnis bestimmt wo du anfängst.</p>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:36px">
+              <div style="background:#C9A84C20;border:1px solid #C9A84C40;border-radius:12px;padding:16px;text-align:center"><div style="font-weight:800;color:#C9A84C;font-size:18px">A1</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Überleben</div></div>
+              <div style="background:#3B82F620;border:1px solid #3B82F640;border-radius:12px;padding:16px;text-align:center"><div style="font-weight:800;color:#3B82F6;font-size:18px">A2</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Leben</div></div>
+              <div style="background:#8B5CF620;border:1px solid #8B5CF640;border-radius:12px;padding:16px;text-align:center"><div style="font-weight:800;color:#8B5CF6;font-size:18px">B1</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Denken</div></div>
+              <div style="background:#22C55E20;border:1px solid #22C55E40;border-radius:12px;padding:16px;text-align:center"><div style="font-weight:800;color:#22C55E;font-size:18px">B2</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Argumentieren</div></div>
+              <div style="background:#CC000020;border:1px solid #CC000040;border-radius:12px;padding:16px;text-align:center"><div style="font-weight:800;color:#CC0000;font-size:18px">C1</div><div style="font-size:11px;color:var(--ink3);margin-top:4px">Meistern</div></div>
+            </div>
+            <button class="btn btn-gold btn-lg" onclick="ptStart()">🎯 Test starten</button>
+          </div>
+
+          <!-- Quiz -->
+          <div id="pt-quiz" style="display:none">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px">
+              <div style="flex:1;height:4px;background:var(--bg2);border-radius:2px;overflow:hidden">
+                <div id="pt-bar" style="height:100%;background:var(--gold);border-radius:2px;transition:width .4s;width:0%"></div>
+              </div>
+              <div id="pt-counter" style="font-family:var(--fm);font-size:12px;color:var(--ink3);white-space:nowrap">1 / 20</div>
+            </div>
+            <div id="pt-level-tag" style="font-family:var(--fm);font-size:10px;letter-spacing:.2em;color:var(--ink3);text-transform:uppercase;margin-bottom:10px">A1</div>
+            <div id="pt-question" style="font-size:22px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:24px"></div>
+            <div id="pt-options" style="display:flex;flex-direction:column;gap:10px"></div>
+            <div id="pt-feedback" style="display:none;border-radius:12px;border:1px solid;padding:14px;margin-top:14px;font-size:14px;font-weight:600;line-height:1.6"></div>
+            <button class="btn btn-gold" id="pt-next-btn" onclick="ptNext()" style="display:none;margin-top:20px;width:100%">Weiter →</button>
+          </div>
+
+          <!-- Ergebnis -->
+          <div id="pt-result" style="display:none;text-align:center">
+            <div style="font-size:56px;margin-bottom:16px">🎯</div>
+            <div style="font-family:var(--fd);font-size:42px;font-weight:700;color:var(--ink);margin-bottom:8px">Dein Ergebnis</div>
+            <div style="font-size:16px;color:var(--ink3);margin-bottom:28px">Basierend auf deinen Antworten empfehlen wir:</div>
+            <div id="pt-result-level" style="display:inline-block;font-size:64px;font-weight:900;border-radius:20px;padding:20px 40px;margin-bottom:24px"></div>
+            <div id="pt-result-desc" style="font-size:16px;color:var(--ink3);line-height:1.7;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto"></div>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+              <button class="btn btn-gold btn-lg" onclick="ptGoToCurriculum()">📚 Zum Curriculum →</button>
+              <button class="btn btn-ghost" onclick="ptStart()">↺ Nochmal machen</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       <!-- ── LESSON PLAYER ── -->
       <div class="view" id="v-lesson">
         <!-- Phase Nav -->
@@ -559,9 +616,13 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
             </div>
           </div>
           <div class="lp-sidebar" id="lp-sidebar">
-            <div class="lp-sb-label">Schlüssel-Vokabular</div>
-            <div class="lp-sb-vocab" id="lp-vocab"></div>
-            <div class="lp-sb-tip">
+            <button onclick="toggleVocab()" style="width:100%;background:rgba(0,0,0,.04);border:1px solid var(--b);border-radius:10px;padding:10px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:var(--fb);font-size:13px;font-weight:700;color:var(--ink3);margin-bottom:0" id="vocab-toggle-btn">
+              <span>📖 Schlüssel-Vokabular</span><span id="vocab-chev" style="transition:transform .2s">⌄</span>
+            </button>
+            <div id="vocab-body" style="display:none;margin-top:8px">
+              <div class="lp-sb-vocab" id="lp-vocab"></div>
+            </div>
+            <div class="lp-sb-tip" style="margin-top:10px">
               <div class="lp-sb-tip-label">💡 Tipp</div>
               <div class="lp-sb-tip-text" id="lp-tip">Lies den Dialog laut — dein Gehirn lernt Sprache durch Sprechen.</div>
             </div>
@@ -787,6 +848,9 @@ async function showApp() {
   document.getElementById('rail-avatar').textContent = initials;
   document.getElementById('home-greeting').textContent = 'Willkommen zurück, ' + (currentUser.user_metadata?.full_name || 'Lerner');
 
+  userLevel = localStorage.getItem('wv_userLevel') || 'A1';
+  currentLevel = userLevel;
+  applyLang();
   await loadLessons();
   await loadProgress();
   renderHome();
@@ -818,6 +882,7 @@ function renderHome() {
   var done   = (userProfile?.completed_lessons || []);
 
   document.getElementById('stat-streak').textContent = streak;
+  var slvl = document.getElementById('stat-level'); if(slvl) slvl.textContent = userLevel || 'A1';
   document.getElementById('stat-done').textContent   = done.length;
   document.getElementById('streak-badge').textContent = '🔥 ' + streak + ' Tage';
   document.getElementById('xp-badge').textContent    = '⚡ ' + xp + ' XP';
@@ -960,6 +1025,7 @@ var LEVEL_CONFIG = {
 };
 
 function renderLibrary() {
+  if (!currentLevel || !LEVEL_CONFIG[currentLevel]) currentLevel = userLevel || 'A1';
   var levels = Object.keys(LEVEL_CONFIG);
 
   // Tabs
@@ -1067,13 +1133,16 @@ function toggleRow(id) {
 function showView(v) {
   document.querySelectorAll('.view').forEach(function(el){ el.classList.remove('active'); });
   document.querySelectorAll('.rail-btn').forEach(function(el){ el.classList.remove('active'); });
-  document.getElementById('v-'+v).classList.add('active');
+  var viewEl = document.getElementById('v-'+v);
+  if (!viewEl) return;
+  viewEl.classList.add('active');
   var rb = document.getElementById('rb-'+v);
   if (rb) rb.classList.add('active');
 
   var crumbs = {
     home:    '<span class="cur">Home</span>',
     library: '<span onclick="showView(\'home\')" style="cursor:pointer;color:var(--m)">Home</span><span class="sep"> / </span><span class="cur">Curriculum</span>',
+    placement: '<span onclick="showView(\'home\')" style="cursor:pointer;color:var(--m)">Home</span><span class="sep"> / </span><span class="cur">Einstufungstest</span>',
     lesson:  '<span onclick="backFromLesson()" style="cursor:pointer;color:var(--m)">Curriculum</span><span class="sep"> / </span><span class="cur">Lektion</span>',
     wotd:    '<span onclick="showView(\'home\')" style="cursor:pointer;color:var(--m)">Home</span><span class="sep"> / </span><span class="cur">Wort des Tages</span>',
   };
@@ -1521,6 +1590,181 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(function(){ t.classList.remove('show'); }, 3000);
 }
+
+// ── PLACEMENT TEST ──────────────────────────────────────────────────────────
+var PT_QUESTIONS = [
+  // A1 (0-3)
+  {level:'A1', q:'Was bedeutet "Guten Morgen"?', opts:['Good night','Good morning','Good evening','Goodbye'], ans:1},
+  {level:'A1', q:'Welche Form ist richtig? "Ich ___ müde."', opts:['bist','sind','bin','seid'], ans:2},
+  {level:'A1', q:'"Ich habe ___ Zeit." (keine)', opts:['keinen','keine','kein','nicht'], ans:1},
+  {level:'A1', q:'Was kommt zuerst? "21" auf Deutsch:', opts:['zwanzigein','einundzwanzig','zwanzigeins','einzwanzig'], ans:1},
+  // A2 (4-7)
+  {level:'A2', q:'"Ich ___ gestern ins Kino gegangen." Welches Hilfsverb?', opts:['habe','bin','war','hatte'], ans:1},
+  {level:'A2', q:'Komparativ von "gut":', opts:['guter','besser','am besten','mehr gut'], ans:1},
+  {level:'A2', q:'"Ich bleibe zuhause, ___ es regnet." Konnektive:', opts:['denn','deshalb','weil','also'], ans:2},
+  {level:'A2', q:'Konjunktiv II: "Ich ___ gern Kaffee." (mögen)', opts:['möchte','mag','mochte','will'], ans:0},
+  // B1 (8-11)
+  {level:'B1', q:'"Das Buch, ___ ich lese, ist spannend." Relativpronomen:', opts:['der','die','das','den'], ans:2},
+  {level:'B1', q:'Passiv: "Das Haus ___ gebaut." (Präsens)', opts:['hat','ist','wird','wurde'], ans:2},
+  {level:'B1', q:'"___ des Regens gingen wir spazieren." Genitivpräposition:', opts:['Wegen','Trotz','Während','Laut'], ans:1},
+  {level:'B1', q:'Infinitiv: "Ich lerne Deutsch, ___ hier zu arbeiten."', opts:['damit','denn','um','weil'], ans:2},
+  // B2 (12-15)
+  {level:'B2', q:'"Der ___ in Berlin geborene Autor..." Partizip I oder II?', opts:['gebärende','geborende','geboren','geborene'], ans:3},
+  {level:'B2', q:'Welcher Konnektor drückt Folge aus?', opts:['gleichwohl','infolgedessen','wohingegen','wenngleich'], ans:1},
+  {level:'B2', q:'"Die ___ des Gesetzes hat Folgen." Nominalisierung von "beschließen":',  opts:['Beschließung','Beschlossheit','Beschließerei','Verabschiedung'], ans:3},
+  {level:'B2', q:'Epistemisch: "Das ___ schwieriger sein als gedacht." (wahrscheinlich)', opts:['muss','dürfte','soll','will'], ans:1},
+  // C1 (16-19)
+  {level:'C1', q:'Was ist ein Strohmann-Argument?', opts:['Ein starkes Argument','Ein verfälschtes Gegenargument','Ein Syllogismus','Eine Metapher'], ans:1},
+  {level:'C1', q:'"schlank" vs. "dürr" — was beschreibt diesen Unterschied?', opts:['Genus','Kasus','Konnotation','Register'], ans:2},
+  {level:'C1', q:'Wissenschaftlich: "Als Beleg ___ die Studie von 2020."', opts:['dient','gilt','steht','ist'], ans:0},
+  {level:'C1', q:'Welches Stilmittel: "Das Leben ist ein Traum"?', opts:['Ironie','Metapher','Synekdoche','Litotes'], ans:1},
+];
+
+var ptAnswers = [];
+var ptCurrentIdx = 0;
+var ptAnsweredThis = false;
+
+function ptStart() {
+  ptAnswers = [];
+  ptCurrentIdx = 0;
+  ptAnsweredThis = false;
+  document.getElementById('pt-intro').style.display = 'none';
+  document.getElementById('pt-result').style.display = 'none';
+  document.getElementById('pt-quiz').style.display = 'block';
+  ptRender();
+}
+
+function ptRender() {
+  var q = PT_QUESTIONS[ptCurrentIdx];
+  var pct = Math.round(ptCurrentIdx / PT_QUESTIONS.length * 100);
+  document.getElementById('pt-bar').style.width = pct + '%';
+  document.getElementById('pt-counter').textContent = (ptCurrentIdx + 1) + ' / ' + PT_QUESTIONS.length;
+  document.getElementById('pt-level-tag').textContent = q.level;
+  document.getElementById('pt-question').textContent = q.q;
+  document.getElementById('pt-feedback').style.display = 'none';
+  document.getElementById('pt-next-btn').style.display = 'none';
+  ptAnsweredThis = false;
+
+  document.getElementById('pt-options').innerHTML = q.opts.map(function(opt, i) {
+    return '<button onclick="ptAnswer(' + i + ')" style="width:100%;padding:14px 18px;background:var(--bg);border:1.5px solid var(--b);border-radius:12px;font-size:15px;color:var(--ink);cursor:pointer;text-align:left;font-family:var(--fb);transition:all .2s;font-weight:500;line-height:1.4" id="pt-opt-' + i + '">' + opt + '</button>';
+  }).join('');
+}
+
+function ptAnswer(i) {
+  if (ptAnsweredThis) return;
+  ptAnsweredThis = true;
+  var q = PT_QUESTIONS[ptCurrentIdx];
+  var correct = (i === q.ans);
+  ptAnswers.push({ correct: correct, level: q.level });
+
+  // Buttons färben
+  for (var j = 0; j < q.opts.length; j++) {
+    var btn = document.getElementById('pt-opt-' + j);
+    if (btn) btn.disabled = true;
+    if (j === q.ans) { btn.style.background = 'rgba(34,197,94,.12)'; btn.style.borderColor = '#22C55E'; btn.style.color = '#16A34A'; }
+    else if (j === i && !correct) { btn.style.background = 'rgba(204,0,0,.08)'; btn.style.borderColor = '#CC0000'; btn.style.color = '#CC0000'; }
+  }
+
+  // Feedback
+  var fb = document.getElementById('pt-feedback');
+  fb.style.display = 'block';
+  fb.style.borderColor = correct ? '#22C55E' : '#CC0000';
+  fb.style.background = correct ? 'rgba(34,197,94,.08)' : 'rgba(204,0,0,.08)';
+  fb.style.color = correct ? '#16A34A' : '#CC0000';
+  fb.textContent = correct ? '✓ Richtig!' : '✗ Richtig wäre: ' + q.opts[q.ans];
+
+  document.getElementById('pt-next-btn').style.display = 'block';
+}
+
+function ptNext() {
+  ptCurrentIdx++;
+  if (ptCurrentIdx >= PT_QUESTIONS.length) {
+    ptShowResult();
+  } else {
+    ptRender();
+  }
+}
+
+function ptShowResult() {
+  document.getElementById('pt-quiz').style.display = 'none';
+  document.getElementById('pt-result').style.display = 'block';
+
+  // Score pro Level
+  var levelScores = {A1:0,A2:0,B1:0,B2:0,C1:0};
+  var levelTotals = {A1:0,A2:0,B1:0,B2:0,C1:0};
+  ptAnswers.forEach(function(a) {
+    levelTotals[a.level]++;
+    if (a.correct) levelScores[a.level]++;
+  });
+
+  // Finde höchstes Level mit >= 50% correct
+  var levels = ['A1','A2','B1','B2','C1'];
+  var resultLevel = 'A1';
+  for (var i = 0; i < levels.length; i++) {
+    var lv = levels[i];
+    var pct = levelTotals[lv] > 0 ? levelScores[lv] / levelTotals[lv] : 0;
+    if (pct >= 0.5) resultLevel = lv; else break;
+  }
+
+  var LEVEL_CONFIG = {
+    A1:{color:'#C9A84C',label:'A1 — Überleben',desc:'Du kennst die ersten deutschen Wörter. Starte mit Aussprache, SEIN und HABEN.'},
+    A2:{color:'#3B82F6',label:'A2 — Leben',desc:'Du beherrschst die Grundlagen. Jetzt kommen Perfekt, Komparativ und Nebensätze.'},
+    B1:{color:'#8B5CF6',label:'B1 — Denken',desc:'Du kommunizierst selbstständig. Relativsätze, Passiv und Konjunktiv warten auf dich.'},
+    B2:{color:'#22C55E',label:'B2 — Argumentieren',desc:'Du argumentierst auf hohem Niveau. Partizipien, Nominalisierung und Diskurskonnektoren.'},
+    C1:{color:'#CC0000',label:'C1 — Meistern',desc:'Du beherrschst Deutsch auf professionellem Niveau. Stilistik, Literatur und Nuancen.'},
+  };
+  var cfg = LEVEL_CONFIG[resultLevel];
+
+  // Speichern
+  userLevel = resultLevel;
+  localStorage.setItem('wv_userLevel', resultLevel);
+  if (userProfile) {
+    userProfile.current_level = resultLevel;
+    try {
+      sb.from('user_progress').upsert({ user_id: currentUser.id, current_level: resultLevel });
+    } catch(e) {}
+  }
+
+  var el = document.getElementById('pt-result-level');
+  el.textContent = cfg.label;
+  el.style.background = cfg.color + '20';
+  el.style.border = '2px solid ' + cfg.color + '60';
+  el.style.color = cfg.color;
+  el.style.fontSize = '28px';
+  el.style.padding = '16px 32px';
+
+  document.getElementById('pt-result-desc').textContent = cfg.desc;
+}
+
+function ptGoToCurriculum() {
+  currentLevel = userLevel;
+  showView('library');
+  // Tab setzen
+  setTimeout(function() {
+    var tabs = document.querySelectorAll('.lvl-tab');
+    tabs.forEach(function(t) { t.classList.remove('active'); t.style.background = ''; t.style.color = ''; });
+    var LEVEL_COLORS = {A1:'#C9A84C',A2:'#3B82F6',B1:'#8B5CF6',B2:'#22C55E',C1:'#CC0000'};
+    tabs.forEach(function(t) {
+      if (t.textContent.trim() === userLevel) {
+        t.classList.add('active');
+        t.style.background = LEVEL_COLORS[userLevel];
+        t.style.color = '#040810';
+      }
+    });
+    renderLevelLessons();
+  }, 100);
+}
+
+function toggleVocab() {
+  var body = document.getElementById('vocab-body');
+  var chev = document.getElementById('vocab-chev');
+  if (!body) return;
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if (chev) chev.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+
 </script>
 </body>
 </html>
