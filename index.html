@@ -532,6 +532,21 @@ var allLessons  = [];
 var currentLevel = 'A1';
 
 // Static lesson list (A1 from Supabase, A2 static)
+var A2_GOALS = {
+  19: ['Perfekt regulärer Verben: ge- + Stamm + -t','Haben vs. sein als Hilfsverb','20 häufigste unregelmäßige Partizipien'],
+  20: ['Komparativ: schneller, schöner, größer','Superlativ: am schnellsten, am besten','Unregelmäßig: gut→besser→am besten'],
+  21: ['Nebensätze mit weil, obwohl, dass','Verb geht ans ENDE im Nebensatz','Gründe und Gegensätze ausdrücken'],
+  22: ['Adjektivendungen nach der/die/das','Adjektivendungen nach ein/eine','Das Signalprinzip verstehen'],
+  23: ['Dativpronomen: mir, dir, ihm, ihr','7 Dativpräpositionen: mit-bei-von-nach-aus-zu-seit','Dativverben: helfen, gefallen, gehören'],
+  24: ['Reflexivpronomen: mich/dich/sich/uns/euch','Häufige reflexive Verben: sich freuen, sich fühlen','sich freuen AUF vs. ÜBER'],
+  25: ['Futur I: werden + Infinitiv','werden konjugieren','Präsens für feste Pläne (natürlicher!)'],
+  26: ['sein → war/waren · haben → hatte/hatten','Modalverben im Präteritum: konnte, musste, wollte','Wann Präteritum vs. Perfekt?'],
+  27: ['würde + Infinitiv','Schlüsselformen: wäre, hätte, könnte','Höfliche Bitten: Könnten Sie...?'],
+  28: ['als (einmalig) vs. wenn (wiederholt)','deshalb/darum/deswegen + Inversion','während = while (Nebensatz)'],
+  29: ['Formeller Brief: Sehr geehrte/r...','Schlussformel: Mit freundlichen Grüßen','Formell vs. informell unterscheiden'],
+  30: ['Alle A2-Strukturen kombinieren','Über Vergangenheit und Zukunft sprechen','A2 abgeschlossen — bereit für B1!'],
+};
+
 var STATIC_LESSONS = {
   'A2': [
     {id:'a2-19', order_index:19, title:'Das Perfekt', level:'A2', duration:22, description:'Talking about the past — what you did, where you went, what happened.'},
@@ -767,6 +782,10 @@ function renderLevelLessons() {
     var mnemonic= content.mnemonic || '';
 
     var goalsHTML = goals.slice(0,4).map(function(g){ return '<div class="le-goal">'+g+'</div>'; }).join('');
+    // For A2 static lessons, use A2_GOALS if no Supabase content
+    if (!goalsHTML && A2_GOALS[l.order_index]) {
+      goalsHTML = A2_GOALS[l.order_index].map(function(g){ return '<div class="le-goal">✓ '+g+'</div>'; }).join('');
+    }
     var speakHTML = speaks.slice(0,4).map(function(sp){
       var parts = sp.split(' :: ');
       var de = (parts[0]||'').trim();
@@ -784,7 +803,7 @@ function renderLevelLessons() {
         + (mnemonic ? '<div class="le-col-label" style="margin-top:14px">Merktrick</div><div class="le-mnemonic">'+mnemonic+'</div>' : '')
       + '</div>'
       + '<div class="le-footer">'
-        + '<button class="btn btn-gold" style="font-size:14px" onclick="openLesson(' + i + ')">▶ Lektion starten</button>'
+        + '<button class="btn btn-gold" style="font-size:14px" onclick="openLesson(' + l.order_index + ')">▶ Lektion starten</button>'
       + '</div>'
       + '</div></div>';
 
