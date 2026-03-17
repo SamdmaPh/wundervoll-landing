@@ -736,7 +736,7 @@ function renderLevelLessons() {
 
   list.forEach(function(l, i) {
     var isDone   = done.includes(String(l.id));
-    var isLocked = false; // alle frei — Stripe kommt später
+    var isLocked = false; // alle frei (A1+A2) — Stripe kommt später
     var status   = isLocked ? 'locked' : (isDone ? 'done' : 'next');
     var icon     = isLocked ? '🔒' : (isDone ? '✓' : '▶');
 
