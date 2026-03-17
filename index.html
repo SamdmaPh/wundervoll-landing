@@ -395,7 +395,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
               <h1 class="hero-title">German,<br><em>made wonderful.</em></h1>
               <p class="hero-sub" id="home-sub">Lade Daten…</p>
               <div class="hero-actions">
-                <button class="btn btn-gold btn-lg" id="continue-btn" onclick="window.open('lesson_player.html','_blank')">▶ Weiter lernen</button>
+                <button class="btn btn-gold btn-lg" id="continue-btn" onclick="openLesson()">▶ Weiter lernen</button>
                 <button class="btn btn-ghost btn-lg" onclick="showView('library')">Alle Lektionen →</button>
               </div>
             </div>
@@ -406,7 +406,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
             </div>
           </div>
 
-          <div class="continue-card" onclick="window.open('lesson_player.html','_blank')">
+          <div class="continue-card" onclick="openLesson()">
             <div class="cc-icon">🚉</div>
             <div class="cc-body">
               <div class="cc-eye" id="cc-eye">Nächste Lektion · A1</div>
@@ -649,7 +649,7 @@ function renderHome() {
     var isDone = done.includes(String(l.id));
     var cls    = isDone ? 'done' : (i === 0 ? 'next' : '');
     var icon   = isDone ? '✓'   : (i === 0 ? '▶'   : 'L' + (allLessons.indexOf(l)+1));
-    return '<div class="nli" onclick="window.open(&quot;lesson_player.html&quot;,&quot;_blank&quot;)">'  
+    return '<div class="nli" onclick="openLesson()">'  
       + '<div class="nli-badge ' + cls + '">' + icon + '</div>'
       + '<div class="nli-body"><div class="nli-title">' + (l.title||'Lektion') + '</div>'
       + '<div class="nli-meta">' + (l.level||'A1') + ' · ' + (l.duration||20) + ' Min</div></div>'
@@ -749,7 +749,7 @@ function renderLevelLessons() {
         + (mnemonic ? '<div class="le-col-label" style="margin-top:14px">Merktrick</div><div class="le-mnemonic">'+mnemonic+'</div>' : '')
       + '</div>'
       + '<div class="le-footer">'
-        + '<button class="btn btn-gold" style="font-size:14px" onclick="window.open(&quot;lesson_player.html&quot;,&quot;_blank&quot;)">▶ Lektion starten</button>'
+        + '<button class="btn btn-gold" style="font-size:14px" onclick="openLesson()">▶ Lektion starten</button>'
       + '</div>'
       + '</div></div>';
 
@@ -813,8 +813,9 @@ var LP_TIPS = {
   6: 'Wiederhole heute Abend! Das Gehirn verankert Sprache im Schlaf. / Review tonight.'
 };
 
-async function startLesson(id) {
-  showView('lesson');
+function startLesson(id) { window.location.href='lesson_player.html'; }
+async function _startLessonOld(id) {
+  // showView disabled
   lpSteps = []; lpStepIdx = 0; lpPhases = []; lpCorrect = 0; lpXP = 0; lpLesson = null;
 
   document.getElementById('lp-stage').innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:60px"><div class="spinner"></div><div style="color:var(--m);font-size:14px">Lektion wird geladen…</div></div>';
