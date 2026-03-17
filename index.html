@@ -167,6 +167,27 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 .skill-xp{font-family:var(--fm);font-size:11px;color:var(--m)}
 
 /* ══════════════════════════════════════════════
+   WORT DES TAGES VIEW
+══════════════════════════════════════════════ */
+#v-wotd{flex-direction:column;overflow-y:auto}
+.wotd-header{padding:48px 52px 32px;border-bottom:1px solid var(--b)}
+.wotd-title{font-family:var(--fd);font-size:58px;font-weight:700;color:var(--ink);line-height:1}
+.wotd-title em{color:var(--gold);font-style:italic}
+.wotd-sub{font-size:17px;color:var(--ml);margin-top:8px;font-weight:300}
+.wotd-grid{padding:40px 52px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.wotd-card{background:#fff;border:1px solid var(--b);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.wotd-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.1);border-color:var(--goldbr)}
+.wotd-card-top{padding:22px 24px 16px;background:linear-gradient(135deg,#070B18,#1C1C2E)}
+.wotd-card-article{font-size:12px;color:rgba(201,168,76,.7);font-family:var(--fm);letter-spacing:.1em;margin-bottom:4px}
+.wotd-card-word{font-family:var(--fd);font-size:26px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:6px}
+.wotd-card-audio{background:none;border:1px solid rgba(201,168,76,.3);border-radius:7px;padding:5px 12px;color:rgba(201,168,76,.8);font-size:12px;cursor:pointer;font-family:var(--fb);transition:all .15s}
+.wotd-card-audio:hover{background:rgba(201,168,76,.1);color:var(--gold)}
+.wotd-card-body{padding:16px 24px 20px}
+.wotd-card-en{font-size:17px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.wotd-card-ex{font-size:13px;color:var(--ink2);font-style:italic;line-height:1.6;margin-bottom:10px}
+.wotd-card-tip{font-size:12px;color:var(--m);background:var(--bg2);border-radius:8px;padding:8px 12px;line-height:1.5}
+
+/* ══════════════════════════════════════════════
    CURRICULUM VIEW
 ══════════════════════════════════════════════ */
 #v-library{padding:48px 52px 40px;flex-direction:column}
@@ -382,7 +403,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
     </div>
     <button class="rail-btn active" id="rb-home"    data-tip="Home"       onclick="showView('home')">🏠</button>
     <button class="rail-btn"        id="rb-library" data-tip="Curriculum" onclick="showView('library')">📚</button>
-    <button class="rail-btn"        id="rb-wotd"    data-tip="Wort des Tages" onclick="toggleWotd()">✨</button>
+    <button class="rail-btn"        id="rb-wotd"    data-tip="Wort des Tages" onclick="showView('wotd')">✨</button>
     <div class="rail-spacer"></div>
     <div class="rail-avatar" id="rail-avatar" onclick="signOut()">P</div>
   </div>
@@ -474,6 +495,15 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- ── WORT DES TAGES ── -->
+      <div class="view" id="v-wotd">
+        <div class="wotd-header">
+          <div class="wotd-title">Wort <em>des Tages</em></div>
+          <div class="wotd-sub">20 unvergessliche deutsche Wörter — von Gemütlichkeit bis Kopfkino</div>
+        </div>
+        <div class="wotd-grid" id="wotd-card-grid"></div>
       </div>
 
       <!-- ── CURRICULUM ── -->
@@ -773,7 +803,7 @@ async function loadProgress() {
   // XP + Streak aus user_progress oder eigene Tabelle
   // Fallback: lokaler State
   try {
-    var { data } = await sb.from('user_progress').select('*').eq('user_id', currentUser.id).single();
+    var { data } = await sb.from('user_progress').select('*,skill_xp').eq('user_id', currentUser.id).single();
     if (data) userProfile = data;
   } catch(e) {}
 }
@@ -883,41 +913,35 @@ var WOTD_LIST = [
 ];
 var wotdIdx = Math.floor(Math.random() * WOTD_LIST.length);
 
-function toggleWotd() {
-  var p = document.getElementById('wotd-popup');
-  if (p.style.display === 'none') {
-    renderWotd();
-    p.style.display = 'block';
-    document.addEventListener('click', closeWotdOutside, {once:true, capture:true});
-  } else {
-    p.style.display = 'none';
-  }
+function renderWotdGrid() {
+  var grid = document.getElementById('wotd-card-grid');
+  if (!grid) return;
+  grid.innerHTML = WOTD_LIST.map(function(w) {
+    var safeWord = w.de.replace(/'/g, "\\'");
+    return '<div class="wotd-card">'
+      + '<div class="wotd-card-top">'
+        + '<div class="wotd-card-article">' + w.article + '</div>'
+        + '<div class="wotd-card-word">' + w.de + '</div>'
+        + '<button class="wotd-card-audio" onclick="event.stopPropagation();wotdSpeakWord(\'' + safeWord + '\')">🔊 Anhören</button>'
+      + '</div>'
+      + '<div class="wotd-card-body">'
+        + '<div class="wotd-card-en">' + w.en + '</div>'
+        + '<div class="wotd-card-ex">&ldquo;' + w.ex + '&rdquo;</div>'
+        + '<div class="wotd-card-tip">🧠 ' + w.tip + '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
 }
-function closeWotdOutside(e) {
-  var p = document.getElementById('wotd-popup');
-  var btn = document.getElementById('rb-wotd');
-  if (!p.contains(e.target) && e.target !== btn) p.style.display = 'none';
-  else if (p.style.display !== 'none') document.addEventListener('click', closeWotdOutside, {once:true, capture:true});
-}
-function renderWotd() {
-  var w = WOTD_LIST[wotdIdx];
-  document.getElementById('wotd-de').textContent      = w.de;
-  document.getElementById('wotd-article').textContent = w.article;
-  document.getElementById('wotd-en').textContent      = w.en;
-  document.getElementById('wotd-example').textContent = '"' + w.ex + '"';
-  document.getElementById('wotd-tip').textContent     = '🧠 ' + w.tip;
-}
-function wotdAudio() {
+function wotdSpeakWord(word) {
   if (window.speechSynthesis) {
-    var u = new SpeechSynthesisUtterance(WOTD_LIST[wotdIdx].de);
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(word);
     u.lang = 'de-DE'; u.rate = 0.85;
     window.speechSynthesis.speak(u);
   }
 }
-function wotdNext() {
-  wotdIdx = (wotdIdx + 1) % WOTD_LIST.length;
-  renderWotd();
-}
+
+function toggleWotd() { showView('wotd'); }
 
 function continueLesson() {
   var done = userProfile?.completed_lessons || [];
@@ -1051,7 +1075,9 @@ function showView(v) {
     home:    '<span class="cur">Home</span>',
     library: '<span onclick="showView(\'home\')" style="cursor:pointer;color:var(--m)">Home</span><span class="sep"> / </span><span class="cur">Curriculum</span>',
     lesson:  '<span onclick="backFromLesson()" style="cursor:pointer;color:var(--m)">Curriculum</span><span class="sep"> / </span><span class="cur">Lektion</span>',
+    wotd:    '<span onclick="showView(\'home\')" style="cursor:pointer;color:var(--m)">Home</span><span class="sep"> / </span><span class="cur">Wort des Tages</span>',
   };
+  if (v === 'wotd') renderWotdGrid();
   document.getElementById('breadcrumb').innerHTML = crumbs[v] || crumbs.home;
 }
 
@@ -1427,9 +1453,25 @@ async function lpCompleteAndSave() {
     var lid = String(lpLesson.id);
     if (!done.includes(lid)) done.push(lid);
     var newXP = ((userProfile&&userProfile.xp)||0) + xpEarned;
-    await sb.from('user_progress').upsert({ user_id: currentUser.id, xp: newXP, completed_lessons: done, streak: (userProfile&&userProfile.streak)||1 });
+
+    // Skill XP aufteilen: Hören 30% · Lesen 20% · Sprechen 25% · Schreiben 25%
+    var sxp = userProfile?.skill_xp || {hoeren:0, lesen:0, sprechen:0, schreiben:0};
+    sxp.hoeren    = (sxp.hoeren    || 0) + Math.round(xpEarned * 0.30);
+    sxp.lesen     = (sxp.lesen     || 0) + Math.round(xpEarned * 0.20);
+    sxp.sprechen  = (sxp.sprechen  || 0) + Math.round(xpEarned * 0.25);
+    sxp.schreiben = (sxp.schreiben || 0) + Math.round(xpEarned * 0.25);
+
+    await sb.from('user_progress').upsert({
+      user_id: currentUser.id,
+      xp: newXP,
+      completed_lessons: done,
+      streak: (userProfile&&userProfile.streak)||1,
+      skill_xp: sxp
+    });
     if (!userProfile) userProfile = {};
-    userProfile.xp = newXP; userProfile.completed_lessons = done;
+    userProfile.xp = newXP;
+    userProfile.completed_lessons = done;
+    userProfile.skill_xp = sxp;
   } catch(e) { console.log('Progress save:', e); }
   showToast('+' + xpEarned + ' XP verdient! 🎉');
   await loadProgress();
