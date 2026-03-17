@@ -532,6 +532,47 @@ var allLessons  = [];
 var currentLevel = 'A1';
 
 // Static lesson list (A1 from Supabase, A2 static)
+var B1_GOALS = {
+  31: ['Relativsätze mit der/die/das/die(pl)','Verb ans Ende des Relativsatzes','Relativpronomen im Dativ: dem/der/dem/denen'],
+  32: ['Passiv Präsens: wird + Partizip II','Passiv Präteritum: wurde + Partizip II','von + Dativ für den Täter'],
+  33: ['Konjunktiv I: er sei, er habe, er komme','Indirekte Rede einleiten','Wann KI, wann KII?'],
+  34: ['Genitiv: des Vaters, der Mutter','Genitivpräpositionen: wegen·trotz·während·statt','Genitiv vs. von + Dativ'],
+  35: ['um...zu, ohne...zu, statt...zu','Infinitiv nach: hoffen, versuchen, beginnen','Trennbare Verben: auf|zu|stehen'],
+  36: ['sowohl...als auch · weder...noch · entweder...oder','nicht nur...sondern auch · zwar...aber','je...desto + Inversion'],
+  37: ['eine Entscheidung treffen · Kontakt aufnehmen','Gespräche führen · Bescheid geben','Nomen-Verb = professioneller Stil'],
+  38: ['weil vs. denn vs. da — Unterschied','deshalb/daher/folglich + Inversion','jedoch/allerdings/dennoch + Inversion'],
+  39: ['doch = Einladung/Beruhigung · mal = freundlicher Imperativ','eben/halt = Akzeptanz · ja = gemeinsames Wissen','Ohne Modalpartikeln klingt Deutsch steif'],
+  40: ['Komposita: letztes Wort bestimmt Genus','Fugenelemente: -s-, -en-, -es-','Unbekannte Wörter entschlüsseln'],
+  41: ['Meiner Meinung nach... · Ich finde, dass...','einerseits...andererseits · Hinzu kommt...','Zusammenfassend kann man sagen...'],
+  42: ['Alle B1-Strukturen kombinieren','Relativsätze · Passiv · Konjunktiv I+II · Genitiv','B1 = unabhängiger Nutzer!'],
+};
+
+var B2_GOALS = {
+  43: ['Partizip I (laufend): der schlafende Mann','Partizip II als Adjektiv: das geschriebene Buch','Erweiterte Partizipialkonstruktionen'],
+  44: ['-ung Nominalisierungen (immer feminin)','Adjektiv nominalisiert: das Gute, das Wichtige','Etwas Neues · nichts Besonderes'],
+  45: ['obwohl(Nebensatz) vs. trotzdem(Hauptsatz)','wohingegen = whereas · im Gegensatz zu','wenngleich = formelles obwohl'],
+  46: ['Bericht vs. Kommentar vs. Erörterung','Formell: Passiv, Nominalisierungen, kein "ich"','Präzise Verben: belegen·feststellen·darlegen'],
+  47: ['darüber hinaus · zudem · nicht zuletzt','infolgedessen · demzufolge · folglich','gleichwohl · nichtsdestotrotz · indessen'],
+  48: ['müssen(epistemic) = logical conclusion','soll(epistemic) = reportedly','angeblich(Skepsis) > wahrscheinlich > vermutlich'],
+  49: ['Rhetorische Frage · Klimax · Appell','Einräumung: Zugegeben... + Widerlegung: Dennoch...','Starke Verben: belegen·beweisen·widerlegen'],
+  50: ['den Nagel auf den Kopf treffen · die Flinte ins Korn werfen','Übung macht den Meister · Aller Anfang ist schwer','Idiome = Kultur, nicht wörtlich übersetzen!'],
+  51: ['Deutschland(ß) vs. Österreich(ß,Jänner) vs. Schweiz(ss)','Dialekte: Bayrisch·Berlinerisch·Norddeutsch','DACH = plurizentrische Sprache'],
+  52: ['Generisches Maskulinum vs. Studierende/Lehrkräfte','Anglizismen akzeptiert vs. umstritten','Deutsche Wörter im Englischen: Zeitgeist·Weltanschauung'],
+  53: ['4 Register: Hochsprache·Umgangssprache·Fachsprache·Dialekt','Signalwörter: ersuchen(formell) vs. bitten(neutral) vs. wollen(informell)','Registerbrüche erkennen und vermeiden'],
+  54: ['Alle B2-Strukturen kombinieren','Selbstständiger Nutzer (GER B2)','C1 bringt: Stilistik·Literatur·Nuancen·Argumentation'],
+};
+
+var C1_GOALS = {
+  55: ['Textkohärenz durch Pronominalisierung und Synonyme','Stilvariation: Satzlänge·Struktur·Wortschatz','Thema-Rhema-Progression'],
+  56: ['These·Belege·Gegenargumente·Schluss analysieren','Wissenschaftliches Vokabular: belegen·widerlegen·feststellen','Kritisches Lesen: hinterfragen + Quellen prüfen'],
+  57: ['Präsentationsstruktur: Eröffnung·Gliederung·Abschluss','Auf Fragen reagieren: "Ich komme darauf zurück"','Höflicher Widerspruch: "Das würde ich differenzierter betrachten"'],
+  58: ['Stilmittel: Metapher·Ironie·Symbolik·Allegorie','Interpretation: These→Textbeleg→Interpretation→Kontext','Kafka·Brecht·Goethe im historischen Kontext'],
+  59: ['Seminararbeit: Einleitung·Hauptteil·Schluss·Literatur','Primär- vs. Sekundärquellen · Zitierformate','C1-Sprache: distanziert·präzise·belegt'],
+  60: ['Konnotationen: schlank(+) · dünn(0) · mager(−)','Euphemismen: freigestellt·eingeschlafen·Einsatz','Sprachliche Nuancen erkennen und einsetzen'],
+  61: ['Syllogismus: Prämisse1 + Prämisse2 → Schluss','Logische Fehlschlüsse: Strohmann·Ad hominem·Zirkelschluss','These→Belege→Gegenargument→Widerlegung→Schluss'],
+  62: ['Alle C1-Strukturen in komplexer Kommunikation','Kompetenter Nutzer (GER C1)','C2: Mastery — annähernd muttersprachlich'],
+};
+
 var A2_GOALS = {
   19: ['Perfekt regulärer Verben: ge- + Stamm + -t','Haben vs. sein als Hilfsverb','20 häufigste unregelmäßige Partizipien'],
   20: ['Komparativ: schneller, schöner, größer','Superlativ: am schnellsten, am besten','Unregelmäßig: gut→besser→am besten'],
@@ -549,19 +590,57 @@ var A2_GOALS = {
 
 var STATIC_LESSONS = {
   'A2': [
-    {id:'a2-19', order_index:19, title:'Das Perfekt', level:'A2', duration:22, description:'Talking about the past — what you did, where you went, what happened.'},
+    {id:'a2-19', order_index:19, title:'Das Perfekt', level:'A2', duration:22, description:'Talking about the past — Perfekt, haben vs. sein, irregular participles.'},
     {id:'a2-20', order_index:20, title:'Größer, schöner, am besten', level:'A2', duration:20, description:'Comparatives and superlatives — comparing everything in German.'},
-    {id:'a2-21', order_index:21, title:'weil, obwohl, dass — Nebensätze', level:'A2', duration:20, description:'Subordinate clauses — connecting ideas, giving reasons, expressing contrasts.'},
-    {id:'a2-22', order_index:22, title:'Adjektivdeklination', level:'A2', duration:22, description:'Adjective endings — describing things precisely with the right forms.'},
-    {id:'a2-23', order_index:23, title:'Dativ vertieft', level:'A2', duration:22, description:'Dative in depth — pronouns, verbs, and the 7 dative prepositions.'},
-    {id:'a2-24', order_index:24, title:'Reflexive Verben', level:'A2', duration:20, description:'Reflexive verbs — sich freuen, sich ärgern, sich fühlen and more.'},
-    {id:'a2-25', order_index:25, title:'Zukunft — werden und Präsens', level:'A2', duration:20, description:'Expressing the future — with werden and the natural present tense.'},
-    {id:'a2-26', order_index:26, title:'Präteritum', level:'A2', duration:20, description:'Simple past — war, hatte, konnte, musste for stories and writing.'},
-    {id:'a2-27', order_index:27, title:'Konjunktiv II', level:'A2', duration:22, description:'Subjunctive II — polite requests, wishes, and hypotheticals.'},
-    {id:'a2-28', order_index:28, title:'Konnektoren vertieft', level:'A2', duration:20, description:'Advanced connectors — als vs. wenn, deshalb, während and more.'},
-    {id:'a2-29', order_index:29, title:'Formelles Schreiben', level:'A2', duration:20, description:'Formal writing — letters, emails, complaints, and professional German.'},
+    {id:'a2-21', order_index:21, title:'weil, obwohl, dass — Nebensätze', level:'A2', duration:20, description:'Subordinate clauses — verb goes to the END.'},
+    {id:'a2-22', order_index:22, title:'Adjektivdeklination', level:'A2', duration:22, description:'Adjective endings — the signal principle.'},
+    {id:'a2-23', order_index:23, title:'Dativ vertieft', level:'A2', duration:22, description:'Dative in depth — mit-bei-von-nach-aus-zu-seit.'},
+    {id:'a2-24', order_index:24, title:'Reflexive Verben', level:'A2', duration:20, description:'Sich freuen, sich ärgern, sich fühlen — AUF vs. ÜBER.'},
+    {id:'a2-25', order_index:25, title:'Zukunft — werden und Präsens', level:'A2', duration:20, description:'Future with werden and present tense for plans.'},
+    {id:'a2-26', order_index:26, title:'Präteritum', level:'A2', duration:20, description:'war, hatte, konnte, musste — simple past.'},
+    {id:'a2-27', order_index:27, title:'Konjunktiv II', level:'A2', duration:22, description:'Könnten Sie...? Wenn ich... wäre — polite requests and wishes.'},
+    {id:'a2-28', order_index:28, title:'Konnektoren vertieft', level:'A2', duration:20, description:'als vs. wenn, deshalb, während — advanced connectors.'},
+    {id:'a2-29', order_index:29, title:'Formelles Schreiben', level:'A2', duration:20, description:'Sehr geehrte/r... Mit freundlichen Grüßen — formal writing.'},
     {id:'a2-30', order_index:30, title:'A2 — Das große Finale', level:'A2', duration:25, description:'Everything together — A2 complete and ready for B1.'},
-  ]
+  ],
+  'B1': [
+    {id:'b1-31', order_index:31, title:'Relativsätze', level:'B1', duration:22, description:'Der Mann, der... die Frau, die... das Buch, das... — relative clauses.'},
+    {id:'b1-32', order_index:32, title:'Passiv', level:'B1', duration:22, description:'Das Haus wird gebaut / wurde gebaut — passive voice.'},
+    {id:'b1-33', order_index:33, title:'Konjunktiv I — Indirekte Rede', level:'B1', duration:20, description:'Er sei krank. Sie habe gewusst. — reported speech.'},
+    {id:'b1-34', order_index:34, title:'Genitiv', level:'B1', duration:20, description:'des Vaters, der Mutter — possession and genitive prepositions.'},
+    {id:'b1-35', order_index:35, title:'Infinitivkonstruktionen', level:'B1', duration:20, description:'um...zu, ohne...zu, statt...zu — infinitive constructions.'},
+    {id:'b1-36', order_index:36, title:'Zweiteilige Konnektoren', level:'B1', duration:18, description:'sowohl...als auch, weder...noch, je...desto — two-part connectors.'},
+    {id:'b1-37', order_index:37, title:'Nomen-Verb-Verbindungen', level:'B1', duration:18, description:'eine Entscheidung treffen, Kontakt aufnehmen — idiomatic German.'},
+    {id:'b1-38', order_index:38, title:'Kausalität und Gegensatz', level:'B1', duration:20, description:'weil vs. denn vs. da — deshalb, jedoch, dennoch.'},
+    {id:'b1-39', order_index:39, title:'Modalpartikeln', level:'B1', duration:18, description:'doch, mal, eben, halt, ja — sound like a native speaker.'},
+    {id:'b1-40', order_index:40, title:'Wortbildung — Komposita', level:'B1', duration:18, description:'das Krankenhaus, die Haustür — German compound words.'},
+    {id:'b1-41', order_index:41, title:'Schreiben — Meinungen', level:'B1', duration:22, description:'Meiner Meinung nach... einerseits...andererseits — structured writing.'},
+    {id:'b1-42', order_index:42, title:'B1 — Das große Finale', level:'B1', duration:25, description:'Everything together — B1 complete, independent user.'},
+  ],
+  'B2': [
+    {id:'b2-43', order_index:43, title:'Partizipialkonstruktionen', level:'B2', duration:22, description:'Der schlafende Mann, das geschriebene Buch — participial constructions.'},
+    {id:'b2-44', order_index:44, title:'Nominalisierung', level:'B2', duration:20, description:'die Entscheidung, das Wichtige, nichts Besonderes — nominalisation.'},
+    {id:'b2-45', order_index:45, title:'Konzessiv und Adversativ', level:'B2', duration:20, description:'wenngleich, wohingegen, nichtsdestotrotz — advanced contrast.'},
+    {id:'b2-46', order_index:46, title:'Textsorten und Register', level:'B2', duration:22, description:'Bericht, Kommentar, Erörterung — text types and register.'},
+    {id:'b2-47', order_index:47, title:'Diskurskonnektoren', level:'B2', duration:18, description:'darüber hinaus, infolgedessen, gleichwohl — academic connectors.'},
+    {id:'b2-48', order_index:48, title:'Epistemische Modalität', level:'B2', duration:20, description:'Das muss ein Fehler sein. Er soll reich sein. — epistemic modals.'},
+    {id:'b2-49', order_index:49, title:'Rhetorische Mittel', level:'B2', duration:20, description:'Rhetorische Fragen, Klimax, Einräumung, Widerlegung.'},
+    {id:'b2-50', order_index:50, title:'Idiome und Redewendungen', level:'B2', duration:20, description:'den Nagel auf den Kopf treffen — idioms and proverbs.'},
+    {id:'b2-51', order_index:51, title:'Varietäten des Deutschen', level:'B2', duration:20, description:'Deutschland, Österreich, Schweiz — DACH varieties.'},
+    {id:'b2-52', order_index:52, title:'Sprache und Gesellschaft', level:'B2', duration:22, description:'Gendern, Anglizismen, generisches Maskulinum.'},
+    {id:'b2-53', order_index:53, title:'Register und Nuancen', level:'B2', duration:20, description:'Hochsprache, Umgangssprache, Fachsprache, Registerbrüche.'},
+    {id:'b2-54', order_index:54, title:'B2 — Das große Finale', level:'B2', duration:25, description:'Everything together — B2 complete, independent user.'},
+  ],
+  'C1': [
+    {id:'c1-55', order_index:55, title:'Stilistik und Textkohärenz', level:'C1', duration:25, description:'Kohärenz, Variation, Proformen — stylistics and text coherence.'},
+    {id:'c1-56', order_index:56, title:'Wissenschaftliche Texte', level:'C1', duration:25, description:'These, Belege, Analyse — academic text skills.'},
+    {id:'c1-57', order_index:57, title:'Mündliche Kompetenz', level:'C1', duration:22, description:'Präsentation, Diskussion, Einwände — oral competence.'},
+    {id:'c1-58', order_index:58, title:'Literarische Texte', level:'C1', duration:25, description:'Kafka, Brecht — literary interpretation and analysis.'},
+    {id:'c1-59', order_index:59, title:'Komplexe Texte verfassen', level:'C1', duration:25, description:'Seminararbeit, Analyse — complex academic writing.'},
+    {id:'c1-60', order_index:60, title:'Sprache der Nuancen', level:'C1', duration:20, description:'Konnotationen, Euphemismen — language of nuance.'},
+    {id:'c1-61', order_index:61, title:'Argumentation und Diskurs', level:'C1', duration:22, description:'Syllogismus, Fehlschlüsse — complex argumentation.'},
+    {id:'c1-62', order_index:62, title:'C1 — Das große Finale', level:'C1', duration:30, description:'Everything together — C1 complete, proficient user.'},
+  ],
 };
 var lessonSteps = [];
 var lessonStepIdx = 0;
@@ -759,6 +838,8 @@ function renderLevelLessons() {
   var list = currentLevel === 'A1'
     ? allLessons.filter(function(l){ return l.level === 'A1'; })
     : (STATIC_LESSONS[currentLevel] || []);
+  // For non-A1, use order_index directly as loop counter
+  var useOrderIndex = currentLevel !== 'A1';
   var done = userProfile?.completed_lessons || [];
 
   document.getElementById('lib-sub').textContent = list.length + ' Lektionen · Klick zum Ausklappen';
@@ -782,9 +863,12 @@ function renderLevelLessons() {
     var mnemonic= content.mnemonic || '';
 
     var goalsHTML = goals.slice(0,4).map(function(g){ return '<div class="le-goal">'+g+'</div>'; }).join('');
-    // For A2 static lessons, use A2_GOALS if no Supabase content
-    if (!goalsHTML && A2_GOALS[l.order_index]) {
-      goalsHTML = A2_GOALS[l.order_index].map(function(g){ return '<div class="le-goal">✓ '+g+'</div>'; }).join('');
+    // For static lessons, use level-specific GOALS
+    if (!goalsHTML) {
+      var goalSource = A2_GOALS[l.order_index] || B1_GOALS[l.order_index] || B2_GOALS[l.order_index] || C1_GOALS[l.order_index];
+      if (goalSource) {
+        goalsHTML = goalSource.map(function(g){ return '<div class="le-goal">✓ '+g+'</div>'; }).join('');
+      }
     }
     var speakHTML = speaks.slice(0,4).map(function(sp){
       var parts = sp.split(' :: ');
