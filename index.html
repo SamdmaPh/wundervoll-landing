@@ -458,6 +458,18 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
     <div style="height:33.4%;background:#C9A84C"></div>
   </div>
 
+          <!-- Level Banner — dynamisch per renderHome() -->
+          <div id="level-banner" style="border-radius:18px;padding:22px 28px;display:flex;align-items:center;gap:18px;border:1.5px solid;cursor:pointer" onclick="showView('library')">
+            <div id="lb-icon" style="font-size:36px;flex-shrink:0">🗣️</div>
+            <div style="flex:1">
+              <div id="lb-eyebrow" style="font-family:var(--fm);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:4px">Dein Level</div>
+              <div id="lb-title" style="font-family:var(--fd);font-size:24px;font-weight:800;line-height:1.2;margin-bottom:2px">A1 — Überleben</div>
+              <div id="lb-sub" style="font-size:13px;opacity:.7">Survival German</div>
+            </div>
+            <div id="lb-goals" style="flex:1;display:flex;flex-direction:column;gap:5px"></div>
+            <div style="font-size:20px;opacity:.4">→</div>
+          </div>
+
           <div class="hero">
             <div>
               <div class="hero-eyebrow" id="home-greeting">Willkommen zurück</div>
@@ -465,7 +477,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
               <p class="hero-sub" id="home-sub">Lade Daten…</p>
               <div class="hero-actions">
                 <button class="btn btn-gold btn-lg" id="continue-btn" onclick="continueLesson()">▶ Weiter lernen</button>
-                <button class="btn btn-ghost btn-lg" onclick="showView('library')">Alle Lektionen →</button>
+                <button class="btn btn-ghost btn-lg" id="all-lessons-btn" onclick="showView('library')">Alle Lektionen →</button>
               </div>
             </div>
             <div class="hero-stats">
@@ -841,28 +853,35 @@ function setLang(l) {
 }
 
 function applyLangTexts() {
-  var de = uiLang === 'de';
-  // Rail Tooltips
-  var rh = document.getElementById('rb-home'); if(rh) rh.setAttribute('data-tip', de?'Home':'Home');
-  var rl = document.getElementById('rb-library'); if(rl) rl.setAttribute('data-tip', de?'Curriculum':'Curriculum');
+  var de = uiLang !== 'en';
   var rw = document.getElementById('rb-wotd'); if(rw) rw.setAttribute('data-tip', de?'Wort des Tages':'Word of the Day');
   var rp = document.getElementById('rb-placement'); if(rp) rp.setAttribute('data-tip', de?'Einstufungstest':'Placement Test');
-  // Continue Button
   var cb = document.getElementById('continue-btn'); if(cb) cb.innerHTML = '▶ ' + (de?'Weiter lernen':'Continue learning');
-  // Stat-Labels
+  var ab = document.getElementById('all-lessons-btn'); if(ab) ab.textContent = (de?'Alle Lektionen →':'All lessons →');
   var sl = document.querySelectorAll('.hstat-l');
   var statTexts = de ? ['Lektionen','Tage Streak','Dein Level'] : ['Lessons','Day streak','Your level'];
   sl.forEach(function(el, i){ if(statTexts[i]) el.textContent = statTexts[i]; });
-  // Hcard Titles
   var hcards = document.querySelectorAll('.hcard-title');
-  if(hcards[0]) hcards[0].innerHTML = (de?'Als n\u00e4chstes':'Up next') + ' <span class="hcard-link" onclick="showView(&quot;library&quot;)">'+(de?'Alle \u2192':'All \u2192')+'</span>';
+  if(hcards[0]) hcards[0].innerHTML = (de?'Als nächstes':'Up next') + ' <span class="hcard-link" onclick="showView(\'library\')">'+(de?'Alle →':'All →')+'</span>';
   if(hcards[1]) hcards[1].textContent = de?'Level-Fortschritt':'Level progress';
   if(hcards[2]) hcards[2].textContent = de?'Deine Skills':'Your skills';
-  // Placement Test Seite
-  var ptIntroH = document.querySelector('#pt-intro h1');
-  if(ptIntroH) ptIntroH.innerHTML = de?'Finde dein <em style="color:var(--gold)">Niveau.</em>':'Find your <em style="color:var(--gold)">level.</em>';
-  var ptStartBtn = document.querySelector('#pt-intro .btn-gold');
-  if(ptStartBtn) ptStartBtn.textContent = de?'🎯 Test starten':'🎯 Start test';
+  var lb = document.getElementById('lb-eyebrow'); if(lb) lb.textContent = de?'Dein Level':'Your Level';
+  var cfg = LEVEL_CONFIG[userLevel||'A1'];
+  if(cfg) {
+    var lbt = document.getElementById('lb-title'); if(lbt) { lbt.textContent = de?cfg.label:(cfg.labelEN||cfg.label); lbt.style.color=cfg.color; }
+    var goals = (de?cfg.goals:cfg.goalsEN)||[];
+    var lbg = document.getElementById('lb-goals');
+    if(lbg) lbg.innerHTML = goals.slice(0,3).map(function(g){
+      return '<div style="display:flex;gap:7px;align-items:flex-start;font-size:13px;color:var(--ink2);line-height:1.4"><span style="color:'+cfg.color+';font-weight:800;flex-shrink:0">✓</span><span>'+g+'</span></div>';
+    }).join('');
+  }
+  var ptH = document.querySelector('#pt-intro h1'); if(ptH) ptH.innerHTML = de?'Finde dein <em style="color:var(--gold)">Niveau.</em>':'Find your <em style="color:var(--gold)">level.</em>';
+  var ptSub = document.querySelector('#pt-intro p'); if(ptSub) ptSub.textContent = de?'20 Fragen · ca. 5 Minuten · Findet dein Deutsch-Niveau von A1 bis C1.':'20 questions · approx. 5 minutes · Finds your German level from A1 to C1.';
+  var ptBtn = document.querySelector('#pt-intro button.btn-gold'); if(ptBtn) ptBtn.textContent = de?'🎯 Test starten':'🎯 Start test';
+  var ptResTitle = document.querySelector('#pt-result .hcard-title, #pt-result > div:first-child'); 
+  document.querySelector('#pt-result > div:nth-child(2)') && (document.querySelector('#pt-result > div:nth-child(2)').textContent = de?'Dein Ergebnis':'Your result');
+  document.querySelector('#pt-result-desc') && (() => {})();
+  var ptGoBtn = document.querySelector('#pt-result button.btn-gold'); if(ptGoBtn) ptGoBtn.textContent = de?'📚 Zum Curriculum →':'📚 Go to Curriculum →';
 }
 
 var currentLesson = null;
@@ -1018,33 +1037,66 @@ function renderHome() {
   var xp     = userProfile?.xp || 0;
   var streak = userProfile?.streak || 0;
   var done   = (userProfile?.completed_lessons || []);
+  var de     = uiLang !== 'en';
+  var lvl    = userLevel || 'A1';
+  var cfg    = LEVEL_CONFIG[lvl] || LEVEL_CONFIG['A1'];
 
   document.getElementById('stat-streak').textContent = streak;
-  var slvl = document.getElementById('stat-level'); if(slvl) slvl.textContent = userLevel || 'A1';
+  var slvl = document.getElementById('stat-level'); if(slvl) slvl.textContent = lvl;
   document.getElementById('stat-done').textContent   = done.length;
-  document.getElementById('streak-badge').textContent = '🔥 ' + streak + ' Tage';
+  document.getElementById('streak-badge').textContent = '🔥 ' + streak + (de?' Tage':' days');
   document.getElementById('xp-badge').textContent    = '⚡ ' + xp + ' XP';
 
-  // Next lesson
-  var next = allLessons.find(function(l) { return !done.includes(String(l.id)); });
-  if (next) {
-    document.getElementById('cc-eye').textContent  = 'Nächste Lektion · ' + (next.level || 'A1');
-    document.getElementById('cc-title').textContent = next.title || 'Lektion';
-    document.getElementById('cc-meta').textContent  = (next.duration || '20') + ' Min';
-    document.getElementById('home-sub').textContent = done.length + ' von ' + allLessons.length + ' Lektionen abgeschlossen.';
+  // ── Level Banner ──
+  var banner = document.getElementById('level-banner');
+  if (banner) {
+    banner.style.background = cfg.color + '12';
+    banner.style.borderColor = cfg.color + '40';
+    document.getElementById('lb-icon').textContent = cfg.icon || '📚';
+    document.getElementById('lb-eyebrow').style.color = cfg.color;
+    document.getElementById('lb-eyebrow').textContent = de ? 'Dein Level' : 'Your Level';
+    document.getElementById('lb-title').textContent = (de ? cfg.label : (cfg.labelEN || cfg.label));
+    document.getElementById('lb-title').style.color = cfg.color;
+    document.getElementById('lb-sub').textContent = cfg.sub;
+    var goals = (de ? cfg.goals : cfg.goalsEN) || [];
+    document.getElementById('lb-goals').innerHTML = goals.slice(0,3).map(function(g){
+      return '<div style="display:flex;gap:7px;align-items:flex-start;font-size:13px;color:var(--ink2);line-height:1.4">'
+        + '<span style="color:' + cfg.color + ';font-weight:800;flex-shrink:0;margin-top:1px">✓</span>'
+        + '<span>' + g + '</span></div>';
+    }).join('');
   }
 
-  // Up next list
+  // ── Continue Card: nächste Lektion im User-Level ──
+  var levelLessons = lvl === 'A1'
+    ? allLessons.filter(function(l){ return l.level==='A1'; })
+    : (STATIC_LESSONS[lvl] || []);
+  var next = levelLessons.find(function(l) { return !done.includes(String(l.id)); })
+          || allLessons.find(function(l) { return !done.includes(String(l.id)); });
+  if (next) {
+    document.getElementById('cc-eye').textContent = (de?'Nächste Lektion':'Next lesson') + ' · ' + (next.level||lvl);
+    document.getElementById('cc-title').textContent = next.title || 'Lektion';
+    document.getElementById('cc-meta').textContent = dur(next.duration||20);
+    var totalInLevel = levelLessons.length || allLessons.length;
+    var doneInLevel  = levelLessons.filter(function(l){ return done.includes(String(l.id)); }).length;
+    document.getElementById('home-sub').textContent = doneInLevel + (de?' von ':' of ') + totalInLevel + (de?' Lektionen in ':' lessons in ') + lvl + (de?' abgeschlossen.':' completed.');
+    setTimeout(function(){
+      var fill = document.getElementById('cc-fill');
+      if(fill) fill.style.width = (totalInLevel>0 ? Math.round(doneInLevel/totalInLevel*100) : 0) + '%';
+    }, 150);
+  }
+
+  // ── Up Next: Lektionen des aktuellen Levels ──
   var nextEl = document.getElementById('next-lessons');
-  var upcoming = allLessons.filter(function(l) { return !done.includes(String(l.id)); }).slice(0, 4);
+  var upcoming = levelLessons.filter(function(l){ return !done.includes(String(l.id)); }).slice(0,4);
+  if (!upcoming.length) upcoming = levelLessons.slice(0,4);
   nextEl.innerHTML = upcoming.map(function(l, i) {
     var isDone = done.includes(String(l.id));
-    var cls    = isDone ? 'done' : (i === 0 ? 'next' : '');
-    var icon   = isDone ? '✓'   : (i === 0 ? '▶'   : 'L' + (allLessons.indexOf(l)+1));
-    return '<div class="nli" onclick="openLesson(' + (allLessons.indexOf(l)) + ')">'  
-      + '<div class="nli-badge ' + cls + '">' + icon + '</div>'
+    var cls    = isDone ? 'done' : (i===0 ? 'next' : '');
+    var icon   = isDone ? '✓' : (i===0 ? '▶' : 'L'+(l.order_index||i+1));
+    return '<div class="nli" onclick="openLesson(' + (l.order_index||0) + ')">'
+      + '<div class="nli-badge ' + cls + '" style="' + (i===0&&!isDone?'background:'+cfg.color+'20;border-color:'+cfg.color+'50;color:'+cfg.color:'') + '">' + icon + '</div>'
       + '<div class="nli-body"><div class="nli-title">' + (l.title||'Lektion') + '</div>'
-      + '<div class="nli-meta">' + (l.level||'A1') + ' · ' + (l.duration||20) + ' Min</div></div>'
+      + '<div class="nli-meta">' + (l.level||lvl) + ' · ' + dur(l.duration||20) + '</div></div>'
       + '</div>';
   }).join('');
 
@@ -1198,12 +1250,27 @@ function continueLesson() {
 
 // ── CURRICULUM RENDERING ──────────────────────────────
 var LEVEL_CONFIG = {
-  A1:{ color:'#C9A84C', label:'A1 — Überleben', sub:'Survival German' },
-  A2:{ color:'#3B82F6', label:'A2 — Leben',     sub:'Living German'   },
-  B1:{ color:'#8B5CF6', label:'B1 — Denken',    sub:'Thinking in German' },
-  B2:{ color:'#22C55E', label:'B2 — Argumentieren', sub:'Arguing in German' },
-  C1:{ color:'#CC0000', label:'C1 — Sein',      sub:'Being German'    },
-  C2:{ color:'#C8D6E8', label:'C2 — Meistern',  sub:'Mastering German'},
+  A1:{ color:'#C9A84C', label:'A1 — Überleben', labelEN:'A1 — Survive', sub:'Survival German',
+    goals:['Erste Gespräche auf Deutsch führen','Dich vorstellen und Leute kennenlernen','Einkaufen, bestellen, nach dem Weg fragen','Grundlegende Grammatik: SEIN, HABEN, Artikel'],
+    goalsEN:['Have your first conversations in German','Introduce yourself and meet people','Shop, order, ask for directions','Core grammar: SEIN, HABEN, articles'],
+    icon:'🗣️' },
+  A2:{ color:'#3B82F6', label:'A2 — Leben', labelEN:'A2 — Live', sub:'Living German',
+    goals:['Über Vergangenheit und Zukunft sprechen','Vergleiche anstellen: größer, besser, am besten','Nebensätze: weil, obwohl, dass','Kommuniziere selbstständig im Alltag'],
+    goalsEN:['Talk about past and future','Make comparisons: bigger, better, best','Subordinate clauses: because, although, that','Communicate independently in everyday life'],
+    icon:'🏙️' },
+  B1:{ color:'#8B5CF6', label:'B1 — Denken', labelEN:'B1 — Think', sub:'Thinking in German',
+    goals:['Relativsätze: der Mann, der...','Passiv: Das Haus wird gebaut','Genitiv und Infinitivkonstruktionen','Beginne auf Deutsch zu denken'],
+    goalsEN:['Relative clauses: the man who...','Passive: The house is being built','Genitive and infinitive constructions','Start thinking in German'],
+    icon:'🧠' },
+  B2:{ color:'#22C55E', label:'B2 — Argumentieren', labelEN:'B2 — Argue', sub:'Arguing in German',
+    goals:['Partizipialkonstruktionen meistern','Akademische Konnektoren: infolgedessen, gleichwohl','Komplexe Texte lesen und schreiben','Auf C1-Niveau vorbereiten'],
+    goalsEN:['Master participial constructions','Academic connectors: consequently, nevertheless','Read and write complex texts','Prepare for C1 level'],
+    icon:'⚖️' },
+  C1:{ color:'#CC0000', label:'C1 — Meistern', labelEN:'C1 — Master', sub:'Being German',
+    goals:['Stilistik und Textkohärenz','Wissenschaftliche Texte analysieren','Literarische Texte interpretieren','Professionelle Kommunikation auf Muttersprachenniveau'],
+    goalsEN:['Stylistics and text coherence','Analyse academic texts','Interpret literary texts','Professional communication near native level'],
+    icon:'🎓' },
+  C2:{ color:'#C8D6E8', label:'C2 — Meistern',  sub:'Mastering German', goals:[], goalsEN:[], icon:'🏆' },
 };
 
 function renderLibrary() {
@@ -1292,7 +1359,7 @@ function renderLevelLessons() {
         + '<div class="lrow-num">L' + String(i).padStart(2,'0') + '</div>'
         + '<div class="lrow-icon ' + status + '">' + icon + '</div>'
         + '<div class="lrow-text"><div class="lrow-title">' + (l.title||'Lektion') + '</div><div class="lrow-desc">' + (l.description||'') + '</div></div>'
-        + '<div class="lrow-dur">' + (l.duration||20) + ' Min</div>'
+        + '<div class="lrow-dur">' + dur(l.duration||20) + '</div>'
         + (isLocked ? '' : '<div class="lrow-chev">⌄</div>')
       + '</div>'
       + expand
@@ -1341,16 +1408,30 @@ var lpPhases = [];
 var lpCorrect = 0;
 var lpXP = 0;
 var lpLesson = null;
+var lpLang = localStorage.getItem('wv_lang') || 'de';
+LP_TIPS = lpLang === 'en' ? LP_TIPS_EN : LP_TIPS_DE;
 
-var LP_TIPS = {
-  0: 'Lies die Ziele durch. Was möchtest du nach dieser Lektion können? / Read the goals — what will you be able to do?',
-  1: 'Lies den Dialog laut — auch wenn du allein bist. / Read the dialog aloud, even alone.',
-  2: 'Klicke auf jede Karte — entdecke die Regeln selbst! / Click each card to discover the rules.',
-  3: 'Tippe bevor du schaust — versuche die Übersetzung zu denken! / Tap before revealing.',
-  4: 'Keine Panik bei Fehlern! Jeder Fehler ist Lernen. / No panic — every error is learning.',
-  5: 'Sprache ist Kultur. Dieser Kontext hilft dir wirklich zu verstehen. / Language is culture.',
-  6: 'Wiederhole heute Abend! Das Gehirn verankert Sprache im Schlaf. / Review tonight.'
+
+function dur(d) { return String(d||20).replace(/\s*[Mm]in[^]*$/,'') + ' Min'; }
+var LP_TIPS_DE = {
+  0: 'Lies die Ziele durch. Was möchtest du nach dieser Lektion können?',
+  1: 'Lies den Dialog laut — auch wenn du allein bist. Dein Gehirn lernt durch Sprechen.',
+  2: 'Klicke auf jede Karte — entdecke die Regeln selbst!',
+  3: 'Tippe bevor du schaust — versuche die Übersetzung zu denken!',
+  4: 'Keine Panik bei Fehlern! Jeder Fehler ist Lernen.',
+  5: 'Sprache ist Kultur. Dieser Kontext hilft dir wirklich zu verstehen.',
+  6: 'Wiederhole heute Abend! Das Gehirn verankert Sprache im Schlaf.'
 };
+var LP_TIPS_EN = {
+  0: 'Read the goals — what will you be able to do after this lesson?',
+  1: 'Read the dialog aloud, even alone. Your brain learns through speaking.',
+  2: 'Click each card to discover the rule yourself!',
+  3: 'Tap before revealing — try to think of the translation first!',
+  4: 'No panic about errors! Every mistake is learning.',
+  5: 'Language is culture. This context helps you truly understand.',
+  6: 'Review tonight! The brain consolidates language during sleep.'
+};
+var LP_TIPS = LP_TIPS_DE;
 
 function openLesson(num) { window.location.href='lesson_player.html?num=' + (num||1); }
 function startLesson(id) { openLesson(id); }
@@ -1368,7 +1449,7 @@ async function _startLessonOld(id) {
 
   lpLesson = res.data;
   document.getElementById('lp-title').textContent = lpLesson.title || 'Lektion';
-  document.getElementById('lp-meta').textContent = (lpLesson.level||'A1') + ' · ' + (lpLesson.duration||20) + ' Min';
+  document.getElementById('lp-meta').textContent = (lpLesson.level||'A1') + ' · ' + dur(lpLesson.duration||20);
   document.getElementById('lp-xp-display').textContent = '⚡ 0 XP';
 
   lpBuildSteps(lpLesson);
@@ -1440,7 +1521,7 @@ function lpBuildSteps(lesson) {
       var others = pairs2.filter(function(p){ return p.de !== pair.de; });
       var wrongs = lpShuffle(others).slice(0,3).map(function(o){ return o.en; });
       var opts = lpShuffle([pair.en].concat(wrongs));
-      lpSteps.push({ type:'practice', question:'Was bedeutet: / What means: "' + pair.de + '"?', deAudio:pair.de, opts:opts, correct:opts.indexOf(pair.en), correctMsg:'✓ Richtig! / Correct!', wrongMsg:'Nicht ganz. / Not quite: ' + pair.en });
+      lpSteps.push({ type:'practice', question:(lpLang===' en'?'What does this mean: "':'Was bedeutet: "') + pair.de + '"?', deAudio:pair.de, opts:opts, correct:opts.indexOf(pair.en), correctMsg:'✓ Richtig! / Correct!', wrongMsg:'Nicht ganz. / Not quite: ' + pair.en });
       lpPhases.push(4);
     });
   }
@@ -1482,12 +1563,13 @@ function lpRender() {
 
   var navNext = document.getElementById('lp-nav-next');
   var isLast = idx === total - 1;
-  if (navNext) { navNext.textContent = isLast ? '✓ Fertig' : 'Weiter →'; navNext.style.display = 'inline-flex'; }
+  if (navNext) { navNext.textContent = isLast ? (lpLang==='en'?'✓ Done':'✓ Fertig') : (lpLang==='en'?'Next →':'Weiter →'); navNext.style.display = 'inline-flex'; }
 
   var phase = lpPhases[idx] !== undefined ? lpPhases[idx] : 0;
   lpUpdatePhaseNav(phase);
 
   var tipEl = document.getElementById('lp-tip');
+  LP_TIPS = lpLang === 'en' ? LP_TIPS_EN : LP_TIPS_DE;
   if (tipEl && LP_TIPS[phase]) tipEl.textContent = LP_TIPS[phase];
 
   var step = lpSteps[idx];
@@ -1549,7 +1631,7 @@ function lpRenderDialog(step) {
   var pairs = step.pairs || [];
   var speakers = ['A','B','A','B','A','B','A','B'];
   var lines = pairs.map(function(p,i){ return lpDlLine(speakers[i%2]||'A', p.de, p.en); }).join('');
-  return '<div class="lp-tag lp-tag-gold">Hören · Dialog</div>'
+  return '<div class="lp-tag lp-tag-gold">' + (lpLang===' en'?'Listen · Dialog':'Hören · Dialog') + '</div>'
     + '<div style="font-size:16px;color:var(--ml);text-align:center;font-weight:300">Lies und höre den Dialog.' + lpAudioInline('Lies den Dialog.') + '<br><em style="font-size:14px;color:var(--m)">Read the dialog aloud. What do you notice?</em></div>'
     + '<div class="lp-dialog-box">'
       + '<div class="lp-dialog-hdr"><div class="lp-dialog-scene">📖 Dialog</div><div class="lp-dialog-noticing">Was fällt dir auf? / What do you notice?</div></div>'
@@ -1574,14 +1656,14 @@ function lpRenderRules(step) {
     return '<div class="lp-rule-card" id="lprc' + i + '" onclick="lpRevealRule(' + i + ')">'
       + '<div class="lp-rule-num">' + (i+1) + '</div>'
       + '<div class="lp-rule-body">'
-        + '<div class="lp-rule-label">Regel ' + (i+1) + ' · Rule ' + (i+1) + '</div>'
+        + '<div class="lp-rule-label">' + (lpLang==='en'?'Rule ':'Regel ') + (i+1) + '</div>'
         + '<div class="lp-rule-title">' + chunk + lpAudioInline(chunk.replace(/<[^>]+>/g,'').split(':')[0].trim()) + '</div>'
-        + '<div class="lp-rule-tap" id="lptap'+i+'">👆 Klicke zum Entdecken / Click to reveal</div>'
+        + '<div class="lp-rule-tap" id="lptap'+i+'">' + (lpLang==='en'?'👆 Click to reveal':'👆 Klicke zum Entdecken') + '</div>'
       + '</div></div>';
   }).join('');
   var memoHtml = step.mnemonic ? '<div style="background:var(--goldbg);border:1px solid var(--goldbr);border-radius:12px;padding:20px 24px;width:100%;font-size:16px;color:var(--goldl);line-height:1.7;font-style:italic"><strong style="color:var(--gold);font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:8px;font-style:normal">🧠 Merktrick / Memory Trick</strong>' + step.mnemonic + lpAudioInline(step.mnemonic) + '</div>' : '';
-  return '<div class="lp-tag lp-tag-purple">Entdecken · Click to reveal</div>'
-    + '<div style="font-size:16px;color:var(--ml);text-align:center;font-weight:300">Klicke auf jede Karte um die Regel zu entdecken.<br><em style="font-size:13px;color:var(--m)">Click each card to discover the rule.</em></div>'
+  return '<div class="lp-tag lp-tag-purple">' + (lpLang===' en'?'Discover':'Entdecken') + '</div>'
+    + '<div style="font-size:16px;color:var(--ml);text-align:center;font-weight:300">' + (lpLang==='en'?'Click each card to discover the rule.':'Klicke auf jede Karte um die Regel zu entdecken.') + '</div>'
     + '<div class="lp-rule-cards">' + cardsHtml + '</div>'
     + memoHtml;
 }
@@ -1595,15 +1677,15 @@ function lpRevealRule(i) {
 
 function lpRenderPhrase(step) {
   var safe = (step.en||'').replace(/"/g,'&quot;');
-  return '<div class="lp-tag lp-tag-gold">Phrase ' + step.idx + ' / ' + step.total + '</div>'
-    + '<div style="font-size:15px;color:var(--m);text-align:center">Tippe die Karte · <em>Tap to reveal</em></div>'
-    + '<button class="audio-btn" data-text="' + (step.de||'').replace(/"/g,'&quot;') + '" onclick="lpSpeak(this.dataset.text,this)">' + lpAudioIcon() + ' Anhören / Listen</button>'
+  return '<div class="lp-tag lp-tag-gold">' + (lpLang===' en'?'Phrase ':'Phrase ') + step.idx + ' / ' + step.total + '</div>'
+    + '<div style="font-size:15px;color:var(--m);text-align:center">' + (lpLang===' en'?'Tap the card to reveal':'Tippe die Karte zum Aufdecken') + '</div>'
+    + '<button class="audio-btn" data-text="' + (step.de||'').replace(/"/g,'&quot;') + '" onclick="lpSpeak(this.dataset.text,this)">' + lpAudioIcon() + ' ' + (lpLang===' en'?'Listen':'Anhören') + '</button>'
     + '<div class="lp-phrase-card" id="lppc" data-en="' + safe + '" onclick="lpRevealPhrase(this.dataset.en)">'
       + '<div class="lp-phrase-de">' + (step.de||'') + '</div>'
-      + '<div class="lp-phrase-tap" id="lp-ptap">Tippe für Übersetzung / Tap for translation</div>'
+      + '<div class="lp-phrase-tap" id="lp-ptap">' + (lpLang===' en'?'Tap for translation':'Tippe für Übersetzung') + '</div>'
       + '<div class="lp-phrase-en-reveal" id="lp-pen" style="display:none"><div class="lp-phrase-en">' + (step.en||'') + '</div></div>'
     + '</div>'
-    + '<button class="btn btn-gold" id="lpnext" disabled onclick="lpNext()" style="padding:12px 28px">Weiter / Next →</button>';
+    + '<button class="btn btn-gold" id="lpnext" disabled onclick="lpNext()" style="padding:12px 28px">' + (lpLang===' en'?'Next →':'Weiter →') + '</button>';
 }
 
 function lpRevealPhrase(en) {
@@ -1625,7 +1707,7 @@ function lpRenderPractice(step) {
     return '<button class="lp-popt" id="' + id + 'o' + i + '" data-id="' + id + '" data-i="' + i + '" data-c="' + step.correct + '" data-cm="' + cm2 + '" data-wm="' + wm2 + '" onclick="lpPickPractice(this.dataset.id,+this.dataset.i,+this.dataset.c,this.dataset.cm,this.dataset.wm)">' + opt + '</button>';
   }).join('');
   return '<div class="lp-tag lp-tag-green">Üben · Practice</div>'
-    + '<div class="lp-pract-box"><div class="lp-pract-label">Wähle die richtige Antwort / Choose the correct answer</div>'
+    + '<div class="lp-pract-box"><div class="lp-pract-label">' + (lpLang===' en'?'Choose the correct answer':'Wähle die richtige Antwort') + 'rect answer</div>'
     + '<div class="lp-pract-q">' + step.question + (step.deAudio ? lpAudioInline(step.deAudio) : '') + '</div></div>'
     + '<div class="lp-pract-opts">' + optsHtml + '</div>'
     + '<div class="lp-fb" id="' + id + 'fb"></div>'
@@ -1641,18 +1723,18 @@ function lpRenderCulture(step) {
 function lpRenderComplete() {
   var xpEarned = 50 + lpCorrect * 10;
   return '<div class="lp-comp-star">⭐</div>'
-    + '<div class="lp-comp-big">Lektion<br><em>abgeschlossen!</em></div>'
-    + '<div style="font-size:16px;color:var(--m);text-align:center;font-style:italic">Lesson complete!</div>'
+    + '<div class="lp-comp-big">' + (lpLang===' en'?'Lesson<br><em>complete!</em>':'Lektion<br><em>abgeschlossen!</em>') + '</div>'
+    + ''
     + '<div class="lp-comp-xp">+' + xpEarned + ' XP</div>'
     + '<div class="lp-sr-box">'
-      + '<div class="lp-sr-label">🔁 Heute Abend wiederholen / Review tonight</div>'
+      + '<div class="lp-sr-label">🔁 ' + (lpLang===' en'?'Review tonight':'Heute Abend wiederholen') + '</div>'
       + (lpLesson && lpLesson.content && lpLesson.content.speak || []).slice(0,4).map(function(sp){
           var p = sp.split(' :: '); return '<div class="lp-sr-item">' + (p[0]||'').trim() + lpAudioInline((p[0]||'').trim()) + ' = ' + (p[1]||'').trim() + '</div>';
         }).join('')
     + '</div>'
     + '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">'
-      + '<button class="btn btn-green" onclick="lpCompleteAndSave()">✓ Fertig & Speichern</button>'
-      + '<button class="btn btn-ghost" onclick="lpStepIdx=0;lpRender()">↺ Wiederholen</button>'
+      + '<button class="btn btn-green" onclick="lpCompleteAndSave()">✓ ' + (lpLang===' en'?'Done & Save':'Fertig & Speichern') + '</button>'
+      + '<button class="btn btn-ghost" onclick="lpStepIdx=0;lpRender()">↺ ' + (lpLang===' en'?'Repeat':'Wiederholen') + '</button>'
     + '</div>';
 }
 
