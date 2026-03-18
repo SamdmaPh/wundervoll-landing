@@ -259,7 +259,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);font-size:16px;li
 .lp-count{font-family:var(--fm);font-size:11px;color:var(--m);text-align:right;margin-top:5px}
 
 /* Step container */
-.lp-stage{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 80px}
+.lp-stage-wrap{flex:1;display:flex;overflow:hidden}.lp-stage{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 80px}.lp-sidebar{width:220px;flex-shrink:0;border-left:1px solid var(--b);padding:16px;overflow-y:auto;background:var(--bg2)}
 
 /* Loading */
 .lp-loading{display:flex;flex-direction:column;align-items:center;gap:14px}
@@ -825,8 +825,11 @@ var uiLang = (typeof localStorage !== 'undefined' && localStorage.getItem('wv_la
 function setLang(l) {
   uiLang = l;
   if (typeof localStorage !== 'undefined') localStorage.setItem('wv_lang', l);
+  // Button-Text
   var btn = document.getElementById('lang-toggle');
   if (btn) btn.textContent = uiLang === 'de' ? '🌐 EN' : '🌐 DE';
+  // Statische UI-Texte übersetzen
+  applyLangTexts();
   // Re-render aktuelle View
   var activeView = document.querySelector('.view.active');
   if (activeView) {
@@ -835,6 +838,31 @@ function setLang(l) {
     else if (vid === 'v-library') renderLibrary();
     else if (vid === 'v-wotd') renderWotdGrid();
   }
+}
+
+function applyLangTexts() {
+  var de = uiLang === 'de';
+  // Rail Tooltips
+  var rh = document.getElementById('rb-home'); if(rh) rh.setAttribute('data-tip', de?'Home':'Home');
+  var rl = document.getElementById('rb-library'); if(rl) rl.setAttribute('data-tip', de?'Curriculum':'Curriculum');
+  var rw = document.getElementById('rb-wotd'); if(rw) rw.setAttribute('data-tip', de?'Wort des Tages':'Word of the Day');
+  var rp = document.getElementById('rb-placement'); if(rp) rp.setAttribute('data-tip', de?'Einstufungstest':'Placement Test');
+  // Continue Button
+  var cb = document.getElementById('continue-btn'); if(cb) cb.innerHTML = '▶ ' + (de?'Weiter lernen':'Continue learning');
+  // Stat-Labels
+  var sl = document.querySelectorAll('.hstat-l');
+  var statTexts = de ? ['Lektionen','Tage Streak','Dein Level'] : ['Lessons','Day streak','Your level'];
+  sl.forEach(function(el, i){ if(statTexts[i]) el.textContent = statTexts[i]; });
+  // Hcard Titles
+  var hcards = document.querySelectorAll('.hcard-title');
+  if(hcards[0]) hcards[0].innerHTML = (de?'Als n\u00e4chstes':'Up next') + ' <span class="hcard-link" onclick="showView(&quot;library&quot;)">'+(de?'Alle \u2192':'All \u2192')+'</span>';
+  if(hcards[1]) hcards[1].textContent = de?'Level-Fortschritt':'Level progress';
+  if(hcards[2]) hcards[2].textContent = de?'Deine Skills':'Your skills';
+  // Placement Test Seite
+  var ptIntroH = document.querySelector('#pt-intro h1');
+  if(ptIntroH) ptIntroH.innerHTML = de?'Finde dein <em style="color:var(--gold)">Niveau.</em>':'Find your <em style="color:var(--gold)">level.</em>';
+  var ptStartBtn = document.querySelector('#pt-intro .btn-gold');
+  if(ptStartBtn) ptStartBtn.textContent = de?'🎯 Test starten':'🎯 Start test';
 }
 
 var currentLesson = null;
@@ -925,6 +953,7 @@ async function showApp() {
   await loadProgress();
   renderHome();
   renderLibrary();
+  applyLangTexts();
 
   // Erstes Login: Placement Test zeigen wenn noch kein Level gesetzt
   var hasLevel = userProfile && userProfile.current_level;
