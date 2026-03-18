@@ -1186,50 +1186,109 @@ function renderWotdGrid() {
   var grid = document.getElementById('wotd-card-grid');
   if (!grid) return;
   var today = new Date();
-  var dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
-  var todayIdx = dayOfYear % WOTD_LIST.length;
-  var w = WOTD_LIST[todayIdx];
-  var safeWord = w.de.replace(/'/g, "\'");
   var dateStr = today.toLocaleDateString(uiLang==='en'?'en-GB':'de-DE',{weekday:'long',day:'numeric',month:'long'});
+  var todayKey = today.toISOString().slice(0,10);
+  var cacheKey = 'wv_wotd_' + todayKey;
+  var langKey = cacheKey + '_' + (uiLang||'de');
 
-  grid.innerHTML = '<div style="grid-column:1/-1;max-width:520px;margin:0 auto;width:100%">'
-    + '<div style="font-family:var(--fm);font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:12px">HEUTE · ' + dateStr + '</div>'
-    + '<div class="wotd-card" id="wotd-main-card" style="max-width:520px">'
+  grid.innerHTML = '<div style="text-align:center;padding:60px;color:var(--ink3);font-size:16px;display:flex;flex-direction:column;align-items:center;gap:16px"><div class="spinner"></div>' + (uiLang==='en'?'Generating Word of the Day…':'Wort des Tages wird generiert…') + '</div>';
+
+  // Cache prüfen
+  var cached = localStorage.getItem(langKey);
+  if (cached) {
+    try { wotdRender(JSON.parse(cached), dateStr); return; } catch(e) {}
+  }
+
+  // KI generiert neues Wort
+  wotdGenerate(dateStr, langKey);
+}
+
+async function wotdGenerate(dateStr, cacheKey) {
+  var grid = document.getElementById('wotd-card-grid');
+  var usedWords = [];
+  try { usedWords = JSON.parse(localStorage.getItem('wv_wotd_used')||'[]'); } catch(e){}
+
+  var lang = uiLang === 'en' ? 'English' : 'German';
+  var prompt = 'Generate a fascinating German word of the day for English speakers learning German.\n\nRequirements:\n- Pick an interesting, memorable, culturally rich German word\n- Avoid common words already used: ' + (usedWords.slice(-30).join(', ')||'none') + '\n- Focus on: untranslatable concepts, compound words, culturally specific terms, words with great stories\n\nReturn ONLY a JSON object, no markdown:\n{"de":"word","article":"der/die/das or -","en":"English translation","ex":"example sentence in German","tip":"interesting fact or memory trick in ' + lang + '","category":"one of: Kultur, Gefühl, Natur, Alltag, Philosophie"}';
+
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    var data = await res.json();
+    var text = (data.content||[]).map(function(c){ return c.text||''; }).join('').replace(/```json|```/g,'').trim();
+    var w = JSON.parse(text);
+    if (!w.de || !w.en) throw new Error('invalid');
+    localStorage.setItem(cacheKey, JSON.stringify(w));
+    usedWords.push(w.de);
+    localStorage.setItem('wv_wotd_used', JSON.stringify(usedWords.slice(-100)));
+    wotdRender(w, dateStr);
+  } catch(e) {
+    // Fallback aus statischer Liste
+    var fallbacks = [
+      {de:'Gemütlichkeit',article:'die',en:'cosiness & conviviality',ex:'Das Café hat eine tolle Gemütlichkeit.',tip:'No direct translation exists in English!',category:'Kultur'},
+      {de:'Weltschmerz',article:'der',en:'world-weariness',ex:'Er leidet an tiefem Weltschmerz.',tip:'Welt=world + Schmerz=pain. Pure Romantik!',category:'Gefühl'},
+      {de:'Schadenfreude',article:'die',en:'pleasure at others\' misfortune',ex:'Das ist pure Schadenfreude.',tip:'Used globally — even in English dictionaries!',category:'Gefühl'},
+      {de:'Fingerspitzengefühl',article:'das',en:'tact & sensitivity',ex:'Das braucht Fingerspitzengefühl.',tip:'Literally: fingertip feeling — delicate touch.',category:'Alltag'},
+      {de:'Kopfkino',article:'das',en:'movie in your head',ex:'Ich mache mir zu viel Kopfkino.',tip:'Kopf=head + Kino=cinema. Perfect!',category:'Gefühl'},
+      {de:'Torschlusspanik',article:'die',en:'last-minute panic / FOMO',ex:'Mit 30 bekommt sie Torschlusspanik.',tip:'Tor=gate + Schluss=closing + Panik',category:'Gefühl'},
+      {de:'Verschlimmbessern',article:'das',en:'making things worse trying to fix',ex:'Lass das — du verschlimmbessert es.',tip:'Verschlimmern + verbessern = genius!',category:'Alltag'},
+      {de:'Drachenfutter',article:'das',en:'peace offering for your partner',ex:'Er bringt Drachenfutter mit nach Hause.',tip:'Dragon + fodder — for the "house dragon" 🐉',category:'Kultur'},
+    ];
+    var idx = Math.floor(Math.random() * fallbacks.length);
+    wotdRender(fallbacks[idx], dateStr);
+  }
+}
+
+function wotdRender(w, dateStr) {
+  var grid = document.getElementById('wotd-card-grid');
+  if (!grid) return;
+  var safeWord = (w.de||'').replace(/'/g,"\'");
+  var catColors = {Kultur:'#C9A84C',Gefühl:'#8B5CF6',Natur:'#22C55E',Alltag:'#3B82F6',Philosophie:'#CC0000'};
+  var catColor = catColors[w.category] || 'var(--gold)';
+
+  grid.innerHTML = '<div style="max-width:520px;margin:0 auto;width:100%">'
+    + '<div style="font-family:var(--fm);font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:16px">'
+    + (uiLang==='en'?'WORD OF THE DAY':'WORT DES TAGES') + ' · ' + dateStr + '</div>'
+    + '<div class="wotd-card" style="max-width:520px">'
       + '<div class="wotd-card-top">'
-        + '<div class="wotd-card-article" id="wmc-article">' + w.article + '</div>'
-        + '<div class="wotd-card-word" id="wmc-word" style="font-size:38px">' + w.de + '</div>'
-        + '<button class="wotd-card-audio" id="wmc-audio" onclick="wotdSpeakWord(\'' + safeWord + '\')">🔊 Anhören</button>'
+        + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
+          + '<span style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;background:' + catColor + '20;color:' + catColor + ';border:1px solid ' + catColor + '40">' + (w.category||'Deutsch') + '</span>'
+        + '</div>'
+        + '<div class="wotd-card-article">' + (w.article||'') + '</div>'
+        + '<div class="wotd-card-word" style="font-size:42px">' + w.de + '</div>'
+        + '<button class="wotd-card-audio" onclick="wotdSpeakWord(&quot;' + safeWord + '&quot;)">🔊 ' + (uiLang==='en'?'Listen':'Anhören') + '</button>'
       + '</div>'
       + '<div class="wotd-card-body">'
-        + '<div class="wotd-card-en" id="wmc-en" style="font-size:20px">' + w.en + '</div>'
-        + '<div class="wotd-card-ex" id="wmc-ex" style="font-size:15px;margin:12px 0">&ldquo;' + w.ex + '&rdquo;</div>'
-        + '<div class="wotd-card-tip" id="wmc-tip">🧠 ' + w.tip + '</div>'
+        + '<div class="wotd-card-en" style="font-size:20px">' + w.en + '</div>'
+        + '<div class="wotd-card-ex" style="font-size:15px;margin:12px 0">&ldquo;' + (w.ex||'') + '&rdquo;</div>'
+        + '<div class="wotd-card-tip">🧠 ' + (w.tip||'') + '</div>'
       + '</div>'
     + '</div>'
-    + '<div style="margin-top:28px"><div style="font-family:var(--fm);font-size:10px;letter-spacing:.15em;color:var(--m);text-transform:uppercase;margin-bottom:12px">ALLE WÖRTER</div>'
-    + '<div style="display:flex;flex-wrap:wrap;gap:8px">'
-    + WOTD_LIST.map(function(ww,i){
-        var a=i===todayIdx;
-        return '<div onclick="wotdShowWord('+i+')" id="wchip-'+i+'" style="padding:5px 13px;border-radius:20px;border:1px solid '+(a?'var(--goldbr)':'var(--b)')+';background:'+(a?'var(--goldbg)':'transparent')+';color:'+(a?'var(--gold)':'var(--ink3)')+';font-size:13px;font-weight:600;cursor:pointer">'+ww.de+'</div>';
-      }).join('')
-    + '</div></div></div>';
+    + '<div style="margin-top:20px;display:flex;gap:10px;justify-content:center">'
+      + '<button class="btn btn-ghost" style="font-size:14px;padding:10px 20px" onclick="wotdRefresh()">'
+        + (uiLang==='en'?'✨ New word':'✨ Neues Wort') + '</button>'
+    + '</div>'
+    + '</div>';
 }
 
-function wotdShowWord(idx) {
-  var w = WOTD_LIST[idx];
-  var safeWord = w.de.replace(/'/g, "\'");
-  var el = function(id){return document.getElementById(id);};
-  if(el('wmc-article')) el('wmc-article').textContent = w.article;
-  if(el('wmc-word'))    el('wmc-word').textContent = w.de;
-  if(el('wmc-audio'))   el('wmc-audio').setAttribute('onclick','wotdSpeakWord(\''+safeWord+'\')');
-  if(el('wmc-en'))      el('wmc-en').textContent = w.en;
-  if(el('wmc-ex'))      el('wmc-ex').innerHTML = '&ldquo;'+w.ex+'&rdquo;';
-  if(el('wmc-tip'))     el('wmc-tip').textContent = '🧠 '+w.tip;
-  WOTD_LIST.forEach(function(_,i){
-    var chip = el('wchip-'+i);
-    if(chip){ chip.style.borderColor=i===idx?'var(--goldbr)':'var(--b)'; chip.style.background=i===idx?'var(--goldbg)':'transparent'; chip.style.color=i===idx?'var(--gold)':'var(--ink3)'; }
-  });
+function wotdRefresh() {
+  var today = new Date();
+  var todayKey = today.toISOString().slice(0,10);
+  var cacheKey = 'wv_wotd_' + todayKey + '_' + (uiLang||'de');
+  localStorage.removeItem(cacheKey);
+  var dateStr = today.toLocaleDateString(uiLang==='en'?'en-GB':'de-DE',{weekday:'long',day:'numeric',month:'long'});
+  var grid = document.getElementById('wotd-card-grid');
+  if (grid) grid.innerHTML = '<div style="text-align:center;padding:60px;color:var(--ink3);font-size:16px;display:flex;flex-direction:column;align-items:center;gap:16px"><div class="spinner"></div>' + (uiLang==='en'?'Generating…':'Wird generiert…') + '</div>';
+  wotdGenerate(dateStr, cacheKey);
 }
+
 
 function wotdSpeakWord(word) {
   if (window.speechSynthesis) {
@@ -1907,46 +1966,81 @@ function setUserLevel(lv) {
 }
 
 // ── PLACEMENT TEST ──────────────────────────────────────────────────────────
-var PT_QUESTIONS = [
-  // A1 (0-3)
-  {level:'A1', q:'Was bedeutet "Guten Morgen"?', opts:['Good night','Good morning','Good evening','Goodbye'], ans:1},
-  {level:'A1', q:'Welche Form ist richtig? "Ich ___ müde."', opts:['bist','sind','bin','seid'], ans:2},
-  {level:'A1', q:'"Ich habe ___ Zeit." (keine)', opts:['keinen','keine','kein','nicht'], ans:1},
-  {level:'A1', q:'Was kommt zuerst? "21" auf Deutsch:', opts:['zwanzigein','einundzwanzig','zwanzigeins','einzwanzig'], ans:1},
-  // A2 (4-7)
-  {level:'A2', q:'"Ich ___ gestern ins Kino gegangen." Welches Hilfsverb?', opts:['habe','bin','war','hatte'], ans:1},
-  {level:'A2', q:'Komparativ von "gut":', opts:['guter','besser','am besten','mehr gut'], ans:1},
-  {level:'A2', q:'"Ich bleibe zuhause, ___ es regnet." Konnektive:', opts:['denn','deshalb','weil','also'], ans:2},
-  {level:'A2', q:'Konjunktiv II: "Ich ___ gern Kaffee." (mögen)', opts:['möchte','mag','mochte','will'], ans:0},
-  // B1 (8-11)
-  {level:'B1', q:'"Das Buch, ___ ich lese, ist spannend." Relativpronomen:', opts:['der','die','das','den'], ans:2},
-  {level:'B1', q:'Passiv: "Das Haus ___ gebaut." (Präsens)', opts:['hat','ist','wird','wurde'], ans:2},
-  {level:'B1', q:'"___ des Regens gingen wir spazieren." Genitivpräposition:', opts:['Wegen','Trotz','Während','Laut'], ans:1},
-  {level:'B1', q:'Infinitiv: "Ich lerne Deutsch, ___ hier zu arbeiten."', opts:['damit','denn','um','weil'], ans:2},
-  // B2 (12-15)
-  {level:'B2', q:'"Der ___ in Berlin geborene Autor..." Partizip I oder II?', opts:['gebärende','geborende','geboren','geborene'], ans:3},
-  {level:'B2', q:'Welcher Konnektor drückt Folge aus?', opts:['gleichwohl','infolgedessen','wohingegen','wenngleich'], ans:1},
-  {level:'B2', q:'"Die ___ des Gesetzes hat Folgen." Nominalisierung von "beschließen":',  opts:['Beschließung','Beschlossheit','Beschließerei','Verabschiedung'], ans:3},
-  {level:'B2', q:'Epistemisch: "Das ___ schwieriger sein als gedacht." (wahrscheinlich)', opts:['muss','dürfte','soll','will'], ans:1},
-  // C1 (16-19)
-  {level:'C1', q:'Was ist ein Strohmann-Argument?', opts:['Ein starkes Argument','Ein verfälschtes Gegenargument','Ein Syllogismus','Eine Metapher'], ans:1},
-  {level:'C1', q:'"schlank" vs. "dürr" — was beschreibt diesen Unterschied?', opts:['Genus','Kasus','Konnotation','Register'], ans:2},
-  {level:'C1', q:'Wissenschaftlich: "Als Beleg ___ die Studie von 2020."', opts:['dient','gilt','steht','ist'], ans:0},
-  {level:'C1', q:'Welches Stilmittel: "Das Leben ist ein Traum"?', opts:['Ironie','Metapher','Synekdoche','Litotes'], ans:1},
-];
+var PT_QUESTIONS = []; // wird von KI befüllt
+var ptGenerating = false;
+
+async function ptGenerateQuestions() {
+  ptGenerating = true;
+  document.getElementById('pt-intro').style.display = 'none';
+  document.getElementById('pt-quiz').style.display = 'block';
+  document.getElementById('pt-question').textContent = '';
+  document.getElementById('pt-options').innerHTML = '';
+  document.getElementById('pt-level-tag').textContent = '';
+  document.getElementById('pt-bar').style.width = '0%';
+  document.getElementById('pt-counter').textContent = '…';
+  document.getElementById('pt-question').innerHTML = '<div style="display:flex;align-items:center;gap:12px;color:var(--ink3);font-size:16px"><div class="spinner" style="width:24px;height:24px;border-width:2px"></div>' + (uiLang==='en'?'Generating your personal test…':'Dein persönlicher Test wird erstellt…') + '</div>';
+
+  var lang = uiLang === 'en' ? 'English' : 'German';
+  var prompt = 'Generate exactly 20 multiple-choice questions to assess German language level (A1 to C1) for English speakers.\n\nRules:\n- 4 questions each for A1, A2, B1, B2, C1\n- Each question tests a distinct grammar point or vocabulary\n- 4 answer options per question, exactly 1 correct\n- Make every test unique — vary topics, structures, and sentence patterns. Never repeat the same question.\n- Questions and answer options should be in ' + lang + ' (German words/phrases may appear as test content)\n- Keep questions concise (max 15 words)\n\nReturn ONLY a JSON array, no markdown, no explanation:\n[{"level":"A1","q":"question text","opts":["a","b","c","d"],"ans":0},...]\n\nans is the 0-based index of the correct option. Mix up which index is correct.';
+
+  try {
+    var res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    var data = await res.json();
+    var text = (data.content||[]).map(function(c){ return c.text||''; }).join('');
+    text = text.replace(/```json|```/g,'').trim();
+    PT_QUESTIONS = JSON.parse(text);
+    if (!Array.isArray(PT_QUESTIONS) || PT_QUESTIONS.length < 10) throw new Error('zu wenig Fragen');
+  } catch(e) {
+    // Fallback: statische Fragen
+    PT_QUESTIONS = ptFallbackQuestions();
+  }
+  ptGenerating = false;
+  ptCurrentIdx = 0;
+  ptAnswers = [];
+  ptAnsweredThis = false;
+  ptRender();
+}
+
+function ptFallbackQuestions() {
+  return [
+    {level:'A1',q:'Was bedeutet "Hallo"?',opts:['Goodbye','Hello','Please','Thank you'],ans:1},
+    {level:'A1',q:'Welche Form? "Ich ___ müde."',opts:['bist','sind','bin','seid'],ans:2},
+    {level:'A1',q:'"Ich habe ___ Zeit." (keine)',opts:['keinen','keine','kein','nicht'],ans:1},
+    {level:'A1',q:'"21" auf Deutsch:',opts:['zwanzigein','einundzwanzig','zwanzigeins','einzwanzig'],ans:1},
+    {level:'A2',q:'"Ich ___ gestern ins Kino gegangen."',opts:['habe','bin','war','hatte'],ans:1},
+    {level:'A2',q:'Komparativ von "gut":',opts:['guter','besser','am besten','mehr gut'],ans:1},
+    {level:'A2',q:'"Ich bleibe zuhause, ___ es regnet."',opts:['denn','deshalb','weil','also'],ans:2},
+    {level:'A2',q:'Konjunktiv II: "Ich ___ gern Kaffee."',opts:['möchte','mag','mochte','will'],ans:0},
+    {level:'B1',q:'"Das Buch, ___ ich lese, ist gut." Relativpronomen:',opts:['der','die','das','den'],ans:2},
+    {level:'B1',q:'Passiv: "Das Haus ___ gebaut."',opts:['hat','ist','wird','wurde'],ans:2},
+    {level:'B1',q:'"___ des Regens gingen wir spazieren."',opts:['Wegen','Trotz','Während','Laut'],ans:1},
+    {level:'B1',q:'"Ich lerne Deutsch, ___ hier zu arbeiten."',opts:['damit','denn','um','weil'],ans:2},
+    {level:'B2',q:'Welcher Konnektor drückt Folge aus?',opts:['gleichwohl','infolgedessen','wohingegen','wenngleich'],ans:1},
+    {level:'B2',q:'Epistemisch: "Das ___ schwieriger sein als gedacht."',opts:['muss','dürfte','soll','will'],ans:1},
+    {level:'B2',q:'"-ung" Nominalisierungen sind immer:',opts:['maskulin','feminin','neutral','variabel'],ans:1},
+    {level:'B2',q:'Partizip I: "der ___ Mann" (schlafen)',opts:['geschlafene','schlafende','schlafende','geschlafende'],ans:1},
+    {level:'C1',q:'Was ist ein Strohmann-Argument?',opts:['Starkes Argument','Verfälschtes Gegenargument','Syllogismus','Metapher'],ans:1},
+    {level:'C1',q:'"schlank" vs. "dürr" — was beschreibt diesen Unterschied?',opts:['Genus','Kasus','Konnotation','Register'],ans:2},
+    {level:'C1',q:'Wissenschaftlich: "Als Beleg ___ die Studie."',opts:['dient','gilt','steht','ist'],ans:0},
+    {level:'C1',q:'"Das Leben ist ein Traum" — welches Stilmittel?',opts:['Ironie','Metapher','Synekdoche','Litotes'],ans:1},
+  ];
+}
 
 var ptAnswers = [];
 var ptCurrentIdx = 0;
 var ptAnsweredThis = false;
 
 function ptStart() {
-  ptAnswers = [];
-  ptCurrentIdx = 0;
-  ptAnsweredThis = false;
-  document.getElementById('pt-intro').style.display = 'none';
   document.getElementById('pt-result').style.display = 'none';
-  document.getElementById('pt-quiz').style.display = 'block';
-  ptRender();
+  ptGenerateQuestions();
 }
 
 function ptRender() {
