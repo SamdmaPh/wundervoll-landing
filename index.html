@@ -1971,6 +1971,28 @@ function toggleVocab() {
 }
 
 
+
+function wotdAudio() {
+  var w = document.getElementById('wotd-de');
+  if (w && window.speechSynthesis) {
+    var u = new SpeechSynthesisUtterance(w.textContent);
+    u.lang = 'de-DE'; u.rate = 0.85;
+    window.speechSynthesis.speak(u);
+  }
+}
+function wotdNext() {
+  wotdIdx = (wotdIdx + 1) % WOTD_LIST.length;
+  var w = WOTD_LIST[wotdIdx];
+  var de = document.getElementById('wotd-de'); if(de) de.textContent = w.de;
+  var ar = document.getElementById('wotd-article'); if(ar) ar.textContent = w.article;
+  var en = document.getElementById('wotd-en'); if(en) en.textContent = w.en;
+  var ex = document.getElementById('wotd-example'); if(ex) ex.textContent = '"' + w.ex + '"';
+  var tip = document.getElementById('wotd-tip'); if(tip) tip.textContent = '🧠 ' + w.tip;
+}
+function signInGoogle() {
+  sb.auth.signInWithOAuth({ provider: 'google' });
+}
+
 </script>
 </body>
 </html>
