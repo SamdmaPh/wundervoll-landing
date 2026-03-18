@@ -335,6 +335,21 @@ body{background:var(--bg);color:var(--t);font-family:var(--fb);-webkit-font-smoo
 </div>
 
 <script>
+function applyPageLang() {
+  document.querySelectorAll('.ph-label').forEach(function(el) {
+    el.textContent = uiLang === 'en' ? el.dataset.en : el.dataset.de;
+  });
+  var vl = document.getElementById('sb-vocab-label');
+  if (vl) vl.textContent = L('Schlüssel-Vokabular','Key Vocabulary');
+  var tl = document.getElementById('sb-tip-label');
+  if (tl) tl.textContent = L('💡 Tipp','💡 Tip');
+  var tt = document.getElementById('sb-tip-text');
+  if (tt) tt.textContent = L(
+    'Lies den Dialog laut — auch wenn du allein bist. Dein Gehirn lernt Sprache durch Sprechen.',
+    'Read the dialog aloud, even alone. Your brain learns language through speaking.'
+  );
+}
+
 var stepIdx = 0;
 var xp = 0;
 var correctCount = 0;
@@ -3648,7 +3663,7 @@ function buildDynamicSteps() {
   (L.compQs||[]).forEach(function(cq) {
     var cqRef = cq;
     STEPS.push({ phase:1, render: function(){
-      return '<div class="tag tag-gold">Hörverständnis</div>'
+      return L('<div class="tag tag-gold">Hörverständnis</div>','<div class="tag tag-gold">Comprehension</div>')
         + compQ(cqRef.q, cqRef.q.split('/')[0].trim(), cqRef.opts, cqRef.ans, cqRef.ok, cqRef.wrong);
     }});
     STEP_PHASES.push(1);
@@ -3759,7 +3774,7 @@ function ruleCard(num, label, title, text, example, memo) {
   return '<div class="rule-card" id="rc' + num + '" onclick="revealRule(' + num + ')" style="cursor:pointer">'
     + '<div class="rule-num">' + num + '</div>'
     + '<div class="rule-body">'
-      + '<div class="rule-label">' + label + '</div>'
+      + '<div class="rule-label">' + (label.indexOf(' · ') > 0 ? (uiLang===' en' ? label.split(' · ')[1] : label.split(' · ')[0]) : label) + '</div>'
       + '<div class="rule-text">' + title + audioInline(title.replace(/<[^>]+>/g,'').split('/')[0].trim()) + '</div>'
       + '<div class="rule-detail" id="rex' + num + '" style="display:none;margin-top:14px;font-size:16px;color:var(--t);line-height:1.8">' + text + '</div>'
       + '<div class="rule-example" id="rexex' + num + '" style="display:none;margin-top:12px;padding:12px 16px;background:rgba(255,255,255,.03);border-radius:10px;font-size:14px;color:var(--ml);border-left:2px solid var(--gold)"><strong style="color:var(--gold);font-size:11px;letter-spacing:.1em;text-transform:uppercase">Beispiel / Example</strong><br><span style="font-size:15px">' + example + '</span></div>'
@@ -3950,6 +3965,7 @@ function jumpToPhase(targetPhase) {
   }
   stepIdx = targetIdx;
   render();
+  applyPageLang();
 }
 
 function updateSidebar(phaseIdx) {
@@ -4017,6 +4033,7 @@ function audioBtnHTML(text, extraStyle) {
 loadLessonFromURL();
 buildDynamicSteps();
 render();
+applyPageLang();
 </script>
 </body>
 </html>
